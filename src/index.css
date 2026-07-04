@@ -12,6 +12,12 @@ body {
   color: #1f2937;
 }
 
+/* Fix text selection visibility issues */
+::selection {
+  background-color: #1b4d24;
+  color: #ffffff;
+}
+
 /* Custom styles to match the warm olive green brand color */
 .bg-brand-light {
   background-color: #f0f7f0;
