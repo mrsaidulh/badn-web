@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Hind Siliguri", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #fafdfa;
+  color: #1f2937;
+}
+
+/* Custom styles to match the warm olive green brand color */
+.bg-brand-light {
+  background-color: #f0f7f0;
+}
+
+.text-brand {
+  color: #1b4d24;
+}
+
+.bg-brand {
+  background-color: #1b4d24;
+}
+
+.bg-brand-hover {
+  background-color: #143a1b;
+}
+
+.border-brand {
+  border-color: #1b4d24;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f0f7f0;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbdccb;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a3bda3;
+}
+

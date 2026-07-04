@@ -1,0 +1,6 @@
+{
+  "name": "BADN Academy",
+  "description": "Bangladesh Academy of Dietetics and Nutrition - A professional platform for clinical nutrition and dietetics training.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
