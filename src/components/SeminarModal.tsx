@@ -2,6 +2,7 @@ import { useState, FormEvent } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { X, Calendar, MapPin, Users, CheckCircle2, Award } from 'lucide-react';
 import { Seminar } from '../types';
+import { addSeminarRegistration } from '../lib/api';
 
 interface SeminarModalProps {
   seminar: Seminar | null;
@@ -24,7 +25,6 @@ export default function SeminarModal({ seminar, isOpen, onClose }: SeminarModalP
   const handleRegister = (e: FormEvent) => {
     e.preventDefault();
 
-    const existingRegistrations = JSON.parse(localStorage.getItem('badn_seminar_registrations') || '[]');
     const newRegistration = {
       id: 'reg_' + Date.now(),
       seminarId: seminar.id,
@@ -36,7 +36,7 @@ export default function SeminarModal({ seminar, isOpen, onClose }: SeminarModalP
       date: new Date().toLocaleDateString('bn-BD')
     };
 
-    localStorage.setItem('badn_seminar_registrations', JSON.stringify([...existingRegistrations, newRegistration]));
+    addSeminarRegistration(newRegistration);
 
     setIsRegistered(true);
     setTimeout(() => {

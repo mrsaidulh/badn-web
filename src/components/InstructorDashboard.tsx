@@ -1,6 +1,17 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { X, Users, BookOpen, MessageSquare, CheckCircle, Trash2, Calendar, Award } from 'lucide-react';
+import {
+  getEnrollments,
+  updateEnrollmentStatus,
+  deleteEnrollment,
+  getSeminars,
+  updateSeminarRegistrationStatus,
+  deleteSeminarRegistration,
+  getInquiries,
+  deleteInquiry,
+  getDbStatus
+} from '../lib/api';
 
 interface InstructorDashboardProps {
   isOpen: boolean;
@@ -11,12 +22,19 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
   const [enrollments, setEnrollments] = useState<any[]>([]);
   const [seminars, setSeminars] = useState<any[]>([]);
   const [inquiries, setInquiries] = useState<any[]>([]);
+  const [dbStatus, setDbStatus] = useState<any>(null);
   const [activeTab, setActiveTab] = useState<'enrollments' | 'seminars' | 'inquiries'>('enrollments');
 
-  const loadData = () => {
-    setEnrollments(JSON.parse(localStorage.getItem('badn_enrollments') || '[]'));
-    setSeminars(JSON.parse(localStorage.getItem('badn_seminar_registrations') || '[]'));
-    setInquiries(JSON.parse(localStorage.getItem('badn_contact_messages') || '[]'));
+  const loadData = async () => {
+    const enrolls = await getEnrollments();
+    const sems = await getSeminars();
+    const inqs = await getInquiries();
+    const status = await getDbStatus();
+
+    setEnrollments(enrolls);
+    setSeminars(sems);
+    setInquiries(inqs);
+    setDbStatus(status);
   };
 
   useEffect(() => {
@@ -24,7 +42,7 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
       loadData();
     }
 
-    // Listen to local storage updates
+    // Listen to updates
     const handleUpdate = () => {
       loadData();
     };
@@ -40,32 +58,27 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
     };
   }, [isOpen]);
 
-  const handleStatusChange = (id: string, type: 'enrollment' | 'seminar', newStatus: string) => {
+  const handleStatusChange = async (id: string, type: 'enrollment' | 'seminar', newStatus: string) => {
     if (type === 'enrollment') {
-      const updated = enrollments.map(item => item.id === id ? { ...item, status: newStatus } : item);
-      localStorage.setItem('badn_enrollments', JSON.stringify(updated));
-      setEnrollments(updated);
+      await updateEnrollmentStatus(id, newStatus);
+      setEnrollments(prev => prev.map(item => item.id === id ? { ...item, status: newStatus } : item));
     } else {
-      const updated = seminars.map(item => item.id === id ? { ...item, status: newStatus } : item);
-      localStorage.setItem('badn_seminar_registrations', JSON.stringify(updated));
-      setSeminars(updated);
+      await updateSeminarRegistrationStatus(id, newStatus);
+      setSeminars(prev => prev.map(item => item.id === id ? { ...item, status: newStatus } : item));
     }
   };
 
-  const handleDelete = (id: string, type: 'enrollment' | 'seminar' | 'inquiry') => {
+  const handleDelete = async (id: string, type: 'enrollment' | 'seminar' | 'inquiry') => {
     if (confirm('আপনি কি নিশ্চিত যে এই রেকর্ডটি মুছে ফেলতে চান?')) {
       if (type === 'enrollment') {
-        const filtered = enrollments.filter(item => item.id !== id);
-        localStorage.setItem('badn_enrollments', JSON.stringify(filtered));
-        setEnrollments(filtered);
+        await deleteEnrollment(id);
+        setEnrollments(prev => prev.filter(item => item.id !== id));
       } else if (type === 'seminar') {
-        const filtered = seminars.filter(item => item.id !== id);
-        localStorage.setItem('badn_seminar_registrations', JSON.stringify(filtered));
-        setSeminars(filtered);
+        await deleteSeminarRegistration(id);
+        setSeminars(prev => prev.filter(item => item.id !== id));
       } else if (type === 'inquiry') {
-        const filtered = inquiries.filter(item => item.id !== id);
-        localStorage.setItem('badn_contact_messages', JSON.stringify(filtered));
-        setInquiries(filtered);
+        await deleteInquiry(id);
+        setInquiries(prev => prev.filter(item => item.id !== id));
       }
     }
   };
@@ -100,6 +113,16 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
                 <p className="text-xs text-brand-light/80 mt-1">
                   এই প্যানেল থেকে আপনি ভর্তিকৃত ছাত্র-ছাত্রী, সেমিনারে অংশগ্রহণকারী এবং জিজ্ঞাসাসমূহ রিয়েল-টাইমে দেখতে ও নিয়ন্ত্রণ করতে পারবেন।
                 </p>
+                {dbStatus && (
+                  <div className={`mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-extrabold border ${
+                    dbStatus.connected 
+                      ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' 
+                      : 'bg-amber-500/20 text-amber-300 border-amber-500/30'
+                  }`}>
+                    <span className={`w-2 h-2 rounded-full ${dbStatus.connected ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
+                    <span>MySQL: {dbStatus.connected ? `রিয়েল-টাইম কানেক্টেড (${dbStatus.database})` : 'লোকাল লোকালস্টোরেজ মোড অ্যাক্টিভ (VPS-এ কানেক্ট হবে)'}</span>
+                  </div>
+                )}
               </div>
               <button
                 onClick={onClose}

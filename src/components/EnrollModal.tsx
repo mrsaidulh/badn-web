@@ -2,6 +2,7 @@ import { useState, FormEvent } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { X, CheckCircle2, Calendar, BookOpen, Clock, Award } from 'lucide-react';
 import { Course } from '../types';
+import { addEnrollment } from '../lib/api';
 
 interface EnrollModalProps {
   course: Course | null;
@@ -25,8 +26,6 @@ export default function EnrollModal({ course, isOpen, onClose }: EnrollModalProp
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     
-    // Save enrollment to localStorage
-    const existingEnrollments = JSON.parse(localStorage.getItem('badn_enrollments') || '[]');
     const newEnrollment = {
       id: 'enr_' + Date.now(),
       courseId: course.id,
@@ -42,7 +41,7 @@ export default function EnrollModal({ course, isOpen, onClose }: EnrollModalProp
       date: new Date().toLocaleDateString('bn-BD')
     };
     
-    localStorage.setItem('badn_enrollments', JSON.stringify([...existingEnrollments, newEnrollment]));
+    addEnrollment(newEnrollment);
     
     setIsSubmitted(true);
     setTimeout(() => {

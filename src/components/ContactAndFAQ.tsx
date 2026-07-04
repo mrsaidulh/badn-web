@@ -2,6 +2,7 @@ import { useState, FormEvent } from 'react';
 import { FAQS } from '../data';
 import { motion, AnimatePresence } from 'motion/react';
 import { Send, CheckCircle2, ChevronDown, HelpCircle, PhoneCall } from 'lucide-react';
+import { addInquiry } from '../lib/api';
 
 export default function ContactAndFAQ() {
   const [formData, setFormData] = useState({
@@ -16,8 +17,6 @@ export default function ContactAndFAQ() {
   const handleContactSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    // Save query to localStorage
-    const existingInquiries = JSON.parse(localStorage.getItem('badn_contact_messages') || '[]');
     const newInquiry = {
       id: 'inq_' + Date.now(),
       firstName: formData.firstName,
@@ -27,7 +26,7 @@ export default function ContactAndFAQ() {
       date: new Date().toLocaleDateString('bn-BD')
     };
 
-    localStorage.setItem('badn_contact_messages', JSON.stringify([...existingInquiries, newInquiry]));
+    addInquiry(newInquiry);
 
     setIsSubmitted(true);
     setFormData({ firstName: '', lastName: '', email: '', message: '' });
