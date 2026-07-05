@@ -31,10 +31,10 @@ export default function WhatsAppButton() {
             initial={{ opacity: 0, scale: 0.8, y: 10, x: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 10, x: 10 }}
-            className="mb-3 bg-white text-gray-800 p-3.5 rounded-2xl shadow-2xl border border-[#cbdccb]/40 text-xs font-bold max-w-[240px] relative flex items-start gap-2 text-left"
+            className="mb-3 bg-white text-gray-800 p-3.5 rounded-2xl shadow-2xl border border-[#cbdccb]/40 text-xs font-bold w-72 max-w-[280px] relative flex items-start gap-2.5 text-left"
           >
             <div className="flex-1">
-              <span className="text-[10px] text-emerald-600 block mb-0.5 font-extrabold uppercase tracking-wider">
+              <span className="text-[11px] text-emerald-600 block mb-0.5 font-bold">
                 সরাসরি যোগাযোগ
               </span>
               <p className="text-gray-700 leading-relaxed font-semibold">
@@ -65,11 +65,15 @@ export default function WhatsAppButton() {
         transition={{ delay: 1, type: 'spring', stiffness: 260, damping: 20 }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
-        className="relative flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-[0_8px_30px_rgb(37,211,102,0.4)] hover:shadow-[0_8px_40px_rgb(37,211,102,0.6)] transition-all duration-300 group cursor-pointer"
+        className="relative flex items-center justify-center w-14 h-14 text-white rounded-full shadow-[0_8px_30px_rgba(37,211,102,0.4)] hover:shadow-[0_8px_40px_rgba(37,211,102,0.6)] transition-all duration-300 group cursor-pointer"
+        style={{ backgroundColor: '#25D366' }}
         aria-label="Chat with BADN administration on WhatsApp"
       >
         {/* Double animated rings for realistic pulse */}
-        <span className="absolute inset-0 rounded-full bg-[#25D366] opacity-30 animate-ping group-hover:animate-none scale-105" />
+        <span 
+          className="absolute inset-0 rounded-full opacity-30 animate-ping group-hover:animate-none scale-105" 
+          style={{ backgroundColor: '#25D366' }}
+        />
         
         {/* Core Icon SVG */}
         <svg
