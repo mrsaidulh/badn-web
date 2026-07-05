@@ -1,18 +1,38 @@
-import { useState, FormEvent } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { FAQS } from '../data';
 import { motion, AnimatePresence } from 'motion/react';
 import { Send, CheckCircle2, ChevronDown, HelpCircle, PhoneCall } from 'lucide-react';
 import { addInquiry } from '../lib/api';
+import { useToast } from './Toast';
 
 export default function ContactAndFAQ() {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    message: ''
+  const { success: showSuccessToast } = useToast();
+  const [formData, setFormData] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('badn_contact_form');
+      if (saved) {
+        return JSON.parse(saved);
+      }
+    } catch (e) {
+      console.error('Failed to parse saved contact form data', e);
+    }
+    return {
+      firstName: '',
+      lastName: '',
+      email: '',
+      message: ''
+    };
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [openFaqId, setOpenFaqId] = useState<string | null>('faq1');
+
+  useEffect(() => {
+    try {
+      sessionStorage.setItem('badn_contact_form', JSON.stringify(formData));
+    } catch (e) {
+      console.error('Failed to write contact form data to sessionStorage', e);
+    }
+  }, [formData]);
 
   const handleContactSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -27,9 +47,18 @@ export default function ContactAndFAQ() {
     };
 
     addInquiry(newInquiry);
+    showSuccessToast('আপনার বার্তাটি সফলভাবে অ্যাডমিন প্যানেলে পাঠানো হয়েছে!', 'বার্তা পাঠানো হয়েছে');
 
     setIsSubmitted(true);
     setFormData({ firstName: '', lastName: '', email: '', message: '' });
+    
+    // Clear storage on successful submission
+    try {
+      sessionStorage.removeItem('badn_contact_form');
+    } catch (e) {
+      console.error('Failed to clear sessionStorage', e);
+    }
+
     setTimeout(() => {
       setIsSubmitted(false);
       // Dispatch custom event to notify dashboard

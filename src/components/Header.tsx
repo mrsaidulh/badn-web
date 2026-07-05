@@ -1,12 +1,14 @@
 import { useState, useEffect, FormEvent } from 'react';
 import { Menu, X, Award, ShieldAlert, LogIn, Heart } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { useToast } from './Toast';
 
 interface HeaderProps {
   onOpenDashboard: () => void;
 }
 
 export default function Header({ onOpenDashboard }: HeaderProps) {
+  const { success: showSuccessToast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [loginData, setLoginData] = useState({ email: '', password: '' });
@@ -29,6 +31,7 @@ export default function Header({ onOpenDashboard }: HeaderProps) {
   const handleLoginSubmit = (e: FormEvent) => {
     e.preventDefault();
     setIsLoggedIn(true);
+    showSuccessToast('অ্যাডমিন ড্যাশবোর্ডে সফলভাবে লগইন সম্পন্ন হয়েছে!', 'লগইন সফল');
     setTimeout(() => {
       setShowLoginModal(false);
       onOpenDashboard(); // Open instructor panel on successful login

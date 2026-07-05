@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { X, Calendar, MapPin, Users, CheckCircle2, Award } from 'lucide-react';
 import { Seminar } from '../types';
 import { addSeminarRegistration } from '../lib/api';
+import { useToast } from './Toast';
 
 interface SeminarModalProps {
   seminar: Seminar | null;
@@ -11,6 +12,7 @@ interface SeminarModalProps {
 }
 
 export default function SeminarModal({ seminar, isOpen, onClose }: SeminarModalProps) {
+  const { success: showSuccessToast } = useToast();
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
@@ -51,6 +53,7 @@ export default function SeminarModal({ seminar, isOpen, onClose }: SeminarModalP
     };
 
     addSeminarRegistration(newRegistration);
+    showSuccessToast(`"${seminar.title}" ফ্রি সেমিনারে রেজিস্ট্রেশন সফল হয়েছে!`, 'সেমিনার রেজিস্ট্রেশন সফল');
 
     setIsRegistered(true);
     setTimeout(() => {

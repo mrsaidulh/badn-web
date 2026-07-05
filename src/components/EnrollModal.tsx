@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { X, CheckCircle2, Calendar, BookOpen, Clock, Award } from 'lucide-react';
 import { Course } from '../types';
 import { addEnrollment } from '../lib/api';
+import { useToast } from './Toast';
 
 interface EnrollModalProps {
   course: Course | null;
@@ -11,6 +12,7 @@ interface EnrollModalProps {
 }
 
 export default function EnrollModal({ course, isOpen, onClose }: EnrollModalProps) {
+  const { success: showSuccessToast } = useToast();
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
@@ -56,6 +58,7 @@ export default function EnrollModal({ course, isOpen, onClose }: EnrollModalProp
     };
     
     addEnrollment(newEnrollment);
+    showSuccessToast(`"${course.title}" কোর্সে আপনার ভর্তির আবেদন সফলভাবে গ্রহণ করা হয়েছে!`, 'ভর্তি আবেদন সফল');
     
     setIsSubmitted(true);
     setTimeout(() => {
