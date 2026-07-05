@@ -43,6 +43,8 @@ export default function SeminarsSection() {
                   src={seminar.image}
                   alt={seminar.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
+                  loading="lazy"
+                  decoding="async"
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />

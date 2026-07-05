@@ -70,6 +70,8 @@ export default function Testimonials() {
                 src={TESTIMONIALS[currentIndex].image}
                 alt={TESTIMONIALS[currentIndex].name}
                 className="w-14 h-14 rounded-full object-cover border-2 border-brand shadow-md"
+                loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
               />
               <div className="text-left">

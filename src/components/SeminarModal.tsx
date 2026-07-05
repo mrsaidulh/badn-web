@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { X, Calendar, MapPin, Users, CheckCircle2, Award } from 'lucide-react';
 import { Seminar } from '../types';
@@ -19,6 +19,20 @@ export default function SeminarModal({ seminar, isOpen, onClose }: SeminarModalP
   });
   const [isRegistered, setIsRegistered] = useState(false);
   const [activeTab, setActiveTab] = useState<'details' | 'register'>('details');
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
 
   if (!seminar) return null;
 
@@ -65,14 +79,16 @@ export default function SeminarModal({ seminar, isOpen, onClose }: SeminarModalP
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-xl bg-white rounded-2xl shadow-2xl overflow-hidden z-10 border border-[#cbdccb]/40"
+            className="relative w-full max-w-xl bg-white rounded-2xl shadow-2xl overflow-hidden z-10 border border-[#cbdccb]/40 max-h-[calc(100vh-2rem)] flex flex-col"
           >
             {/* Image / Header */}
-            <div className="relative h-48 sm:h-56">
+            <div className="relative h-48 sm:h-56 shrink-0">
               <img
                 src={seminar.image}
                 alt={seminar.title}
                 className="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-6">
@@ -93,7 +109,7 @@ export default function SeminarModal({ seminar, isOpen, onClose }: SeminarModalP
             </div>
 
             {/* Navigation Tabs */}
-            <div className="flex border-b border-gray-100 bg-gray-50/50">
+            <div className="flex border-b border-gray-100 bg-gray-50/50 shrink-0">
               <button
                 onClick={() => setActiveTab('details')}
                 className={`flex-1 py-3 text-sm font-semibold text-center border-b-2 transition-all cursor-pointer ${
@@ -117,7 +133,7 @@ export default function SeminarModal({ seminar, isOpen, onClose }: SeminarModalP
             </div>
 
             {/* Content Area */}
-            <div className="p-6 max-h-[50vh] overflow-y-auto">
+            <div className="p-6 overflow-y-auto flex-1">
               {activeTab === 'details' ? (
                 <div className="space-y-4">
                   {/* Metadata cards */}

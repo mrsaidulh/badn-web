@@ -66,6 +66,8 @@ export default function PromoBanner() {
                 src={SEMINAR_VIDEO_PLACEHOLDER}
                 alt="BADN Online nutrition seminar student grid on Zoom"
                 className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500 opacity-90"
+                loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
               />
 

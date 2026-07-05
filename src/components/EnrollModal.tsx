@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { X, CheckCircle2, Calendar, BookOpen, Clock, Award } from 'lucide-react';
 import { Course } from '../types';
@@ -20,6 +20,20 @@ export default function EnrollModal({ course, isOpen, onClose }: EnrollModalProp
     note: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
 
   if (!course) return null;
 
@@ -70,10 +84,10 @@ export default function EnrollModal({ course, isOpen, onClose }: EnrollModalProp
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden z-10 border border-[#cbdccb]/40"
+            className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden z-10 border border-[#cbdccb]/40 max-h-[calc(100vh-2rem)] flex flex-col"
           >
             {/* Header */}
-            <div className="p-6 bg-brand text-white relative">
+            <div className="p-6 bg-brand text-white relative shrink-0">
               <button
                 onClick={onClose}
                 className="absolute top-4 right-4 text-white/80 hover:text-white hover:bg-white/10 p-1.5 rounded-full transition-colors"
@@ -90,7 +104,7 @@ export default function EnrollModal({ course, isOpen, onClose }: EnrollModalProp
             </div>
 
             {/* Content */}
-            <div className="p-6 max-h-[75vh] overflow-y-auto">
+            <div className="p-6 overflow-y-auto flex-1">
               {isSubmitted ? (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}

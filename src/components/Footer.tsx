@@ -10,14 +10,14 @@ export default function Footer() {
           
           {/* Column 1 - Brand description */}
           <div className="md:col-span-4 space-y-4 text-left">
-            <div className="flex items-center gap-2.5">
-              <div className="w-10 h-10 bg-white text-brand rounded-full flex items-center justify-center font-bold text-base shadow">
-                <Heart className="w-5 h-5 text-brand fill-brand" />
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="w-10 h-10 bg-white text-brand rounded-full flex items-center justify-center font-bold text-base shadow shrink-0">
+                <Heart className="w-5 h-5 text-brand fill-brand animate-pulse" />
               </div>
-              <div>
+              <div className="min-w-0">
                 <span className="text-lg font-bold block leading-none">BADN</span>
-                <span className="text-[8px] text-brand-light font-semibold uppercase tracking-wider block mt-1">
-                  Academy of Dietetics & Nutrition
+                <span className="text-[8px] text-brand-light font-semibold uppercase tracking-wider block mt-1 leading-snug truncate xs:whitespace-normal max-w-[150px] xs:max-w-[200px] md:max-w-none">
+                  Bangladesh Academy of Dietetics and Nutrition
                 </span>
               </div>
             </div>

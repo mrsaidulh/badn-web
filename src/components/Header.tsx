@@ -1,5 +1,6 @@
-import { useState, FormEvent } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { Menu, X, Award, ShieldAlert, LogIn, Heart } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 
 interface HeaderProps {
   onOpenDashboard: () => void;
@@ -10,6 +11,20 @@ export default function Header({ onOpenDashboard }: HeaderProps) {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShowLoginModal(false);
+      }
+    };
+    if (showLoginModal) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [showLoginModal]);
 
   const handleLoginSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -26,16 +41,16 @@ export default function Header({ onOpenDashboard }: HeaderProps) {
         <div className="flex justify-between items-center h-20">
           
           {/* Logo Brand exactly like BADN */}
-          <div className="flex items-center gap-2.5">
-            <div className="w-11 h-11 bg-brand rounded-full flex items-center justify-center text-white font-black text-lg shadow-md border border-amber-500/30">
-              <Heart className="w-6 h-6 text-amber-500 fill-amber-500 animate-pulse" />
+          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 bg-brand rounded-full flex items-center justify-center text-white font-black text-lg shadow-md border border-amber-500/30 shrink-0">
+              <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500 fill-amber-500 animate-pulse" />
             </div>
-            <div>
-              <span className="text-xl font-bold tracking-tight text-brand block leading-none">
+            <div className="min-w-0">
+              <span className="text-lg sm:text-xl font-bold tracking-tight text-brand block leading-none">
                 BADN
               </span>
-              <span className="text-[9px] text-gray-500 font-semibold uppercase tracking-wider block mt-1">
-                Academy of Dietetics & Nutrition
+              <span className="text-[8px] sm:text-[9px] text-gray-500 font-semibold uppercase tracking-wider block mt-0.5 sm:mt-1 leading-snug truncate xs:whitespace-normal max-w-[130px] xs:max-w-[180px] sm:max-w-none">
+                Bangladesh Academy of Dietetics and Nutrition
               </span>
             </div>
           </div>
@@ -187,64 +202,83 @@ export default function Header({ onOpenDashboard }: HeaderProps) {
       )}
 
       {/* Login Modal */}
-      {showLoginModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div onClick={() => setShowLoginModal(false)} className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
-          <div className="relative w-full max-w-sm bg-white rounded-2xl shadow-xl overflow-hidden z-10 border border-[#cbdccb]/30 p-6">
-            <button
+      <AnimatePresence>
+        {showLoginModal && (
+          <div className="fixed inset-0 z-50 overflow-y-auto">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               onClick={() => setShowLoginModal(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100"
-            >
-              <X className="w-5 h-5" />
-            </button>
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+            />
 
-            <div className="text-center mb-6">
-              <div className="w-12 h-12 bg-[#e2eee2] text-brand rounded-full flex items-center justify-center mx-auto mb-2">
-                <LogIn className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900">ইনস্ট্রাক্টর / স্টুডেন্ট লগইন</h3>
-              <p className="text-xs text-gray-500 mt-1">পোর্টালে প্রবেশ করতে আপনার তথ্য দিন</p>
-            </div>
-
-            <form onSubmit={handleLoginSubmit} className="space-y-4">
-              <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1">ইমেইল এড্রেস</label>
-                <input
-                  type="email"
-                  required
-                  value={loginData.email}
-                  onChange={e => setLoginData({ ...loginData, email: e.target.value })}
-                  placeholder="যেমন: admin@badn-edu.com"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:ring-1 focus:ring-brand focus:border-transparent outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1">পাসওয়ার্ড</label>
-                <input
-                  type="password"
-                  required
-                  value={loginData.password}
-                  onChange={e => setLoginData({ ...loginData, password: e.target.value })}
-                  placeholder="••••••••"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:ring-1 focus:ring-brand focus:border-transparent outline-none"
-                />
-              </div>
-
-              <div className="bg-amber-50 text-[11px] text-amber-800 p-2.5 rounded border border-amber-200/50 leading-relaxed">
-                💡 ডেমো ভিউ করার জন্য যেকোনো ইমেইল ও পাসওয়ার্ড টাইপ করে সরাসরি লগইন করতে পারেন। এটি আপনাকে রিয়েল-টাইম এডমিন ড্যাশবোর্ডে নিয়ে যাবে।
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-brand hover:bg-brand-hover text-white font-bold py-2 rounded-lg text-xs transition-colors cursor-pointer"
+            {/* Scrollable container that centers the modal */}
+            <div className="flex min-h-full items-center justify-center p-4">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 15 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+                className="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl z-10 border border-[#cbdccb]/40 p-6 sm:p-8"
               >
-                প্রবেশ করুন
-              </button>
-            </form>
+                <button
+                  onClick={() => setShowLoginModal(false)}
+                  className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-1.5 rounded-full hover:bg-gray-100 transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+
+                <div className="text-center mb-6">
+                  <div className="w-12 h-12 bg-[#e2eee2] text-brand rounded-full flex items-center justify-center mx-auto mb-2.5 shadow-sm">
+                    <LogIn className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900">ইনস্ট্রাক্টর / স্টুডেন্ট লগইন</h3>
+                  <p className="text-xs text-gray-500 mt-1">পোর্টালে প্রবেশ করতে আপনার তথ্য দিন</p>
+                </div>
+
+                <form onSubmit={handleLoginSubmit} className="space-y-4 text-left">
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 mb-1">ইমেইল এড্রেস</label>
+                    <input
+                      type="email"
+                      required
+                      value={loginData.email}
+                      onChange={e => setLoginData({ ...loginData, email: e.target.value })}
+                      placeholder="যেমন: admin@badn-edu.com"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:ring-1 focus:ring-brand focus:border-transparent outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 mb-1">পাসওয়ার্ড</label>
+                    <input
+                      type="password"
+                      required
+                      value={loginData.password}
+                      onChange={e => setLoginData({ ...loginData, password: e.target.value })}
+                      placeholder="••••••••"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:ring-1 focus:ring-brand focus:border-transparent outline-none"
+                    />
+                  </div>
+
+                  <div className="bg-amber-50 text-[11px] text-amber-800 p-3 rounded-xl border border-amber-200/50 leading-relaxed">
+                    💡 ডেমো ভিউ করার জন্য যেকোনো ইমেইল ও পাসওয়ার্ড টাইপ করে সরাসরি লগইন করতে পারেন। এটি আপনাকে রিয়েল-টাইম এডমিন ড্যাশবোর্ডে নিয়ে যাবে।
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full bg-brand hover:bg-brand-hover text-white font-bold py-2.5 rounded-xl text-xs transition-colors shadow-md hover:shadow-lg cursor-pointer"
+                  >
+                    প্রবেশ করুন
+                  </button>
+                </form>
+              </motion.div>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
     </header>
   );
 }

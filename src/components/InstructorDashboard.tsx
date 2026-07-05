@@ -42,6 +42,16 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
       loadData();
     }
 
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+
     // Listen to updates
     const handleUpdate = () => {
       loadData();
@@ -52,11 +62,12 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
     window.addEventListener('contact_message_added', handleUpdate);
 
     return () => {
+      window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('enrollment_added', handleUpdate);
       window.removeEventListener('seminar_registration_added', handleUpdate);
       window.removeEventListener('contact_message_added', handleUpdate);
     };
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   const handleStatusChange = async (id: string, type: 'enrollment' | 'seminar', newStatus: string) => {
     if (type === 'enrollment') {
@@ -101,7 +112,7 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden z-10 border border-[#cbdccb]/40 h-[85vh] flex flex-col"
+            className="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden z-10 border border-[#cbdccb]/40 h-[90vh] max-h-[calc(100vh-2rem)] flex flex-col"
           >
             {/* Header */}
             <div className="p-6 bg-brand text-white flex justify-between items-center shrink-0">

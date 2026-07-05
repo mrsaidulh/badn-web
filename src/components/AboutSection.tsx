@@ -16,6 +16,8 @@ export default function AboutSection() {
                 src={WORKSHOP_MAIN_IMAGE}
                 alt="BADN Certificate Distribution Graduation Ceremony"
                 className="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
               />
 
