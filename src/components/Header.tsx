@@ -39,7 +39,8 @@ export default function Header({ onOpenDashboard }: HeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-[#cbdccb]/20 shadow-sm transition-all">
+    <>
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-[#cbdccb]/20 shadow-sm transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           
@@ -204,84 +205,86 @@ export default function Header({ onOpenDashboard }: HeaderProps) {
         </div>
       )}
 
-      {/* Login Modal */}
-      <AnimatePresence>
-        {showLoginModal && (
-          <div className="fixed inset-0 z-50 overflow-y-auto">
-            {/* Backdrop */}
+    </header>
+
+    {/* Login Modal */}
+    <AnimatePresence>
+      {showLoginModal && (
+        <div className="fixed inset-0 z-[100] overflow-y-auto">
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowLoginModal(false)}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]"
+          />
+
+          {/* Scrollable container that centers the modal */}
+          <div className="flex min-h-full items-center justify-center p-4 relative z-[101]">
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setShowLoginModal(false)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm"
-            />
-
-            {/* Scrollable container that centers the modal */}
-            <div className="flex min-h-full items-center justify-center p-4">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: 15 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 15 }}
-                transition={{ duration: 0.3, ease: 'easeOut' }}
-                className="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl z-10 border border-[#cbdccb]/40 p-6 sm:p-8"
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+              className="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl z-10 border border-[#cbdccb]/40 p-6 sm:p-8"
+            >
+              <button
+                onClick={() => setShowLoginModal(false)}
+                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-1.5 rounded-full hover:bg-gray-100 transition-colors"
               >
-                <button
-                  onClick={() => setShowLoginModal(false)}
-                  className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-1.5 rounded-full hover:bg-gray-100 transition-colors"
-                >
-                  <X className="w-5 h-5" />
-                </button>
+                <X className="w-5 h-5" />
+              </button>
 
-                <div className="text-center mb-6">
-                  <div className="w-12 h-12 bg-[#e2eee2] text-brand rounded-full flex items-center justify-center mx-auto mb-2.5 shadow-sm">
-                    <LogIn className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900">ইনস্ট্রাক্টর / স্টুডেন্ট লগইন</h3>
-                  <p className="text-xs text-gray-500 mt-1">পোর্টালে প্রবেশ করতে আপনার তথ্য দিন</p>
+              <div className="text-center mb-6">
+                <div className="w-12 h-12 bg-[#e2eee2] text-brand rounded-full flex items-center justify-center mx-auto mb-2.5 shadow-sm">
+                  <LogIn className="w-6 h-6" />
+                </div>
+                <h3 className="text-lg font-bold text-gray-900">ইনস্ট্রাক্টর / স্টুডেন্ট লগইন</h3>
+                <p className="text-xs text-gray-500 mt-1">পোর্টালে প্রবেশ করতে আপনার তথ্য দিন</p>
+              </div>
+
+              <form onSubmit={handleLoginSubmit} className="space-y-4 text-left">
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">ইমেইল এড্রেস</label>
+                  <input
+                    type="email"
+                    required
+                    value={loginData.email}
+                    onChange={e => setLoginData({ ...loginData, email: e.target.value })}
+                    placeholder="যেমন: admin@badn-edu.com"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:ring-1 focus:ring-brand focus:border-transparent outline-none"
+                  />
                 </div>
 
-                <form onSubmit={handleLoginSubmit} className="space-y-4 text-left">
-                  <div>
-                    <label className="block text-xs font-bold text-gray-700 mb-1">ইমেইল এড্রেস</label>
-                    <input
-                      type="email"
-                      required
-                      value={loginData.email}
-                      onChange={e => setLoginData({ ...loginData, email: e.target.value })}
-                      placeholder="যেমন: admin@badn-edu.com"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:ring-1 focus:ring-brand focus:border-transparent outline-none"
-                    />
-                  </div>
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">পাসওয়ার্ড</label>
+                  <input
+                    type="password"
+                    required
+                    value={loginData.password}
+                    onChange={e => setLoginData({ ...loginData, password: e.target.value })}
+                    placeholder="••••••••"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:ring-1 focus:ring-brand focus:border-transparent outline-none"
+                  />
+                </div>
 
-                  <div>
-                    <label className="block text-xs font-bold text-gray-700 mb-1">পাসওয়ার্ড</label>
-                    <input
-                      type="password"
-                      required
-                      value={loginData.password}
-                      onChange={e => setLoginData({ ...loginData, password: e.target.value })}
-                      placeholder="••••••••"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:ring-1 focus:ring-brand focus:border-transparent outline-none"
-                    />
-                  </div>
+                <div className="bg-amber-50 text-[11px] text-amber-800 p-3 rounded-xl border border-amber-200/50 leading-relaxed">
+                  💡 ডেমো ভিউ করার জন্য যেকোনো ইমেইল ও পাসওয়ার্ড টাইপ করে সরাসরি লগইন করতে পারেন। এটি আপনাকে রিয়েল-টাইম এডমিন ড্যাশবোর্ডে নিয়ে যাবে।
+                </div>
 
-                  <div className="bg-amber-50 text-[11px] text-amber-800 p-3 rounded-xl border border-amber-200/50 leading-relaxed">
-                    💡 ডেমো ভিউ করার জন্য যেকোনো ইমেইল ও পাসওয়ার্ড টাইপ করে সরাসরি লগইন করতে পারেন। এটি আপনাকে রিয়েল-টাইম এডমিন ড্যাশবোর্ডে নিয়ে যাবে।
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full bg-brand hover:bg-brand-hover text-white font-bold py-2.5 rounded-xl text-xs transition-colors shadow-md hover:shadow-lg cursor-pointer"
-                  >
-                    প্রবেশ করুন
-                  </button>
-                </form>
-              </motion.div>
-            </div>
+                <button
+                  type="submit"
+                  className="w-full bg-brand hover:bg-brand-hover text-white font-bold py-2.5 rounded-xl text-xs transition-colors shadow-md hover:shadow-lg cursor-pointer"
+                >
+                  প্রবেশ করুন
+                </button>
+              </form>
+            </motion.div>
           </div>
-        )}
-      </AnimatePresence>
-    </header>
-  );
+        </div>
+      )}
+    </AnimatePresence>
+  </>
+);
 }
