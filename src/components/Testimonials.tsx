@@ -22,7 +22,7 @@ export default function Testimonials() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         
         {/* Decorative elements */}
-        <div className="absolute top-10 left-10 text-brand-light opacity-30 select-none">
+        <div className="hidden lg:block absolute top-6 left-6 text-[#cbdccb]/30 select-none pointer-events-none -z-10">
           <Quote className="w-40 h-40 transform rotate-180" />
         </div>
 

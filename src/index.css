@@ -54,3 +54,35 @@ body {
   background: #a3bda3;
 }
 
+/* Mobile Readability Enhancements (Screens under 640px) */
+@media (max-width: 639px) {
+  /* Smoothly scale up paragraphs for mobile viewports */
+  p,
+  p *,
+  main p,
+  section p {
+    font-size: 15.5px !important;
+    line-height: 1.625 !important;
+  }
+
+  /* Bring all tiny/small text descriptions up to the same readable standard as paragraphs */
+  .text-xs,
+  .text-sm,
+  .text-\[10px\],
+  .text-\[11px\],
+  .text-\[12px\],
+  .text-\[13px\] {
+    font-size: 15.5px !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Retain compact sizing for helper badges, buttons, and inline flex pills */
+  span.text-xs,
+  button.text-xs,
+  .inline-flex.text-xs,
+  .inline-flex.text-\[10px\] {
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+  }
+}
+
