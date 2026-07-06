@@ -57,7 +57,7 @@ export default function Header({ onOpenDashboard }: HeaderProps) {
           </div>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-4 lg:gap-8 shrink-0">
+          <nav className="hidden md:flex items-center gap-3 lg:gap-5 xl:gap-8 shrink-0">
             <a href="#home" className="text-sm font-semibold text-brand hover:text-amber-600 transition-colors whitespace-nowrap">
               হোম
             </a>
@@ -70,8 +70,7 @@ export default function Header({ onOpenDashboard }: HeaderProps) {
             <a href="#seminars" className="text-sm font-semibold text-gray-600 hover:text-brand transition-colors whitespace-nowrap">
               সেমিনার
             </a>
-            <a href="#verify-certificate" className="text-sm font-bold text-emerald-800 hover:text-amber-600 transition-colors flex items-center gap-1 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-100 shadow-sm hover:scale-105 transition-all whitespace-nowrap shrink-0">
-              <Award className="w-4 h-4 text-emerald-700 animate-pulse" />
+            <a href="#verify-certificate" className="text-sm font-semibold text-gray-600 hover:text-brand transition-colors whitespace-nowrap">
               সার্টিফিকেট যাচাই
             </a>
             <a href="#contact" className="text-sm font-semibold text-gray-600 hover:text-brand transition-colors whitespace-nowrap">
@@ -157,10 +156,9 @@ export default function Header({ onOpenDashboard }: HeaderProps) {
           <a
             href="#verify-certificate"
             onClick={() => setIsOpen(false)}
-            className="block px-3 py-2.5 rounded-xl text-sm font-bold text-emerald-850 bg-emerald-50 border border-emerald-100 hover:bg-emerald-100 transition-all flex items-center gap-1.5"
+            className="block px-3 py-2 rounded-xl text-sm font-semibold text-gray-600 hover:text-brand hover:bg-brand-light transition-all"
           >
-            <Award className="w-4 h-4 text-emerald-700" />
-            সার্টিফিকেট যাচাইকরণ
+            সার্টিফিকেট যাচাই
           </a>
           <a
             href="#contact"

@@ -24,7 +24,7 @@ export default function WhatsAppButton() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end font-sans">
+    <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end font-sans no-print">
       <AnimatePresence>
         {showTooltip && (
           <motion.div
