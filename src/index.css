@@ -86,3 +86,72 @@ body {
   }
 }
 
+/* Print Stylesheet for Certificate Layouts */
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide everything on the page except the target certificate */
+  body > * {
+    display: none !important;
+  }
+
+  /* Make sure the certificate container is shown and styled beautifully */
+  #printable-certificate,
+  #verified-certificate {
+    display: flex !important;
+    visibility: visible !important;
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 297mm !important; /* A4 Landscape width */
+    height: 210mm !important; /* A4 Landscape height */
+    margin: 0 !important;
+    padding: 24mm !important;
+    border: 12px double #1b4d24 !important;
+    box-shadow: none !important;
+    background-color: #ffffff !important;
+    background-image: radial-gradient(#6c856c 1px, transparent 1px) !important;
+    background-size: 16px 16px !important;
+    z-index: 9999999 !important;
+    page-break-after: avoid !important;
+    page-break-before: avoid !important;
+  }
+
+  #printable-certificate *,
+  #verified-certificate * {
+    visibility: visible !important;
+    color: #000000 !important;
+  }
+
+  /* Maintain brand colors in print */
+  .text-brand, #printable-certificate .text-brand, #verified-certificate .text-brand {
+    color: #1b4d24 !important;
+  }
+  .text-emerald-900 {
+    color: #064e3b !important;
+  }
+  .text-emerald-800 {
+    color: #065f46 !important;
+  }
+  .bg-emerald-50 {
+    background-color: #ecfdf5 !important;
+  }
+  .text-amber-600 {
+    color: #d97706 !important;
+  }
+  .bg-amber-500 {
+    background-color: #f59e0b !important;
+  }
+
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+}
+
+

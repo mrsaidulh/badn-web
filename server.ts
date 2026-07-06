@@ -166,6 +166,36 @@ async function initializeTables(dbPool: mysql.Pool) {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
   `);
 
+  // Certificates table
+  await dbPool.query(`
+    CREATE TABLE IF NOT EXISTS certificates (
+      id VARCHAR(50) PRIMARY KEY,
+      studentName VARCHAR(255) NOT NULL,
+      courseTitle VARCHAR(255) NOT NULL,
+      issueDate VARCHAR(100) NOT NULL,
+      status VARCHAR(50) DEFAULT 'Active',
+      createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `);
+
+  // Seed default certificates if empty
+  const [certCountRows]: any = await dbPool.query('SELECT COUNT(*) as count FROM certificates');
+  if (certCountRows[0].count === 0) {
+    await dbPool.query(
+      `INSERT INTO certificates (id, studentName, courseTitle, issueDate, status) VALUES 
+       ('BADN-2026-1001', 'Zinnatul Zahra Oishe', 'Certificate Course in Clinical Nutrition & Dietetics (CCND)', 'July 05, 2026', 'Active'),
+       ('BADN-2026-1002', 'Afrina Sharmin Tona', 'Certificate Course in Clinical Nutrition & Dietetics (CCND)', 'July 05, 2026', 'Active')`
+    );
+  } else {
+    // If the database has records but they contain Bengali names, update them so the default is fully English
+    await dbPool.query(
+      `UPDATE certificates SET studentName = 'Zinnatul Zahra Oishe', courseTitle = 'Certificate Course in Clinical Nutrition & Dietetics (CCND)', issueDate = 'July 05, 2026' WHERE id = 'BADN-2026-1001' AND studentName LIKE '%জি%'`
+    );
+    await dbPool.query(
+      `UPDATE certificates SET studentName = 'Afrina Sharmin Tona', courseTitle = 'Certificate Course in Clinical Nutrition & Dietetics (CCND)', issueDate = 'July 05, 2026' WHERE id = 'BADN-2026-1002' AND studentName LIKE '%আ%'`
+    );
+  }
+
   // Contact inquiries table
   await dbPool.query(`
     CREATE TABLE IF NOT EXISTS contact_messages (
@@ -539,6 +569,72 @@ app.delete('/api/inquiries/:id', async (req, res) => {
   }
   try {
     await db.query('DELETE FROM contact_messages WHERE id = ?', [id]);
+    res.json({ success: true });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// ==================== CERTIFICATE VERIFICATION ENDPOINTS ====================
+
+app.get('/api/certificates', async (req, res) => {
+  const db = await getDbPool();
+  if (!db) {
+    return res.json({ success: false, message: 'Database not connected. Local fallback active.' });
+  }
+  try {
+    const [rows] = await db.query('SELECT * FROM certificates ORDER BY createdAt DESC');
+    res.json({ success: true, source: 'database', data: rows });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.get('/api/certificates/:id', async (req, res) => {
+  const db = await getDbPool();
+  const { id } = req.params;
+  if (!db) {
+    return res.json({ success: false, message: 'Database not connected. Local fallback active.' });
+  }
+  try {
+    const [rows]: any = await db.query('SELECT * FROM certificates WHERE id = ?', [id]);
+    if (rows.length > 0) {
+      res.json({ success: true, source: 'database', data: rows[0] });
+    } else {
+      res.json({ success: false, message: 'Certificate not found' });
+    }
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.post('/api/certificates', async (req, res) => {
+  const db = await getDbPool();
+  const { id, studentName, courseTitle, issueDate, status } = req.body;
+  if (!db) {
+    return res.json({ success: false, message: 'Database not connected. Local fallback active.' });
+  }
+  try {
+    await db.query(
+      `INSERT INTO certificates (id, studentName, courseTitle, issueDate, status) 
+       VALUES (?, ?, ?, ?, ?)
+       ON DUPLICATE KEY UPDATE studentName = VALUES(studentName), courseTitle = VALUES(courseTitle), issueDate = VALUES(issueDate), status = VALUES(status)`,
+      [id, studentName, courseTitle, issueDate, status || 'Active']
+    );
+    res.json({ success: true });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.delete('/api/certificates/:id', async (req, res) => {
+  const db = await getDbPool();
+  const { id } = req.params;
+  if (!db) {
+    return res.json({ success: false, message: 'Database not connected. Local fallback active.' });
+  }
+  try {
+    await db.query('DELETE FROM certificates WHERE id = ?', [id]);
     res.json({ success: true });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });

@@ -53,44 +53,37 @@ export default function Header({ onOpenDashboard }: HeaderProps) {
               <span className="text-lg sm:text-xl font-bold tracking-tight text-brand block leading-none">
                 BADN
               </span>
-              <span className="text-[8px] sm:text-[9px] text-gray-500 font-semibold uppercase tracking-wider block mt-0.5 sm:mt-1 leading-snug truncate xs:whitespace-normal max-w-[130px] xs:max-w-[180px] sm:max-w-none">
-                Bangladesh Academy of Dietetics and Nutrition
-              </span>
             </div>
           </div>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-6 lg:gap-8">
-            <a href="#home" className="text-sm font-semibold text-brand hover:text-amber-600 transition-colors">
+          <nav className="hidden md:flex items-center gap-4 lg:gap-8 shrink-0">
+            <a href="#home" className="text-sm font-semibold text-brand hover:text-amber-600 transition-colors whitespace-nowrap">
               হোম
             </a>
-            <a href="#about" className="text-sm font-semibold text-gray-600 hover:text-brand transition-colors">
+            <a href="#about" className="text-sm font-semibold text-gray-600 hover:text-brand transition-colors whitespace-nowrap">
               আমাদের সম্পর্কে
             </a>
-            <a href="#courses" className="text-sm font-semibold text-gray-600 hover:text-brand transition-colors">
+            <a href="#courses" className="text-sm font-semibold text-gray-600 hover:text-brand transition-colors whitespace-nowrap">
               কোর্স
             </a>
-            <a href="#seminars" className="text-sm font-semibold text-gray-600 hover:text-brand transition-colors">
+            <a href="#seminars" className="text-sm font-semibold text-gray-600 hover:text-brand transition-colors whitespace-nowrap">
               সেমিনার
             </a>
-            <a href="#contact" className="text-sm font-semibold text-gray-600 hover:text-brand transition-colors">
-              যোগাযোগ করুন
+            <a href="#verify-certificate" className="text-sm font-bold text-emerald-800 hover:text-amber-600 transition-colors flex items-center gap-1 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-100 shadow-sm hover:scale-105 transition-all whitespace-nowrap shrink-0">
+              <Award className="w-4 h-4 text-emerald-700 animate-pulse" />
+              সার্টিফিকেট যাচাই
+            </a>
+            <a href="#contact" className="text-sm font-semibold text-gray-600 hover:text-brand transition-colors whitespace-nowrap">
+              যোগাযোগ
             </a>
           </nav>
 
           {/* Action Buttons */}
-          <div className="hidden md:flex items-center gap-3">
-            <button
-              onClick={onOpenDashboard}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-light hover:bg-[#d9ecd9] text-brand text-xs font-bold border border-[#cbdccb]/40 shadow-sm transition-all cursor-pointer"
-            >
-              <ShieldAlert className="w-4 h-4 text-brand" />
-              ইনস্ট্রাক্টর প্যানেল
-            </button>
-
+          <div className="hidden md:flex items-center gap-2.5 shrink-0">
             <a
               href="#courses"
-              className="px-4.5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all cursor-pointer"
+              className="px-4.5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all cursor-pointer whitespace-nowrap"
             >
               কোর্স করুন
             </a>
@@ -103,7 +96,7 @@ export default function Header({ onOpenDashboard }: HeaderProps) {
                   setShowLoginModal(true);
                 }
               }}
-              className="px-4.5 py-2.5 rounded-xl border border-brand text-brand hover:bg-brand-light text-xs font-bold transition-all cursor-pointer flex items-center gap-1"
+              className="px-4.5 py-2.5 rounded-xl border border-brand text-brand hover:bg-brand-light text-xs font-bold transition-all cursor-pointer flex items-center gap-1 whitespace-nowrap"
             >
               <LogIn className="w-3.5 h-3.5" />
               {isLoggedIn ? 'আমার ড্যাশবোর্ড' : 'লগইন করুন'}
@@ -162,11 +155,19 @@ export default function Header({ onOpenDashboard }: HeaderProps) {
             সেমিনার
           </a>
           <a
+            href="#verify-certificate"
+            onClick={() => setIsOpen(false)}
+            className="block px-3 py-2.5 rounded-xl text-sm font-bold text-emerald-850 bg-emerald-50 border border-emerald-100 hover:bg-emerald-100 transition-all flex items-center gap-1.5"
+          >
+            <Award className="w-4 h-4 text-emerald-700" />
+            সার্টিফিকেট যাচাইকরণ
+          </a>
+          <a
             href="#contact"
             onClick={() => setIsOpen(false)}
             className="block px-3 py-2 rounded-xl text-sm font-semibold text-gray-600 hover:text-brand hover:bg-brand-light transition-all"
           >
-            যোগাযোগ করুন
+            যোগাযোগ
           </a>
 
           <div className="pt-4 border-t border-gray-100 flex flex-col gap-2">

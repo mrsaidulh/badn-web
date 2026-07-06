@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { X, Users, BookOpen, MessageSquare, CheckCircle, Trash2, Calendar, Award } from 'lucide-react';
+import { X, Users, BookOpen, MessageSquare, CheckCircle, Trash2, Calendar, Award, Printer, RefreshCw } from 'lucide-react';
 import {
   getEnrollments,
   updateEnrollmentStatus,
@@ -10,7 +10,8 @@ import {
   deleteSeminarRegistration,
   getInquiries,
   deleteInquiry,
-  getDbStatus
+  getDbStatus,
+  addCertificate
 } from '../lib/api';
 
 interface InstructorDashboardProps {
@@ -23,7 +24,21 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
   const [seminars, setSeminars] = useState<any[]>([]);
   const [inquiries, setInquiries] = useState<any[]>([]);
   const [dbStatus, setDbStatus] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState<'enrollments' | 'seminars' | 'inquiries'>('enrollments');
+  const [activeTab, setActiveTab] = useState<'enrollments' | 'seminars' | 'inquiries' | 'certificates'>('enrollments');
+
+  // Certificate Generator States
+  const [certStudentName, setCertStudentName] = useState('');
+  const [certCourseTitle, setCertCourseTitle] = useState('Certificate Course in Clinical Nutrition & Dietetics (CCND)');
+  const [certIssueDate, setCertIssueDate] = useState('July 05, 2026');
+  const [certId, setCertId] = useState(() => `BADN-2026-${Math.floor(1000 + Math.random() * 9000)}`);
+  const [certSaveSuccess, setCertSaveSuccess] = useState(false);
+  const [certSaveError, setCertSaveError] = useState('');
+
+  const generateRandomCertId = () => {
+    setCertId(`BADN-2026-${Math.floor(1000 + Math.random() * 9000)}`);
+    setCertSaveSuccess(false);
+    setCertSaveError('');
+  };
 
   const loadData = async () => {
     const enrolls = await getEnrollments();
@@ -73,6 +88,45 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
     if (type === 'enrollment') {
       await updateEnrollmentStatus(id, newStatus);
       setEnrollments(prev => prev.map(item => item.id === id ? { ...item, status: newStatus } : item));
+      if (newStatus === 'Approved') {
+        const enr = enrollments.find(item => item.id === id);
+        if (enr) {
+          const randCertId = `BADN-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+          const today = new Date();
+          const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'long', year: 'numeric' };
+          const todayStr = today.toLocaleDateString('en-US', options); // e.g. "July 05, 2026"
+          
+          // Map Bengali names/titles to English
+          const mapCourseTitleToEnglish = (title: string) => {
+            if (title.includes('সিসিএনডি') || title.includes('ক্লিনিক্যাল') || title.includes('Clinical')) {
+              return 'Certificate Course in Clinical Nutrition & Dietetics (CCND)';
+            }
+            if (title.includes('ডিজিটাল হেলথ') || title.includes('Digital') || title.includes('নিউট্রিশন')) {
+              return 'Professional Certificate in Digital Health and Basic Nutrition';
+            }
+            return title;
+          };
+          
+          const mapStudentNameToEnglish = (name: string) => {
+            const dict: Record<string, string> = {
+              'জিন্নাতুল জাহরা ঐশী': 'Zinnatul Zahra Oishe',
+              'আফরিনা শারমিন তনা': 'Afrina Sharmin Tona',
+              'আফরিনা শারমিন': 'Afrina Sharmin',
+              'সায়দুল ইসলাম': 'Saidul Islam',
+              'সাজেদা কাশেম জ্যোতি': 'Sajeda Kashem Jyoti'
+            };
+            return dict[name.trim()] || name;
+          };
+
+          await addCertificate({
+            id: randCertId,
+            studentName: mapStudentNameToEnglish(enr.studentName),
+            courseTitle: mapCourseTitleToEnglish(enr.courseTitle),
+            issueDate: todayStr,
+            status: 'Active'
+          });
+        }
+      }
     } else {
       await updateSeminarRegistrationStatus(id, newStatus);
       setSeminars(prev => prev.map(item => item.id === id ? { ...item, status: newStatus } : item));
@@ -208,6 +262,16 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
               >
                 জিজ্ঞাসা ও মেসেজ ({inquiries.length})
               </button>
+              <button
+                onClick={() => setActiveTab('certificates')}
+                className={`px-6 py-3 text-xs sm:text-sm font-bold border-b-2 transition-all cursor-pointer ${
+                  activeTab === 'certificates'
+                    ? 'border-brand text-brand bg-white'
+                    : 'border-transparent text-gray-500 hover:text-gray-800'
+                }`}
+              >
+                🎓 সার্টিফিকেট জেনারেটর
+              </button>
             </div>
 
             {/* List Data */}
@@ -335,6 +399,318 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
                       </div>
                     ))
                   )}
+                </div>
+              )}
+
+              {activeTab === 'certificates' && (
+                <div className="space-y-6">
+                  {/* Styled style block for custom print routing */}
+                  <style dangerouslySetInnerHTML={{__html: `
+                    @media print {
+                      body * {
+                        visibility: hidden !important;
+                      }
+                      #printable-certificate, #printable-certificate * {
+                        visibility: visible !important;
+                      }
+                      #printable-certificate {
+                        position: fixed !important;
+                        left: 0 !important;
+                        top: 0 !important;
+                        width: 100% !important;
+                        height: 100% !important;
+                        max-width: 100% !important;
+                        max-height: 100% !important;
+                        border: none !important;
+                        box-shadow: none !important;
+                        background-color: #fdfcf7 !important;
+                        -webkit-print-color-adjust: exact !important;
+                        print-color-adjust: exact !important;
+                        transform: none !important;
+                        margin: 0 !important;
+                        padding: 3rem !important;
+                        z-index: 9999999 !important;
+                      }
+                      @page {
+                        size: landscape;
+                        margin: 0;
+                      }
+                    }
+                  `}} />
+
+                  <div className="bg-gradient-to-r from-emerald-500/10 to-[#cbdccb]/10 border border-emerald-500/20 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                    <div>
+                      <h4 className="text-sm font-bold text-emerald-900 flex items-center gap-1.5">
+                        <Award className="w-4 h-4 text-emerald-600" />
+                        প্রফেশনাল সার্টিফিকেট জেনারেটর ও প্রিন্টার
+                      </h4>
+                      <p className="text-xs text-gray-600 mt-0.5">
+                        এখানে শিক্ষার্থীর নাম লিখে বা ভর্তি আবেদন থেকে সরাসরি যেকোনো শিক্ষার্থীর জন্য প্রিন্ট-রেডি সার্টিফিকেট জেনারেট করতে পারবেন।
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+                    {/* Controls */}
+                    <div className="xl:col-span-4 bg-white p-5 rounded-2xl border border-gray-200/80 shadow-sm space-y-4">
+                      <h5 className="text-xs font-bold uppercase tracking-wider text-gray-500 border-b border-gray-100 pb-2">
+                        সার্টিফিকেট কাস্টমাইজ করুন
+                      </h5>
+
+                      {/* Dropdown list from approved student database */}
+                      {enrollments.filter((e: any) => e.status === 'Approved').length > 0 ? (
+                        <div className="space-y-1">
+                          <label className="block text-xs font-bold text-emerald-700">অনুমোদিত ছাত্র-ছাত্রী তালিকা:</label>
+                          <select
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              if (val) {
+                                const selected = enrollments.find((item: any) => item.id === val);
+                                if (selected) {
+                                  setCertStudentName(selected.studentName);
+                                  setCertCourseTitle(selected.courseTitle);
+                                }
+                              }
+                            }}
+                            className="w-full text-xs p-2.5 border border-gray-300 rounded-lg bg-emerald-50/50 text-emerald-900 focus:outline-none focus:ring-1 focus:ring-brand font-semibold cursor-pointer"
+                          >
+                            <option value="">-- শিক্ষার্থী নির্বাচন করুন --</option>
+                            {enrollments.filter((e: any) => e.status === 'Approved').map((enr: any) => (
+                              <option key={enr.id} value={enr.id}>
+                                {enr.studentName} ({enr.courseTitle})
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      ) : (
+                        <p className="text-[10px] text-gray-400 bg-gray-50 p-2 rounded border border-dashed border-gray-200">
+                          💡 কোনো অনুমোদিত শিক্ষার্থী থাকলে সরাসরি এখান থেকে তার তথ্য নির্বাচন করা যাবে।
+                        </p>
+                      )}
+
+                      {/* Manual Name */}
+                      <div className="space-y-1">
+                        <label className="block text-xs font-bold text-gray-700">শিক্ষার্থীর নাম (বাংলা/ইংরেজি):</label>
+                        <input
+                          type="text"
+                          value={certStudentName}
+                          onChange={(e) => setCertStudentName(e.target.value)}
+                          placeholder="উদা: জিন্নাতুল জাহরা ঐশী"
+                          className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand bg-gray-50 text-gray-800"
+                        />
+                      </div>
+
+                      {/* Course Selection */}
+                      <div className="space-y-1">
+                        <label className="block text-xs font-bold text-gray-700">কোর্সের নাম:</label>
+                        <input
+                          type="text"
+                          value={certCourseTitle}
+                          onChange={(e) => setCertCourseTitle(e.target.value)}
+                          placeholder="উদা: ডিজিটাল হেলথ ও বেসিক নিউট্রিশন"
+                          className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand bg-gray-50 text-gray-800"
+                        />
+                      </div>
+
+                      {/* Certificate ID */}
+                      <div className="space-y-1">
+                        <label className="block text-xs font-bold text-gray-700">সার্টিফিকেট আইডি:</label>
+                        <div className="flex gap-2">
+                          <input
+                            type="text"
+                            value={certId}
+                            onChange={(e) => setCertId(e.target.value)}
+                            placeholder="BADN-2026-XXXX"
+                            className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand bg-gray-50 text-gray-800 font-mono"
+                          />
+                          <button
+                            type="button"
+                            onClick={generateRandomCertId}
+                            className="p-2.5 bg-gray-100 hover:bg-gray-200 border border-gray-300 text-gray-700 rounded-lg cursor-pointer"
+                            title="নতুন আইডি জেনারেট করুন"
+                          >
+                            <RefreshCw className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Issue Date */}
+                      <div className="space-y-1">
+                        <label className="block text-xs font-bold text-gray-700">ইস্যুর তারিখ:</label>
+                        <input
+                          type="text"
+                          value={certIssueDate}
+                          onChange={(e) => setCertIssueDate(e.target.value)}
+                          placeholder="উদা: ০৫ জুলাই, ২০২৬"
+                          className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand bg-gray-50 text-gray-800"
+                        />
+                      </div>
+
+                      {/* Direct Print Button */}
+                      <button
+                        type="button"
+                        onClick={() => window.print()}
+                        className="w-full py-3 bg-brand text-white text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 hover:bg-brand-dark cursor-pointer shadow-md transition-all mt-6"
+                      >
+                        <Printer className="w-4 h-4" />
+                        সার্টিফিকেট প্রিন্ট করুন (Print Certificate)
+                      </button>
+
+                      {/* DB Save and Verify Button */}
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          setCertSaveSuccess(false);
+                          setCertSaveError('');
+                          if (!certStudentName.trim()) {
+                            setCertSaveError('দয়া করে শিক্ষার্থীর নাম লিখুন।');
+                            return;
+                          }
+                          try {
+                            const success = await addCertificate({
+                              id: certId,
+                              studentName: certStudentName,
+                              courseTitle: certCourseTitle,
+                              issueDate: certIssueDate,
+                              status: 'Active'
+                            });
+                            if (success) {
+                              setCertSaveSuccess(true);
+                            } else {
+                              setCertSaveError('সংরক্ষণ করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।');
+                            }
+                          } catch (err: any) {
+                            setCertSaveError(err.message || 'Error occurred');
+                          }
+                        }}
+                        className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 cursor-pointer shadow-md transition-all mt-2"
+                      >
+                        <CheckCircle className="w-4 h-4 text-emerald-100" />
+                        ডাটাবেজে সংরক্ষণ ও ভেরিফাইড করুন
+                      </button>
+
+                      {certSaveSuccess && (
+                        <div className="text-[11px] text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-lg p-2.5 font-semibold text-center mt-2 animate-pulse">
+                          ✓ সার্টিফিকেটটি সফলভাবে সংরক্ষিত ও ভেরিফাইড তালিকায় যুক্ত হয়েছে!
+                        </div>
+                      )}
+
+                      {certSaveError && (
+                        <div className="text-[11px] text-red-800 bg-red-50 border border-red-200 rounded-lg p-2.5 font-semibold text-center mt-2">
+                          ⚠ {certSaveError}
+                        </div>
+                      )}
+
+                      <div className="text-[10px] text-gray-400 bg-amber-50 p-2.5 rounded-lg border border-amber-100 leading-normal">
+                        ⚠️ <strong>প্রিন্ট টিপস:</strong> ব্রাউজার প্রিন্ট ডায়ালগ আসার পর "Background Graphics" অপশনটি চালু করুন এবং মার্জিন "None" রাখুন যাতে ব্যাকগ্রাউন্ড কালার ও ডিজাইন পারফেক্ট আসে।
+                      </div>
+                    </div>
+
+                    {/* Preview Area */}
+                    <div className="xl:col-span-8 space-y-4">
+                      <div className="flex justify-between items-center bg-emerald-50/50 p-3 rounded-xl border border-emerald-200/40">
+                        <span className="text-xs text-emerald-800 font-bold flex items-center gap-1.5">
+                          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+                          রিয়েল-টাইম প্রিন্ট প্রিভিউ (ল্যান্ডস্কেপ ফরম্যাট)
+                        </span>
+                        <button
+                          onClick={() => window.print()}
+                          className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-md transition-all"
+                        >
+                          <Printer className="w-4 h-4" />
+                          প্রিন্ট (Print)
+                        </button>
+                      </div>
+
+                      {/* Certificate Frame with overflow support */}
+                      <div className="overflow-x-auto w-full border border-gray-200 rounded-2xl bg-white shadow-inner p-4 flex justify-center">
+                        <div className="min-w-[700px] w-full max-w-[840px] p-2 bg-gray-50 rounded-xl">
+                          {/* Printable Certificate */}
+                          <div 
+                            id="printable-certificate" 
+                            className="w-full aspect-[1.414] bg-[#fdfcf7] border-8 border-double border-[#6c856c] p-6 sm:p-10 flex flex-col justify-between text-center shadow-lg relative overflow-hidden rounded-md text-gray-800"
+                          >
+                            {/* Elegant watermark background */}
+                            <div className="absolute inset-0 bg-[radial-gradient(#6c856c_1px,transparent_1px)] [background-size:16px_16px] opacity-5 pointer-events-none" />
+                            
+                            {/* Gold corner ornaments */}
+                            <div className="absolute top-2 left-2 w-8 h-8 border-t-2 border-l-2 border-amber-600/60 pointer-events-none" />
+                            <div className="absolute top-2 right-2 w-8 h-8 border-t-2 border-r-2 border-amber-600/60 pointer-events-none" />
+                            <div className="absolute bottom-2 left-2 w-8 h-8 border-b-2 border-l-2 border-amber-600/60 pointer-events-none" />
+                            <div className="absolute bottom-2 right-2 w-8 h-8 border-b-2 border-r-2 border-amber-600/60 pointer-events-none" />
+
+                            {/* Header logo / Badge */}
+                            <div className="space-y-1.5">
+                              <div className="flex justify-center">
+                                <div className="w-12 h-12 bg-[#e2eee2] border-2 border-[#6c856c] rounded-full flex items-center justify-center shadow-sm">
+                                  <Award className="w-7 h-7 text-[#416241]" />
+                                </div>
+                              </div>
+                              <h2 className="text-[12px] sm:text-[14px] font-bold text-gray-700 tracking-wider">BANGLADESH ASSOCIATION OF DIGITAL NUTRITIONISTS</h2>
+                              <p className="text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest font-mono">BADN Academy Certification Board</p>
+                            </div>
+
+                            {/* Certificate Title */}
+                            <div className="space-y-1">
+                              <h1 className="text-xl sm:text-2xl font-black text-[#416241] uppercase tracking-wide">Certificate of Completion</h1>
+                              <div className="w-24 h-0.5 bg-amber-600 mx-auto" />
+                            </div>
+
+                            {/* Recipient Text */}
+                            <div className="space-y-1 sm:space-y-2">
+                              <p className="text-[10px] sm:text-[11px] text-gray-500 italic">This is to certify that</p>
+                              <h3 className="text-lg sm:text-2xl font-black text-gray-900 border-b-2 border-dashed border-gray-200 pb-1.5 max-w-[80%] mx-auto font-serif">
+                                {certStudentName || "[Student Name Here]"}
+                              </h3>
+                              <p className="text-[10px] sm:text-[11px] text-gray-600 max-w-[80%] mx-auto leading-relaxed">
+                                has successfully completed the professional curriculum and passed the examination for the specialized training of <span className="font-bold text-[#416241]">"{certCourseTitle}"</span> to qualify for this certificate.
+                              </p>
+                            </div>
+
+                            {/* Certificate ID & Issue Date */}
+                            <div className="grid grid-cols-3 items-center text-[10px] font-mono text-gray-500 max-w-[85%] mx-auto py-1 sm:py-2 border-t border-b border-gray-100">
+                              <div className="text-left pl-2">ID No: <span className="font-bold text-gray-700">{certId}</span></div>
+                              
+                              <div className="flex flex-col items-center justify-center gap-0.5">
+                                <svg width="34" height="34" viewBox="0 0 29 29" fill="none" className="text-gray-800">
+                                  <path d="M1 1h7v7H1V1zm1 1h5v5H2V2zm1 1h3v3H3V3zm17-2h7v7h-7V1zm1 1h5v5h-5V2zm1 1h3v3h-3V3zM1 17h7v7H1v-7zm1 1h5v5H2v-5zm1 1h3v3H3v-3z" fill="currentColor" />
+                                  <path d="M10 2h1v1h-1V2zm3 0h2v1h-2V2zm4 0h1v1h-1V2zm-7 2h1v1h-1V4zm2 0h1v2h-1V4zm4 0h1v1h-1V4zm-6 3h1v1h-1V7zm3 0h1v1h-1V7zm2 0h1v1h-1V7zm-5 4h1v1h-1v-1zm4 0h2v1h-2v-1zm5 0h1v1h-1v-1zm-9 2h1v2h-1v-2zm3 0h1v1h-1v-1zm4 0h1v1h-1v-1zm2 0h1v1h-1v-1zm-9 3h2v1h-2v-1zm4 0h1v2h-1v-2zm3 0h1v1h-1v-1zm-7 3h1v1h-1v-1zm3 0h2v1h-2v-1zm4 0h1v1h-1v-1zm-7 2h1v1h-1v-1zm4 0h1v1h-1v-1zm3 0h2v1h-2v-1z" fill="currentColor" />
+                                </svg>
+                                <span className="text-[6px] font-extrabold text-emerald-800 uppercase tracking-tighter">VERIFIED</span>
+                              </div>
+
+                              <div className="text-right pr-2">Issue Date: <span className="font-bold text-gray-700">{certIssueDate}</span></div>
+                            </div>
+
+                            {/* Signatures and Seal */}
+                            <div className="grid grid-cols-3 items-end pt-4">
+                              {/* Left signature */}
+                              <div className="flex flex-col items-center">
+                                <div className="h-6 font-serif italic text-xs sm:text-sm text-gray-600">M. Rahman</div>
+                                <div className="w-24 h-px bg-gray-300 my-1" />
+                                <span className="text-[8px] sm:text-[9px] text-gray-500">Director, BADN</span>
+                              </div>
+
+                              {/* Center Seal */}
+                              <div className="flex justify-center relative">
+                                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-amber-600/50 flex items-center justify-center bg-amber-50 relative rotate-12 shadow-sm">
+                                  <div className="absolute inset-1 rounded-full border border-dashed border-amber-600/30" />
+                                  <span className="text-[7px] sm:text-[8px] font-extrabold text-amber-800 tracking-tighter leading-none text-center">BADN OFFICIAL SEAL</span>
+                                </div>
+                              </div>
+
+                              {/* Right signature */}
+                              <div className="flex flex-col items-center">
+                                <div className="h-6 font-serif italic text-xs sm:text-sm text-gray-600">Dr. S. Islam</div>
+                                <div className="w-24 h-px bg-gray-300 my-1" />
+                                <span className="text-[8px] sm:text-[9px] text-gray-500">Chief Instructor, BADN</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>

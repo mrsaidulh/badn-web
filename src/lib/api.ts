@@ -198,3 +198,94 @@ export async function deleteInquiry(id: string): Promise<boolean> {
     return false;
   }
 }
+
+// ==================== CERTIFICATES ====================
+
+const DEFAULT_LOCAL_CERTS = [
+  {
+    id: 'BADN-2026-1001',
+    studentName: 'Zinnatul Zahra Oishe',
+    courseTitle: 'Certificate Course in Clinical Nutrition & Dietetics (CCND)',
+    issueDate: 'July 05, 2026',
+    status: 'Active'
+  },
+  {
+    id: 'BADN-2026-1002',
+    studentName: 'Afrina Sharmin Tona',
+    courseTitle: 'Certificate Course in Clinical Nutrition & Dietetics (CCND)',
+    issueDate: 'July 05, 2026',
+    status: 'Active'
+  }
+];
+
+export async function getCertificates(): Promise<any[]> {
+  try {
+    const res = await fetch('/api/certificates');
+    const result = await res.json();
+    if (result.success && result.data) {
+      localStorage.setItem('badn_certificates', JSON.stringify(result.data));
+      return result.data;
+    }
+  } catch (err) {
+    console.warn('API error fetching certificates. Using localStorage fallback:', err);
+  }
+  const local = localStorage.getItem('badn_certificates');
+  if (!local || local.includes('জিন্নাতুল') || local.includes('আফরিনা')) {
+    localStorage.setItem('badn_certificates', JSON.stringify(DEFAULT_LOCAL_CERTS));
+    return DEFAULT_LOCAL_CERTS;
+  }
+  return JSON.parse(local);
+}
+
+export async function getCertificateById(id: string): Promise<any | null> {
+  try {
+    const res = await fetch(`/api/certificates/${id}`);
+    const result = await res.json();
+    if (result.success && result.data) {
+      return result.data;
+    }
+  } catch (err) {
+    console.warn('API error getting certificate. Using localStorage search:', err);
+  }
+  const certs = await getCertificates();
+  return certs.find((c: any) => c.id.trim().toUpperCase() === id.trim().toUpperCase()) || null;
+}
+
+export async function addCertificate(certificate: any): Promise<boolean> {
+  const local = await getCertificates();
+  const index = local.findIndex((c: any) => c.id === certificate.id);
+  if (index >= 0) {
+    local[index] = certificate;
+  } else {
+    local.push(certificate);
+  }
+  localStorage.setItem('badn_certificates', JSON.stringify(local));
+
+  try {
+    const res = await fetch('/api/certificates', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(certificate)
+    });
+    const result = await res.json();
+    return result.success;
+  } catch (err) {
+    console.warn('API error adding certificate:', err);
+    return true; // Return true as it succeeded locally
+  }
+}
+
+export async function deleteCertificate(id: string): Promise<boolean> {
+  const local = await getCertificates();
+  const filtered = local.filter((c: any) => c.id !== id);
+  localStorage.setItem('badn_certificates', JSON.stringify(filtered));
+
+  try {
+    const res = await fetch(`/api/certificates/${id}`, { method: 'DELETE' });
+    const result = await res.json();
+    return result.success;
+  } catch (err) {
+    console.warn('API error deleting certificate:', err);
+    return true; // Return true as it succeeded locally
+  }
+}

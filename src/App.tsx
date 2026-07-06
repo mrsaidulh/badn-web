@@ -10,6 +10,7 @@ import WhyChooseUs from './components/WhyChooseUs';
 import Testimonials from './components/Testimonials';
 import SeminarsSection from './components/SeminarsSection';
 import ContactAndFAQ from './components/ContactAndFAQ';
+import CertificateVerification from './components/CertificateVerification';
 import Footer from './components/Footer';
 import InstructorDashboard from './components/InstructorDashboard';
 import WhatsAppButton from './components/WhatsAppButton';
@@ -81,6 +82,7 @@ export default function App() {
           <WhyChooseUs />
           <Testimonials />
           <SeminarsSection />
+          <CertificateVerification />
           <ContactAndFAQ />
         </main>
 
