@@ -63,35 +63,35 @@ export default function CertificateVerification() {
               <label htmlFor="verify-input" className="block text-xs sm:text-sm font-extrabold text-gray-700">
                 সার্টিফিকেট আইডি নম্বরটি লিখুন:
               </label>
-              <div className="relative rounded-xl shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
-                  <Search className="w-5 h-5" />
+              <div className="flex flex-col sm:flex-row gap-3">
+                <div className="relative flex-1 rounded-xl shadow-sm">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                    <Search className="w-5 h-5" />
+                  </div>
+                  <input
+                    id="verify-input"
+                    type="text"
+                    value={certId}
+                    onChange={(e) => setCertId(e.target.value)}
+                    placeholder="যেমন: BADN-2026-1001"
+                    className="block w-full pl-11 pr-4 py-3.5 sm:py-4 text-sm sm:text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent font-mono uppercase tracking-wider text-gray-800 bg-gray-50/50"
+                    required
+                  />
                 </div>
-                <input
-                  id="verify-input"
-                  type="text"
-                  value={certId}
-                  onChange={(e) => setCertId(e.target.value)}
-                  placeholder="যেমন: BADN-2026-1001"
-                  className="block w-full pl-11 pr-36 py-3.5 sm:py-4 text-sm sm:text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent font-mono uppercase tracking-wider text-gray-800 bg-gray-50/50"
-                  required
-                />
-                <div className="absolute right-1.5 top-1.5 bottom-1.5 flex items-stretch">
-                  <button
-                    type="submit"
-                    disabled={loading || !certId.trim()}
-                    className="px-4 sm:px-6 bg-brand hover:bg-brand-hover text-white rounded-lg text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 cursor-pointer transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {loading ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                    ) : (
-                      <>
-                        <ShieldCheck className="w-4 h-4 text-amber-400" />
-                        <span>যাচাই করুন</span>
-                      </>
-                    )}
-                  </button>
-                </div>
+                <button
+                  type="submit"
+                  disabled={loading || !certId.trim()}
+                  className="px-6 py-3.5 sm:py-4 bg-brand hover:bg-brand-hover text-white rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 cursor-pointer transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shrink-0"
+                >
+                  {loading ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <>
+                      <ShieldCheck className="w-4 h-4 text-amber-400" />
+                      <span>যাচাই করুন</span>
+                    </>
+                  )}
+                </button>
               </div>
             </div>
           </form>
