@@ -1,4 +1,5 @@
 import { Heart, MapPin, Mail, Clock, Phone } from 'lucide-react';
+import Logo from './Logo';
 
 export default function Footer() {
   return (
@@ -11,15 +12,7 @@ export default function Footer() {
           {/* Column 1 - Brand description */}
           <div className="md:col-span-4 space-y-4 text-left">
             <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-10 h-10 bg-white text-brand rounded-full flex items-center justify-center font-bold text-base shadow shrink-0">
-                <Heart className="w-5 h-5 text-brand fill-brand animate-pulse" />
-              </div>
-              <div className="min-w-0">
-                <span className="text-xl font-bold block leading-none">BADN</span>
-                <span className="text-xs sm:text-sm text-brand-light font-bold uppercase tracking-wider block mt-1.5 leading-tight max-w-[260px] md:max-w-none whitespace-normal">
-                  Bangladesh Academy of Dietetics and Nutrition
-                </span>
-              </div>
+              <Logo showText={true} theme="light" />
             </div>
 
             <p className="text-xs sm:text-sm text-brand-light/80 leading-relaxed">

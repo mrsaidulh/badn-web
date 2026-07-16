@@ -2,6 +2,7 @@ import { useState, useEffect, FormEvent } from 'react';
 import { Menu, X, Award, ShieldAlert, LogIn, Heart } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useToast } from './Toast';
+import Logo from './Logo';
 
 interface HeaderProps {
   onOpenDashboard: () => void;
@@ -45,16 +46,9 @@ export default function Header({ onOpenDashboard }: HeaderProps) {
         <div className="flex justify-between items-center h-20">
           
           {/* Logo Brand exactly like BADN */}
-          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 bg-brand rounded-full flex items-center justify-center text-white font-black text-lg shadow-md border border-amber-500/30 shrink-0">
-              <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500 fill-amber-500 animate-pulse" />
-            </div>
-            <div className="min-w-0">
-              <span className="text-lg sm:text-xl font-bold tracking-tight text-brand block leading-none">
-                BADN
-              </span>
-            </div>
-          </div>
+          <a href="#home" className="flex items-center min-w-0 hover:opacity-90 transition-opacity">
+            <Logo showText={true} theme="color" />
+          </a>
 
           {/* Desktop Navigation Links */}
           <nav className="hidden md:flex items-center gap-3 lg:gap-5 xl:gap-8 shrink-0">
