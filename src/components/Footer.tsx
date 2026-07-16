@@ -15,8 +15,8 @@ export default function Footer() {
                 <Heart className="w-5 h-5 text-brand fill-brand animate-pulse" />
               </div>
               <div className="min-w-0">
-                <span className="text-lg font-bold block leading-none">BADN</span>
-                <span className="text-[8px] text-brand-light font-semibold uppercase tracking-wider block mt-1 leading-snug truncate xs:whitespace-normal max-w-[150px] xs:max-w-[200px] md:max-w-none">
+                <span className="text-xl font-bold block leading-none">BADN</span>
+                <span className="text-xs sm:text-sm text-brand-light font-bold uppercase tracking-wider block mt-1.5 leading-tight max-w-[260px] md:max-w-none whitespace-normal">
                   Bangladesh Academy of Dietetics and Nutrition
                 </span>
               </div>

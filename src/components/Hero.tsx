@@ -35,9 +35,9 @@ export default function Hero() {
             </motion.div>
 
             <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+              transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#111827] leading-tight tracking-tight"
             >
               <span className="text-brand block mb-1">পুষ্টিবিদ্যা এবং ডায়েটেটিক্স</span>
@@ -47,37 +47,38 @@ export default function Hero() {
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+              transition={{ duration: 0.8, delay: 0.25, ease: "easeOut" }}
               className="text-gray-600 text-sm sm:text-base leading-relaxed max-w-2xl"
             >
               ডায়েটিশিয়ান ও পুষ্টিবিদদের দেশসেরা প্ল্যাটফর্ম থেকে প্রশিক্ষণ নিয়ে আপনিও হয়ে উঠুন সেরাদের একজন। 
               আধুনিক ও বিজ্ঞানভিত্তিক কারিকুলামে অভিজ্ঞ দেশি-বিদেশি চিকিৎসাবিদ ও ডায়েটেশিয়ানদের সরাসরি গাইডলাইনে গড়ে তুলুন আপনার আত্মবিশ্বাসী পেশাগত দক্ষতা।
             </motion.p>
 
-            {/* CTA button */}
-            <motion.div 
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-              className="flex flex-wrap items-center gap-4"
-            >
+            {/* CTA buttons */}
+            <div className="flex flex-wrap items-center gap-4">
               <motion.a
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ scale: 1.04, y: -2, boxShadow: "0 10px 25px -5px rgba(27,77,36,0.3)" }}
+                whileTap={{ scale: 0.98 }}
                 href="#courses"
-                className="inline-flex items-center justify-center bg-brand hover:bg-brand-hover text-white text-sm font-bold px-7 py-3.5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform active:scale-95 cursor-pointer"
+                className="inline-flex items-center justify-center bg-brand hover:bg-brand-hover text-white text-sm font-bold px-7 py-3.5 rounded-xl shadow-lg transition-all duration-300 cursor-pointer"
               >
                 প্রশিক্ষণ নিন
               </motion.a>
               <motion.a
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ scale: 1.04, y: -2, boxShadow: "0 10px 20px -5px rgba(0,0,0,0.08)" }}
+                whileTap={{ scale: 0.98 }}
                 href="#about"
                 className="inline-flex items-center justify-center border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 text-sm font-semibold px-6 py-3.5 rounded-xl transition-all duration-300 cursor-pointer"
               >
                 বিস্তারিত জানুন
               </motion.a>
-            </motion.div>
+            </div>
 
             {/* Stats list from screenshot */}
             <motion.div 

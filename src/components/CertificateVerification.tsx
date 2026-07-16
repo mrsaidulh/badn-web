@@ -148,8 +148,8 @@ export default function CertificateVerification() {
                       type="button"
                       className="px-4 py-2.5 bg-brand hover:bg-brand-hover text-white font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
                     >
-                      <Printer className="w-4 h-4" />
-                      <span>প্রিন্ট করুন</span>
+                      <Printer className="w-4 h-4 text-amber-400" />
+                      <span>Print Certificate</span>
                     </button>
                   </div>
 
@@ -235,6 +235,18 @@ export default function CertificateVerification() {
                       </div>
 
                     </div>
+                  </div>
+
+                  {/* Centered Large Print Button */}
+                  <div className="flex justify-center pt-2 pb-4 no-print">
+                    <button
+                      onClick={handlePrint}
+                      type="button"
+                      className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 bg-brand hover:bg-brand-hover text-white font-extrabold text-sm sm:text-base rounded-2xl shadow-lg hover:shadow-xl hover:shadow-brand/20 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                    >
+                      <Printer className="w-5 h-5 text-amber-400 animate-pulse" />
+                      <span>Print Certificate (সার্টিফিকেট প্রিন্ট করুন)</span>
+                    </button>
                   </div>
                 </div>
               ) : (

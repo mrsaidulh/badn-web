@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -21,9 +21,32 @@ import { Award, ShieldAlert, X } from 'lucide-react';
 export default function App() {
   const [isDashboardOpen, setIsDashboardOpen] = useState(false);
   const [showNotification, setShowNotification] = useState(true);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        const progress = (window.scrollY / totalHeight) * 100;
+        setScrollProgress(progress);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial call
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <ToastProvider>
+      {/* Scroll Progress Bar */}
+      <div className="fixed top-0 left-0 right-0 h-1 bg-transparent z-[100] no-print pointer-events-none">
+        <div 
+          className="h-full bg-gradient-to-r from-brand to-emerald-500 transition-all duration-75 ease-out shadow-[0_1.5px_10px_rgba(27,77,36,0.35)]" 
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
       <div className="min-h-screen bg-[#fafdfa] flex flex-col text-gray-900 selection:bg-brand selection:text-white relative">
         <Helmet>
           {/* Document Title */}
