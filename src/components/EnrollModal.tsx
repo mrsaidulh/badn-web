@@ -125,17 +125,17 @@ export default function EnrollModal({ course, isOpen, onClose }: EnrollModalProp
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   {/* Course Quick Stats */}
-                  <div className="bg-brand-light p-3.5 rounded-xl flex items-center justify-between text-xs text-brand font-medium border border-[#cbdccb]/30">
-                    <div className="flex items-center gap-1">
-                      <Clock className="w-4 h-4 text-brand" />
+                  <div className="bg-brand-light p-3.5 rounded-xl flex items-center justify-between text-xs font-medium border border-[#cbdccb]/30">
+                    <div className="flex items-center gap-1 text-[#e17100] dark:text-[#ff9800] font-bold">
+                      <Clock className="w-4 h-4 text-[#e17100] dark:text-[#ff9800]" />
                       <span>{course.duration}</span>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <BookOpen className="w-4 h-4 text-brand" />
+                    <div className="flex items-center gap-1 text-[#e17100] dark:text-[#ff9800] font-bold">
+                      <BookOpen className="w-4 h-4 text-[#e17100] dark:text-[#ff9800]" />
                       <span>{course.liveClasses} টি লাইভ ক্লাস</span>
                     </div>
-                    <div className="flex items-center gap-1 font-bold text-base text-amber-600">
-                      <span>৳ {course.price.toLocaleString('bn-BD')}</span>
+                    <div className="flex items-center gap-1 font-bold text-base">
+                      <span className="text-[#e17100] dark:text-[#ff9800] rounded-lg shadow-sm transition-transform duration-300 hover:scale-105 inline-block">৳ {course.price.toLocaleString('bn-BD')}</span>
                     </div>
                   </div>
 

@@ -107,16 +107,16 @@ export default function CoursesSection() {
                 </div>
 
                 {/* Course core specifications matching screenshot exactly */}
-                <div className="bg-brand-light/50 p-3 rounded-xl border border-[#cbdccb]/20 space-y-1.5 text-xs text-gray-700">
+                <div className="bg-brand-light/50 p-3 rounded-xl border border-[#cbdccb]/20 space-y-1.5 text-xs text-gray-700 dark:text-zinc-300">
                   <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-brand shrink-0" />
-                    <span className="font-bold text-brand">কোর্স সময়কাল: {course.duration}</span>
+                    <Clock className="w-4 h-4 text-[#143a1b] dark:text-[#a8d764] shrink-0" />
+                    <span className="font-bold text-[#143a1b] dark:text-[#a8d764]">কোর্স সময়কাল: {course.duration}</span>
                   </div>
 
                   <div className="flex items-start gap-2">
-                    <BookOpen className="w-4 h-4 text-brand shrink-0 mt-0.5" />
+                    <BookOpen className="w-4 h-4 text-[#143a1b] dark:text-[#a8d764] shrink-0 mt-0.5" />
                     <div className="leading-normal">
-                      লাইভ ক্লাস <span className="font-bold text-brand">{course.liveClasses}টি</span> | রেকর্ড সেশন {course.recordedClasses}টি | {course.orientation}টি ওরিয়েন্টেশন | {course.exams}টি পরীক্ষা
+                      লাইভ ক্লাস <span className="font-bold text-[#143a1b] dark:text-[#a8d764]">{course.liveClasses}টি</span> | রেকর্ড সেশন {course.recordedClasses}টি | {course.orientation}টি ওরিয়েন্টেশন | {course.exams}টি পরীক্ষা
                     </div>
                   </div>
 

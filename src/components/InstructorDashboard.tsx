@@ -1,6 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { X, Users, BookOpen, MessageSquare, CheckCircle, Trash2, Calendar, Award, Printer, RefreshCw } from 'lucide-react';
+import { 
+  X, Users, BookOpen, MessageSquare, CheckCircle, Trash2, Calendar, Award, Printer, RefreshCw,
+  Lock, User, Eye, EyeOff, LogIn, ShieldAlert, LogOut 
+} from 'lucide-react';
 import {
   getEnrollments,
   updateEnrollmentStatus,
@@ -16,6 +19,13 @@ import {
 
 import { THEMES, applyTheme, getCurrentTheme, Theme } from '../lib/theme';
 
+// ==========================================
+// ADMIN LOGIN CREDENTIALS
+// Feel free to modify these default values!
+// ==========================================
+const ADMIN_USERNAME = 'admin';
+const ADMIN_PASSWORD = 'Password123';
+
 interface InstructorDashboardProps {
   isOpen: boolean;
   onClose: () => void;
@@ -28,6 +38,35 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
   const [dbStatus, setDbStatus] = useState<any>(null);
   const [activeTab, setActiveTab] = useState<'enrollments' | 'seminars' | 'inquiries' | 'certificates'>('enrollments');
   const [activeTheme, setActiveTheme] = useState<Theme>(getCurrentTheme);
+
+  // Admin Login States
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
+    return sessionStorage.getItem('badn_admin_logged_in') === 'true';
+  });
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [loginError, setLoginError] = useState('');
+
+  const handleLogin = (e: FormEvent) => {
+    e.preventDefault();
+    setLoginError('');
+
+    if (username.trim().toLowerCase() === ADMIN_USERNAME.toLowerCase() && password === ADMIN_PASSWORD) {
+      setIsLoggedIn(true);
+      sessionStorage.setItem('badn_admin_logged_in', 'true');
+      setUsername('');
+      setPassword('');
+    } else {
+      setLoginError('ভুল ইউজারনেম অথবা পাসওয়ার্ড দেওয়া হয়েছে। আবার চেষ্টা করুন।');
+    }
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    sessionStorage.removeItem('badn_admin_logged_in');
+    onClose();
+  };
 
   const handleThemeChange = (id: string) => {
     const updatedTheme = applyTheme(id);
@@ -207,15 +246,109 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
                   </div>
                 )}
               </div>
-              <button
-                onClick={onClose}
-                className="text-brand-contrast/80 hover:text-brand-contrast hover:bg-black/10 p-2 rounded-full transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
+              <div className="flex items-center gap-2">
+                {isLoggedIn && (
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-black/20 hover:bg-black/35 text-xs font-bold rounded-lg transition-colors border border-white/10 cursor-pointer"
+                    title="লগআউট করুন"
+                  >
+                    <LogOut className="w-4 h-4 text-red-400" />
+                    <span>লগআউট</span>
+                  </button>
+                )}
+                <button
+                  onClick={onClose}
+                  className="text-brand-contrast/80 hover:text-brand-contrast hover:bg-black/10 p-2 rounded-full transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
             </div>
 
-            {/* Quick Stats overview bar */}
+            {!isLoggedIn ? (
+              <div className="flex-1 bg-gray-50 dark:bg-[#0c140e] flex items-center justify-center p-4 sm:p-8">
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="w-full max-w-md bg-white dark:bg-[#121b14] p-6 sm:p-8 rounded-2xl border border-gray-200/80 dark:border-[#223326] shadow-xl space-y-6"
+                >
+                  <div className="text-center space-y-2">
+                    <div className="mx-auto w-12 h-12 bg-brand-light dark:bg-[#1d2d21] rounded-full flex items-center justify-center text-brand">
+                      <Lock className="w-6 h-6" />
+                    </div>
+                    <h4 className="text-lg font-bold text-gray-900 dark:text-white">এডমিন লগইন (Admin Login)</h4>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      প্যানেলটি অ্যাক্সেস করতে অনুগ্রহ করে আপনার ইউজারনেম ও পাসওয়ার্ড দিয়ে লগইন করুন।
+                    </p>
+                  </div>
+
+                  <form onSubmit={handleLogin} className="space-y-4">
+                    {loginError && (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="p-3 bg-red-50 dark:bg-red-950/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-900/40 rounded-xl text-xs font-semibold flex items-center gap-2"
+                      >
+                        <ShieldAlert className="w-4 h-4 shrink-0" />
+                        <span>{loginError}</span>
+                      </motion.div>
+                    )}
+
+                    <div className="space-y-1">
+                      <label className="block text-xs font-bold text-gray-700 dark:text-gray-300">ইউজারনেম (Username):</label>
+                      <div className="relative">
+                        <span className="absolute left-3.5 top-1/2 transform -translate-y-1/2 text-gray-400">
+                          <User className="w-4 h-4" />
+                        </span>
+                        <input
+                          type="text"
+                          value={username}
+                          onChange={(e) => setUsername(e.target.value)}
+                          placeholder="admin"
+                          required
+                          className="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-300 dark:border-[#223326] rounded-xl focus:outline-none focus:ring-2 focus:ring-brand bg-gray-50 dark:bg-[#0c140e] text-gray-800 dark:text-white font-medium"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="block text-xs font-bold text-gray-700 dark:text-gray-300">পাসওয়ার্ড (Password):</label>
+                      <div className="relative">
+                        <span className="absolute left-3.5 top-1/2 transform -translate-y-1/2 text-gray-400">
+                          <Lock className="w-4 h-4" />
+                        </span>
+                        <input
+                          type={showPassword ? "text" : "password"}
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          placeholder="••••••••"
+                          required
+                          className="w-full pl-10 pr-10 py-2.5 text-sm border border-gray-300 dark:border-[#223326] rounded-xl focus:outline-none focus:ring-2 focus:ring-brand bg-gray-50 dark:bg-[#0c140e] text-gray-800 dark:text-white font-medium"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 cursor-pointer"
+                        >
+                          {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        </button>
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full py-3 bg-brand text-brand-contrast hover:text-white text-xs sm:text-sm font-bold rounded-xl flex items-center justify-center gap-1.5 hover:bg-brand-hover cursor-pointer shadow-md transition-all mt-6"
+                    >
+                      <LogIn className="w-4 h-4" />
+                      লগইন করুন
+                    </button>
+                  </form>
+                </motion.div>
+              </div>
+            ) : (
+              <>
+                {/* Quick Stats overview bar */}
             <div className="bg-brand-light/50 px-6 py-4 border-b border-[#cbdccb]/20 grid grid-cols-3 gap-4 shrink-0">
               <div className="bg-white p-3 rounded-xl border border-[#cbdccb]/30 flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center">
@@ -765,8 +898,10 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
                 </div>
               )}
             </div>
-          </motion.div>
-        </div>
+          </>
+        )}
+      </motion.div>
+    </div>
       )}
     </AnimatePresence>
   );
