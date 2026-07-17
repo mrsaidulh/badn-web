@@ -63,7 +63,7 @@ export default function Hero() {
                 whileHover={{ scale: 1.04, y: -2, boxShadow: "0 10px 25px -5px rgba(27,77,36,0.3)" }}
                 whileTap={{ scale: 0.98 }}
                 href="#courses"
-                className="inline-flex items-center justify-center bg-brand hover:bg-brand-hover text-[#143a1b] text-sm font-bold px-7 py-3.5 rounded-xl shadow-lg transition-all duration-300 cursor-pointer"
+                className="inline-flex items-center justify-center bg-brand hover:bg-brand-hover text-brand-contrast hover:text-white text-sm font-bold px-7 py-3.5 rounded-xl shadow-lg transition-all duration-300 cursor-pointer"
               >
                 প্রশিক্ষণ নিন
               </motion.a>
@@ -159,7 +159,7 @@ export default function Hero() {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.8, ease: "easeOut" }}
-                className="absolute top-4 right-4 bg-brand text-[#143a1b] text-[10px] uppercase tracking-wider font-extrabold px-3 py-1 rounded-full shadow-md border border-amber-500/20"
+                className="absolute top-4 right-4 bg-brand text-brand-contrast text-[10px] uppercase tracking-wider font-extrabold px-3 py-1 rounded-full shadow-md border border-amber-500/20"
               >
                 Government Registered
               </motion.div>

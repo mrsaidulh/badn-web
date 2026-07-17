@@ -17,6 +17,7 @@ body {
   --color-brand-hover: #143a1b;
   --color-brand-light: #f0f7f0;
   --color-brand-text: #143a1b;
+  --color-brand-hover-text: #ffffff;
 }
 
 /* Fix text selection visibility issues */
@@ -49,6 +50,11 @@ body {
 .text-brand-contrast {
   color: var(--color-brand-text) !important;
 }
+
+.text-brand-dark {
+  color: var(--color-brand-hover) !important;
+}
+
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
@@ -177,6 +183,226 @@ body {
     size: A4 landscape;
     margin: 0;
   }
+}
+
+/* ==========================================================================
+   High-Contrast Dark Mode Overrides (for all active themes)
+   ========================================================================== */
+html.dark {
+  --color-brand-light: #162a1b !important;
+  --color-brand-hover: #ffffff !important;
+  --color-brand-text: #0d1117 !important; /* Make text on green brand buttons black/dark in dark mode */
+  --color-brand-hover-text: #0d1117 !important;
+}
+
+html.dark body {
+  background-color: #0b0f19 !important; /* Elegant deep-dark space background */
+  color: #f0f6fc !important;
+}
+
+/* Ensure all text and icons inside bg-brand elements is dark in dark mode */
+html.dark .bg-brand,
+html.dark .bg-brand-hover:hover,
+html.dark .hover\:bg-brand-hover:hover {
+  color: #0d1117 !important;
+}
+
+html.dark .bg-brand *,
+html.dark .bg-brand-hover:hover *,
+html.dark .hover\:bg-brand-hover:hover * {
+  color: #0d1117 !important;
+}
+
+/* Force hover:text-white to be black/dark when hovered in dark mode, on brand buttons */
+html.dark .hover\:text-white:hover {
+  color: #0d1117 !important;
+}
+
+/* Override text color inside the light green FeatureGrid items and other text with brand color in dark mode */
+html.dark .text-\[\#143a1b\] {
+  color: #c9d1d9 !important;
+}
+
+html.dark .text-\[\#143a1b\] * {
+  color: #c9d1d9 !important;
+}
+
+html.dark .bg-\[\#143a1b\]\/10 {
+  background-color: rgba(168, 215, 100, 0.2) !important;
+}
+
+html.dark .bg-\[\#143a1b\]\/10 * {
+  color: #a8d764 !important;
+}
+
+/* Force override custom text-[#111827] and text-[#e17100] in dark mode */
+html.dark .text-\[\#111827\] {
+  color: #ffffff !important;
+}
+
+html.dark .text-\[\#e17100\] {
+  color: #ff9800 !important;
+}
+
+/* Reset light background gradients for sections in dark mode */
+html.dark section,
+html.dark #home,
+html.dark #courses,
+html.dark #seminars,
+html.dark #verify-certificate,
+html.dark #contact {
+  background-image: none !important;
+  background-color: #0b0f19 !important;
+}
+
+/* Override Testimonial and custom cards background gradients to dark cards */
+html.dark .max-w-4xl .bg-gradient-to-br,
+html.dark .bg-gradient-to-br[class*="from-[#fafdfa]"],
+html.dark .bg-gradient-to-b[class*="from-[#fafdfa]"] {
+  background-image: none !important;
+  background-color: #161b22 !important;
+  border-color: rgba(240, 246, 252, 0.1) !important;
+}
+
+/* Selection and scrollbar */
+html.dark ::selection {
+  background-color: var(--color-brand) !important;
+  color: #0b0f19 !important;
+}
+html.dark ::-webkit-scrollbar-track {
+  background: #0b0f19 !important;
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: #21262d !important;
+}
+
+/* Layout headers and footers */
+html.dark header,
+html.dark .bg-white\/95 {
+  background-color: rgba(11, 15, 25, 0.95) !important;
+  border-color: rgba(240, 246, 252, 0.1) !important;
+}
+html.dark main {
+  background-color: #0b0f19 !important;
+}
+html.dark footer {
+  background-color: #070a10 !important;
+  border-color: rgba(240, 246, 252, 0.1) !important;
+}
+
+/* White/Gray/Special backgrounds */
+html.dark .bg-white {
+  background-color: #161b22 !important;
+  color: #f0f6fc !important;
+}
+html.dark .bg-gray-50 {
+  background-color: #0d1117 !important;
+}
+html.dark .bg-gray-100 {
+  background-color: #161b22 !important;
+}
+html.dark .bg-gray-200 {
+  background-color: #21262d !important;
+}
+html.dark .bg-\[\#fafdfa\],
+html.dark .bg-\[\#fafdfa\]\/40 {
+  background-color: #161b22 !important;
+}
+
+html.dark .bg-brand-light,
+html.dark .bg-brand-light\/30,
+html.dark .bg-brand-light\/40 {
+  background-color: rgba(22, 42, 22, 0.3) !important;
+}
+
+/* Feature Grid overrides */
+html.dark .bg-\[\#dbe6ca\] {
+  background-color: #152216 !important;
+  color: #f0f6fc !important;
+  border-color: rgba(240, 246, 252, 0.1) !important;
+}
+html.dark .hover\:bg-\[\#cfdbbd\]:hover {
+  background-color: #1b2e1d !important;
+}
+
+/* Borders */
+html.dark .border-gray-100,
+html.dark .border-gray-200,
+html.dark .border-\[\#cbdccb\]\/20,
+html.dark .border-\[\#cbdccb\]\/40 {
+  border-color: rgba(240, 246, 252, 0.12) !important;
+}
+
+/* Typography contrast */
+html.dark .text-gray-900,
+html.dark .text-slate-900,
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark h6 {
+  color: #ffffff !important;
+}
+html.dark .text-gray-800,
+html.dark .text-slate-800 {
+  color: #f0f6fc !important;
+}
+html.dark .text-gray-700,
+html.dark .text-slate-700 {
+  color: #e1e7ee !important;
+}
+html.dark .text-gray-600,
+html.dark .text-slate-600 {
+  color: #c9d1d9 !important;
+}
+html.dark .text-gray-500,
+html.dark .text-slate-500 {
+  color: #8b949e !important;
+}
+html.dark .text-brand-dark {
+  color: #a8d764 !important;
+}
+
+/* Forms and interactive states */
+html.dark input,
+html.dark select,
+html.dark textarea {
+  background-color: #0b0f19 !important;
+  color: #f0f6fc !important;
+  border-color: #30363d !important;
+}
+html.dark input:focus,
+html.dark select:focus,
+html.dark textarea:focus {
+  border-color: var(--color-brand) !important;
+  outline: none;
+}
+
+/* Emerald elements (badges/callouts) */
+html.dark .bg-emerald-50,
+html.dark .bg-emerald-50\/60 {
+  background-color: #122415 !important;
+  color: #f0f6fc !important;
+}
+html.dark .text-emerald-900,
+html.dark .text-emerald-800 {
+  color: #e6f7eb !important;
+}
+
+/* Shadows and global micro-transitions */
+html.dark .shadow-sm,
+html.dark .shadow-md,
+html.dark .shadow-lg,
+html.dark .shadow-xl,
+html.dark .shadow-2xl {
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.65) !important;
+}
+
+body, header, main, footer, section, div, button, a {
+  transition-property: background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
 }
 
 

@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEvent } from 'react';
-import { Menu, X, Award, ShieldAlert, LogIn, Heart } from 'lucide-react';
+import { Menu, X, Award, ShieldAlert, LogIn, Heart, Sun, Moon } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useToast } from './Toast';
 import Logo from './Logo';
@@ -14,6 +14,21 @@ export default function Header({ onOpenDashboard }: HeaderProps) {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    return localStorage.getItem('badn_dark_mode') === 'true';
+  });
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('badn_dark_mode', 'true');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('badn_dark_mode', 'false');
+    }
+    // Dispatch a custom event to notify other components if necessary
+    window.dispatchEvent(new CustomEvent('dark_mode_changed', { detail: isDarkMode }));
+  }, [isDarkMode]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -74,6 +89,14 @@ export default function Header({ onOpenDashboard }: HeaderProps) {
 
           {/* Action Buttons */}
           <div className="hidden md:flex items-center gap-2.5 shrink-0">
+            <button
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              className="p-2.5 rounded-xl border border-gray-200 dark:border-zinc-800 hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-600 dark:text-zinc-300 transition-all cursor-pointer flex items-center justify-center shrink-0"
+              title={isDarkMode ? 'লাইট মোড (Light Mode)' : 'ডার্ক মোড (Dark Mode)'}
+            >
+              {isDarkMode ? <Sun className="w-4 h-4 text-amber-500" /> : <Moon className="w-4 h-4" />}
+            </button>
+
             <a
               href="#courses"
               className="px-4.5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all cursor-pointer whitespace-nowrap"
@@ -98,6 +121,13 @@ export default function Header({ onOpenDashboard }: HeaderProps) {
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center gap-2">
+            <button
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              className="p-1.5 text-gray-600 dark:text-zinc-300 bg-gray-100 dark:bg-zinc-800 rounded-lg border border-gray-200 dark:border-zinc-700 flex items-center justify-center shrink-0"
+              title={isDarkMode ? 'লাইট মোড (Light Mode)' : 'ডার্ক মোড (Dark Mode)'}
+            >
+              {isDarkMode ? <Sun className="w-4 h-4 text-amber-500" /> : <Moon className="w-4 h-4" />}
+            </button>
             <button
               onClick={onOpenDashboard}
               className="p-1.5 text-brand bg-brand-light rounded-lg border border-[#cbdccb]/40"
@@ -268,7 +298,7 @@ export default function Header({ onOpenDashboard }: HeaderProps) {
 
                 <button
                   type="submit"
-                  className="w-full bg-brand hover:bg-brand-hover text-[#143a1b] font-bold py-2.5 rounded-xl text-xs transition-colors shadow-md hover:shadow-lg cursor-pointer"
+                  className="w-full bg-brand hover:bg-brand-hover text-brand-contrast hover:text-white font-bold py-2.5 rounded-xl text-xs transition-colors shadow-md hover:shadow-lg cursor-pointer"
                 >
                   প্রবেশ করুন
                 </button>

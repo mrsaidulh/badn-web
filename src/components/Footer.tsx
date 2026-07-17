@@ -3,7 +3,7 @@ import Logo from './Logo';
 
 export default function Footer() {
   return (
-    <footer className="bg-[#fbfdf0] text-[#143a1b] border-t border-[#143a1b]/10">
+    <footer className="bg-brand-light/40 text-brand-dark border-t border-brand/10">
       
       {/* Upper Footer section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -23,21 +23,21 @@ export default function Footer() {
             <div className="flex items-center gap-3 pt-2">
               <a
                 href="#"
-                className="w-8 h-8 rounded-full bg-[#143a1b]/10 hover:bg-[#143a1b]/20 text-[#143a1b] flex items-center justify-center text-xs font-semibold transition-colors"
+                className="w-8 h-8 rounded-full bg-brand/10 hover:bg-brand/20 text-brand-dark flex items-center justify-center text-xs font-semibold transition-colors"
                 title="Facebook"
               >
                 f
               </a>
               <a
                 href="#"
-                className="w-8 h-8 rounded-full bg-[#143a1b]/10 hover:bg-[#143a1b]/20 text-[#143a1b] flex items-center justify-center text-xs font-semibold transition-colors"
+                className="w-8 h-8 rounded-full bg-brand/10 hover:bg-brand/20 text-brand-dark flex items-center justify-center text-xs font-semibold transition-colors"
                 title="Twitter"
               >
                 t
               </a>
               <a
                 href="#"
-                className="w-8 h-8 rounded-full bg-[#143a1b]/10 hover:bg-[#143a1b]/20 text-[#143a1b] flex items-center justify-center text-xs font-semibold transition-colors"
+                className="w-8 h-8 rounded-full bg-brand/10 hover:bg-brand/20 text-brand-dark flex items-center justify-center text-xs font-semibold transition-colors"
                 title="Google"
               >
                 g
@@ -47,13 +47,13 @@ export default function Footer() {
 
           {/* Column 2 - Business Hours */}
           <div className="md:col-span-3 space-y-3 text-left">
-            <h3 className="text-sm font-bold uppercase tracking-wider text-[#143a1b] flex items-center gap-1.5">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-brand-dark flex items-center gap-1.5">
               <Clock className="w-4 h-4 text-[#e04f21]" />
               <span>Business Hours</span>
             </h3>
             <div className="text-xs space-y-2 text-gray-700 leading-relaxed font-normal">
               <p>
-                <strong className="font-bold text-[#143a1b] block">Opening Day:</strong>
+                <strong className="font-bold text-brand-dark block">Opening Day:</strong>
                 Saturday - Wednesday: 11am to 8pm
               </p>
               <p>
@@ -67,7 +67,7 @@ export default function Footer() {
 
           {/* Column 3 - Contact Info */}
           <div className="md:col-span-3 space-y-3 text-left">
-            <h3 className="text-sm font-bold uppercase tracking-wider text-[#143a1b] flex items-center gap-1.5">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-brand-dark flex items-center gap-1.5">
               <Mail className="w-4 h-4 text-[#e04f21]" />
               <span>Contact Us</span>
             </h3>
@@ -95,7 +95,7 @@ export default function Footer() {
 
           {/* Column 4 - Useful Links */}
           <div className="md:col-span-2 space-y-3 text-left">
-            <h3 className="text-sm font-bold uppercase tracking-wider text-[#143a1b]">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-brand-dark">
               Useful Links
             </h3>
             <ul className="text-xs space-y-2 text-gray-700 font-normal">
@@ -118,12 +118,12 @@ export default function Footer() {
       </div>
 
       {/* Bottom copyright footer bar */}
-      <div className="bg-[#dbe6ca] py-6 text-center text-xs text-[#143a1b] border-t border-[#143a1b]/10">
+      <div className="bg-brand-light py-6 text-center text-xs text-brand-dark border-t border-brand/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-2">
           <span className="font-medium">
             Copyright © {new Date().getFullYear()}. All rights reserved by BADN Academy.
           </span>
-          <span className="text-[10px] text-[#143a1b]/80">
+          <span className="text-[10px] opacity-80">
             Designed for professional clinical training and dietitian certifications.
           </span>
         </div>

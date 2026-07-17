@@ -129,7 +129,7 @@ export default function App() {
         <div className="fixed bottom-6 left-6 z-30 no-print">
           <button
             onClick={() => setIsDashboardOpen(true)}
-            className="flex items-center gap-2 px-4 py-3 bg-brand text-[#143a1b] font-extrabold text-xs rounded-full shadow-2xl hover:bg-brand-hover hover:scale-105 transition-all duration-300 border border-amber-500/30 cursor-pointer animate-bounce"
+            className="flex items-center gap-2 px-4 py-3 bg-brand text-brand-contrast hover:text-white font-extrabold text-xs rounded-full shadow-2xl hover:bg-brand-hover hover:scale-105 transition-all duration-300 border border-amber-500/30 cursor-pointer animate-bounce"
           >
             <ShieldAlert className="w-4 h-4 text-amber-400" />
             <span>এডমিন প্যানেল</span>

@@ -45,7 +45,7 @@ export default function CoursesSection() {
               onClick={() => setActiveCategory(cat)}
               className={`px-4.5 py-2.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
                 activeCategory === cat
-                  ? 'bg-brand text-[#143a1b] shadow-md'
+                  ? 'bg-brand text-brand-contrast shadow-md'
                   : 'bg-brand-light text-brand hover:bg-[#cbdccb]/40'
               }`}
             >
@@ -138,7 +138,7 @@ export default function CoursesSection() {
 
                   <button
                     onClick={() => handleEnrollClick(course)}
-                    className="bg-brand hover:bg-brand-hover text-[#143a1b] text-xs font-bold px-4 py-2.5 rounded-xl shadow transition-all duration-300 flex items-center gap-1 cursor-pointer"
+                    className="bg-brand hover:bg-brand-hover text-brand-contrast hover:text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow transition-all duration-300 flex items-center gap-1 cursor-pointer"
                   >
                     <span>ভর্তি হোন</span>
                     <ArrowRight className="w-3.5 h-3.5" />

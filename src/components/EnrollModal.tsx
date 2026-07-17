@@ -90,18 +90,18 @@ export default function EnrollModal({ course, isOpen, onClose }: EnrollModalProp
             className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden z-10 border border-[#cbdccb]/40 max-h-[calc(100vh-2rem)] flex flex-col"
           >
             {/* Header */}
-            <div className="p-6 bg-brand text-[#143a1b] relative shrink-0">
+            <div className="p-6 bg-brand text-brand-contrast relative shrink-0">
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 text-[#143a1b]/80 hover:text-[#143a1b] hover:bg-[#143a1b]/10 p-1.5 rounded-full transition-colors"
+                className="absolute top-4 right-4 text-brand-contrast/80 hover:text-brand-contrast hover:bg-black/10 p-1.5 rounded-full transition-colors"
                 aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
               </button>
-              <span className="inline-block text-xs bg-white/60 text-[#143a1b] font-semibold px-2.5 py-1 rounded-full mb-2">
+              <span className="inline-block text-xs bg-white/30 text-brand-contrast font-semibold px-2.5 py-1 rounded-full mb-2">
                 ভর্তি ফরম
               </span>
-              <h3 className="text-xl font-bold leading-tight select-none text-[#143a1b]">
+              <h3 className="text-xl font-bold leading-tight select-none text-brand-contrast">
                 {course.title}
               </h3>
             </div>

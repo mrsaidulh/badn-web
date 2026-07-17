@@ -187,13 +187,13 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
             className="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden z-10 border border-[#cbdccb]/40 h-[90vh] max-h-[calc(100vh-2rem)] flex flex-col"
           >
             {/* Header */}
-            <div className="p-6 bg-brand text-[#143a1b] flex justify-between items-center shrink-0">
+            <div className="p-6 bg-brand text-brand-contrast flex justify-between items-center shrink-0">
               <div>
                 <h3 className="text-xl font-bold flex items-center gap-2">
                   <Award className="w-5 h-5 text-amber-500" />
                   BADN ইন্ট্রাক্টর ও এডমিন প্যানেল (VPS & SQL Simulator)
                 </h3>
-                <p className="text-xs text-[#143a1b]/85 mt-1">
+                <p className="text-xs opacity-85 mt-1">
                   এই প্যানেল থেকে আপনি ভর্তিকৃত ছাত্র-ছাত্রী, সেমিনারে অংশগ্রহণকারী এবং জিজ্ঞাসাসমূহ রিয়েল-টাইমে দেখতে ও নিয়ন্ত্রণ করতে পারবেন।
                 </p>
                 {dbStatus && (
@@ -209,7 +209,7 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
               </div>
               <button
                 onClick={onClose}
-                className="text-white/80 hover:text-white hover:bg-white/10 p-2 rounded-full transition-colors"
+                className="text-brand-contrast/80 hover:text-brand-contrast hover:bg-black/10 p-2 rounded-full transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -601,7 +601,7 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
                       <button
                         type="button"
                         onClick={() => window.print()}
-                        className="w-full py-3 bg-brand text-[#143a1b] text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 hover:bg-brand-dark cursor-pointer shadow-md transition-all mt-6"
+                        className="w-full py-3 bg-brand text-brand-contrast hover:text-white text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 hover:bg-brand-hover cursor-pointer shadow-md transition-all mt-6"
                       >
                         <Printer className="w-4 h-4" />
                         সার্টিফিকেট প্রিন্ট করুন (Print Certificate)

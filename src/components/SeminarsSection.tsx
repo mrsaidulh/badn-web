@@ -48,7 +48,7 @@ export default function SeminarsSection() {
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                <span className="absolute bottom-4 left-4 bg-brand text-[#143a1b] font-bold text-[10px] uppercase px-2 py-0.5 rounded">
+                <span className="absolute bottom-4 left-4 bg-brand text-brand-contrast font-bold text-[10px] uppercase px-2 py-0.5 rounded">
                   {seminar.organization.split(' ')[0]}
                 </span>
               </div>

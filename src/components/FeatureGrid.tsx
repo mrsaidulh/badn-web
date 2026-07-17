@@ -31,7 +31,7 @@ export default function FeatureGrid() {
                 <h3 className="text-xl font-bold mb-3 tracking-tight text-[#e17100] select-none">
                   {feat.title}
                 </h3>
-                <p className="text-sm text-gray-800 leading-relaxed font-normal">
+                <p className="text-sm text-[#143a1b] leading-relaxed font-semibold">
                   {feat.description}
                 </p>
               </div>

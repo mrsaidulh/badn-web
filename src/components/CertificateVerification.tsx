@@ -1,6 +1,6 @@
 import { useState, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Search, Award, CheckCircle2, XCircle, ShieldCheck, Loader2, Printer, ExternalLink } from 'lucide-react';
+import { Search, Award, CheckCircle2, XCircle, ShieldCheck, Loader2, Printer, ExternalLink, Download } from 'lucide-react';
 import { getCertificateById } from '../lib/api';
 
 export default function CertificateVerification() {
@@ -81,7 +81,7 @@ export default function CertificateVerification() {
                 <button
                   type="submit"
                   disabled={loading || !certId.trim()}
-                  className="px-6 py-3.5 sm:py-4 bg-brand hover:bg-brand-hover text-[#143a1b] rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 cursor-pointer transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shrink-0"
+                  className="px-6 py-3.5 sm:py-4 bg-brand hover:bg-brand-hover text-brand-contrast hover:text-white rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 cursor-pointer transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shrink-0"
                 >
                   {loading ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -143,14 +143,24 @@ export default function CertificateVerification() {
                         </p>
                       </div>
                     </div>
-                    <button
-                      onClick={handlePrint}
-                      type="button"
-                      className="px-4 py-2.5 bg-brand hover:bg-brand-hover text-[#143a1b] font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
-                    >
-                      <Printer className="w-4 h-4 text-amber-400" />
-                      <span>Print Certificate</span>
-                    </button>
+                    <div className="flex flex-wrap items-center gap-2 shrink-0">
+                      <button
+                        onClick={handlePrint}
+                        type="button"
+                        className="px-4 py-2.5 bg-brand hover:bg-brand-hover text-brand-contrast hover:text-white font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
+                      >
+                        <Printer className="w-4 h-4 text-amber-400" />
+                        <span>Print Certificate</span>
+                      </button>
+                      <button
+                        onClick={handlePrint}
+                        type="button"
+                        className="px-4 py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
+                      >
+                        <Download className="w-4 h-4 text-amber-200" />
+                        <span>Download PDF</span>
+                      </button>
+                    </div>
                   </div>
 
                   {/* High-Fidelity Visual Certificate Copy */}
@@ -237,15 +247,23 @@ export default function CertificateVerification() {
                     </div>
                   </div>
 
-                  {/* Centered Large Print Button */}
-                  <div className="flex justify-center pt-2 pb-4 no-print">
+                  {/* Centered Large Print & Download Buttons */}
+                  <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-2 pb-4 no-print">
                     <button
                       onClick={handlePrint}
                       type="button"
-                      className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 bg-brand hover:bg-brand-hover text-[#143a1b] font-extrabold text-sm sm:text-base rounded-2xl shadow-lg hover:shadow-xl hover:shadow-brand/20 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 bg-brand hover:bg-brand-hover text-brand-contrast hover:text-white font-extrabold text-sm sm:text-base rounded-2xl shadow-lg hover:shadow-xl hover:shadow-brand/20 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
                     >
                       <Printer className="w-5 h-5 text-amber-400 animate-pulse" />
                       <span>Print Certificate (সার্টিফিকেট প্রিন্ট করুন)</span>
+                    </button>
+                    <button
+                      onClick={handlePrint}
+                      type="button"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-sm sm:text-base rounded-2xl shadow-lg hover:shadow-xl hover:shadow-amber-600/20 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                    >
+                      <Download className="w-5 h-5 text-amber-200 animate-pulse" />
+                      <span>Download PDF (পিডিএফ ডাউনলোড করুন)</span>
                     </button>
                   </div>
                 </div>

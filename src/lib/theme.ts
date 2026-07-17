@@ -8,6 +8,7 @@ export interface Theme {
   hover: string;
   light: string;
   text: string;
+  hoverText: string;
 }
 
 export const THEMES: Theme[] = [
@@ -17,7 +18,8 @@ export const THEMES: Theme[] = [
     primary: '#99C754',
     hover: '#143a1b',
     light: '#f0f7f0',
-    text: '#143a1b'
+    text: '#143a1b',
+    hoverText: '#ffffff'
   },
   {
     id: 'teal',
@@ -25,7 +27,8 @@ export const THEMES: Theme[] = [
     primary: '#0D9488',
     hover: '#115E59',
     light: '#F0FDFA',
-    text: '#ffffff'
+    text: '#ffffff',
+    hoverText: '#ffffff'
   },
   {
     id: 'blue',
@@ -33,7 +36,8 @@ export const THEMES: Theme[] = [
     primary: '#1D4ED8',
     hover: '#1E3A8A',
     light: '#EFF6FF',
-    text: '#ffffff'
+    text: '#ffffff',
+    hoverText: '#ffffff'
   },
   {
     id: 'terracotta',
@@ -41,7 +45,8 @@ export const THEMES: Theme[] = [
     primary: '#e17100',
     hover: '#78350F',
     light: '#FFF7ED',
-    text: '#ffffff'
+    text: '#ffffff',
+    hoverText: '#ffffff'
   }
 ];
 
@@ -54,6 +59,7 @@ export function applyTheme(themeId: string): Theme {
   root.style.setProperty('--color-brand-hover', theme.hover);
   root.style.setProperty('--color-brand-light', theme.light);
   root.style.setProperty('--color-brand-text', theme.text);
+  root.style.setProperty('--color-brand-hover-text', theme.hoverText);
   
   // Persist the choice in local storage
   localStorage.setItem('badn_theme_id', theme.id);
