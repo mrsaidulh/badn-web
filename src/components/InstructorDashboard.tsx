@@ -14,6 +14,8 @@ import {
   addCertificate
 } from '../lib/api';
 
+import { THEMES, applyTheme, getCurrentTheme, Theme } from '../lib/theme';
+
 interface InstructorDashboardProps {
   isOpen: boolean;
   onClose: () => void;
@@ -25,6 +27,22 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
   const [inquiries, setInquiries] = useState<any[]>([]);
   const [dbStatus, setDbStatus] = useState<any>(null);
   const [activeTab, setActiveTab] = useState<'enrollments' | 'seminars' | 'inquiries' | 'certificates'>('enrollments');
+  const [activeTheme, setActiveTheme] = useState<Theme>(getCurrentTheme);
+
+  const handleThemeChange = (id: string) => {
+    const updatedTheme = applyTheme(id);
+    setActiveTheme(updatedTheme);
+  };
+
+  useEffect(() => {
+    const handleThemeChangeExternal = (e: any) => {
+      if (e.detail) {
+        setActiveTheme(e.detail);
+      }
+    };
+    window.addEventListener('theme_changed', handleThemeChangeExternal);
+    return () => window.removeEventListener('theme_changed', handleThemeChangeExternal);
+  }, []);
 
   // Certificate Generator States
   const [certStudentName, setCertStudentName] = useState('');
@@ -169,13 +187,13 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
             className="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden z-10 border border-[#cbdccb]/40 h-[90vh] max-h-[calc(100vh-2rem)] flex flex-col"
           >
             {/* Header */}
-            <div className="p-6 bg-brand text-white flex justify-between items-center shrink-0">
+            <div className="p-6 bg-brand text-[#143a1b] flex justify-between items-center shrink-0">
               <div>
                 <h3 className="text-xl font-bold flex items-center gap-2">
                   <Award className="w-5 h-5 text-amber-500" />
                   BADN ইন্ট্রাক্টর ও এডমিন প্যানেল (VPS & SQL Simulator)
                 </h3>
-                <p className="text-xs text-brand-light/80 mt-1">
+                <p className="text-xs text-[#143a1b]/85 mt-1">
                   এই প্যানেল থেকে আপনি ভর্তিকৃত ছাত্র-ছাত্রী, সেমিনারে অংশগ্রহণকারী এবং জিজ্ঞাসাসমূহ রিয়েল-টাইমে দেখতে ও নিয়ন্ত্রণ করতে পারবেন।
                 </p>
                 {dbStatus && (
@@ -230,48 +248,81 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
               </div>
             </div>
 
-            {/* Navigation Tabs */}
-            <div className="flex border-b border-gray-100 bg-gray-50 shrink-0">
-              <button
-                onClick={() => setActiveTab('enrollments')}
-                className={`px-6 py-3 text-xs sm:text-sm font-bold border-b-2 transition-all cursor-pointer ${
-                  activeTab === 'enrollments'
-                    ? 'border-brand text-brand bg-white'
-                    : 'border-transparent text-gray-500 hover:text-gray-800'
-                }`}
-              >
-                কোর্স ভর্তি আবেদন ({enrollments.length})
-              </button>
-              <button
-                onClick={() => setActiveTab('seminars')}
-                className={`px-6 py-3 text-xs sm:text-sm font-bold border-b-2 transition-all cursor-pointer ${
-                  activeTab === 'seminars'
-                    ? 'border-brand text-brand bg-white'
-                    : 'border-transparent text-gray-500 hover:text-gray-800'
-                }`}
-              >
-                সেমিনার বুকিং ({seminars.length})
-              </button>
-              <button
-                onClick={() => setActiveTab('inquiries')}
-                className={`px-6 py-3 text-xs sm:text-sm font-bold border-b-2 transition-all cursor-pointer ${
-                  activeTab === 'inquiries'
-                    ? 'border-brand text-brand bg-white'
-                    : 'border-transparent text-gray-500 hover:text-gray-800'
-                }`}
-              >
-                জিজ্ঞাসা ও মেসেজ ({inquiries.length})
-              </button>
-              <button
-                onClick={() => setActiveTab('certificates')}
-                className={`px-6 py-3 text-xs sm:text-sm font-bold border-b-2 transition-all cursor-pointer ${
-                  activeTab === 'certificates'
-                    ? 'border-brand text-brand bg-white'
-                    : 'border-transparent text-gray-500 hover:text-gray-800'
-                }`}
-              >
-                🎓 সার্টিফিকেট জেনারেটর
-              </button>
+            {/* Navigation Tabs and Dynamic Theme Swatches */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-gray-200 bg-gray-100 shrink-0 px-4 py-2 gap-3">
+              <div className="flex overflow-x-auto scrollbar-none gap-1 py-1">
+                <button
+                  onClick={() => setActiveTab('enrollments')}
+                  className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer whitespace-nowrap ${
+                    activeTab === 'enrollments'
+                      ? 'bg-brand text-brand-contrast shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200/50'
+                  }`}
+                >
+                  কোর্স ভর্তি আবেদন ({enrollments.length})
+                </button>
+                <button
+                  onClick={() => setActiveTab('seminars')}
+                  className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer whitespace-nowrap ${
+                    activeTab === 'seminars'
+                      ? 'bg-brand text-brand-contrast shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200/50'
+                  }`}
+                >
+                  সেমিনার বুকিং ({seminars.length})
+                </button>
+                <button
+                  onClick={() => setActiveTab('inquiries')}
+                  className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer whitespace-nowrap ${
+                    activeTab === 'inquiries'
+                      ? 'bg-brand text-brand-contrast shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200/50'
+                  }`}
+                >
+                  জিজ্ঞাসা ও মেসেজ ({inquiries.length})
+                </button>
+                <button
+                  onClick={() => setActiveTab('certificates')}
+                  className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer whitespace-nowrap ${
+                    activeTab === 'certificates'
+                      ? 'bg-brand text-brand-contrast shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200/50'
+                  }`}
+                >
+                  🎓 সার্টিফিকেট জেনারেটর
+                </button>
+              </div>
+
+              {/* Theme Color Swatches Picker */}
+              <div className="flex items-center gap-2.5 px-3 py-1.5 bg-white rounded-2xl border border-gray-200 shadow-sm self-start md:self-center">
+                <span className="text-[11px] font-extrabold text-gray-700 select-none flex items-center gap-1 shrink-0">
+                  🎨 ওয়েবসাইট থিম কালার:
+                </span>
+                <div className="flex gap-2.5">
+                  {THEMES.map((theme) => (
+                    <button
+                      key={theme.id}
+                      onClick={() => handleThemeChange(theme.id)}
+                      title={theme.name}
+                      style={{ backgroundColor: theme.primary }}
+                      className={`w-6 h-6 rounded-full border-2 transition-all duration-300 relative group flex items-center justify-center cursor-pointer shadow-sm hover:scale-110 active:scale-95 ${
+                        activeTheme.id === theme.id
+                          ? 'border-gray-800 ring-2 ring-gray-300'
+                          : 'border-white hover:border-gray-300'
+                      }`}
+                    >
+                      {activeTheme.id === theme.id && (
+                        <span className="w-1.5 h-1.5 rounded-full bg-white shadow-inner" />
+                      )}
+                      
+                      {/* Tooltip */}
+                      <span className="absolute bottom-full mb-2.5 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-[10px] font-bold px-2 py-1 rounded-lg shadow-md pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
+                        {theme.name}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* List Data */}
@@ -550,7 +601,7 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
                       <button
                         type="button"
                         onClick={() => window.print()}
-                        className="w-full py-3 bg-brand text-white text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 hover:bg-brand-dark cursor-pointer shadow-md transition-all mt-6"
+                        className="w-full py-3 bg-brand text-[#143a1b] text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 hover:bg-brand-dark cursor-pointer shadow-md transition-all mt-6"
                       >
                         <Printer className="w-4 h-4" />
                         সার্টিফিকেট প্রিন্ট করুন (Print Certificate)

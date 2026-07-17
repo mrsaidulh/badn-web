@@ -27,7 +27,7 @@ export default function WhyChooseUs() {
             কেন আমাদের সিলেক্ট করবেন?
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 leading-tight">
-            প্রশিক্ষণ আর পুষ্টিবিদদের পরামর্শ <span className="text-brand">একই প্ল্যাটফর্মে!</span>
+            প্রশিক্ষণ আর পুষ্টিবিদদের পরামর্শ <span className="text-[#e17100]">একই প্ল্যাটফর্মে!</span>
           </h2>
           <p className="text-sm sm:text-base text-gray-600 font-medium">
             BADN কেন আপনার স্বাস্থ্যকর জীবনের যাত্রায় সেরা সঙ্গী হতে পারে!

@@ -49,7 +49,7 @@ export default function CertificateVerification() {
             <span>নিরাপদ ও ডিজিটাল ভেরিফিকেশন সিস্টেম</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900 leading-tight">
-            Certificate Verification
+            Certificate <span className="text-[#e17100]">Verification</span>
           </h2>
           <p className="text-sm sm:text-base text-gray-600 mt-3 font-medium">
             যেকোনো শিক্ষার্থী বা নিয়োগকারী কর্তৃপক্ষ সার্টিফিকেট আইডি ব্যবহার করে আমাদের ডেটাবেজ থেকে মূল সার্টিফিকেট যাচাই করে নিতে পারেন।
@@ -81,7 +81,7 @@ export default function CertificateVerification() {
                 <button
                   type="submit"
                   disabled={loading || !certId.trim()}
-                  className="px-6 py-3.5 sm:py-4 bg-brand hover:bg-brand-hover text-white rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 cursor-pointer transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shrink-0"
+                  className="px-6 py-3.5 sm:py-4 bg-brand hover:bg-brand-hover text-[#143a1b] rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 cursor-pointer transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shrink-0"
                 >
                   {loading ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -146,7 +146,7 @@ export default function CertificateVerification() {
                     <button
                       onClick={handlePrint}
                       type="button"
-                      className="px-4 py-2.5 bg-brand hover:bg-brand-hover text-white font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
+                      className="px-4 py-2.5 bg-brand hover:bg-brand-hover text-[#143a1b] font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
                     >
                       <Printer className="w-4 h-4 text-amber-400" />
                       <span>Print Certificate</span>
@@ -242,7 +242,7 @@ export default function CertificateVerification() {
                     <button
                       onClick={handlePrint}
                       type="button"
-                      className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 bg-brand hover:bg-brand-hover text-white font-extrabold text-sm sm:text-base rounded-2xl shadow-lg hover:shadow-xl hover:shadow-brand/20 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                      className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 bg-brand hover:bg-brand-hover text-[#143a1b] font-extrabold text-sm sm:text-base rounded-2xl shadow-lg hover:shadow-xl hover:shadow-brand/20 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
                     >
                       <Printer className="w-5 h-5 text-amber-400 animate-pulse" />
                       <span>Print Certificate (সার্টিফিকেট প্রিন্ট করুন)</span>

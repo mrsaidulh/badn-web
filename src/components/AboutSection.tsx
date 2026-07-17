@@ -22,13 +22,13 @@ export default function AboutSection() {
               />
 
               {/* Verified Badge overlay */}
-              <div className="absolute bottom-6 right-6 bg-brand text-white p-4 rounded-2xl shadow-xl flex items-center gap-3 border border-amber-500/20 max-w-[200px] backdrop-blur-sm">
-                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-amber-400 shrink-0 font-bold text-lg">
+              <div className="absolute bottom-6 right-6 bg-brand text-[#143a1b] p-4 rounded-2xl shadow-xl flex items-center gap-3 border border-amber-500/20 max-w-[200px] backdrop-blur-sm">
+                <div className="w-10 h-10 rounded-full bg-[#143a1b]/10 flex items-center justify-center text-amber-600 shrink-0 font-bold text-lg">
                   ★
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold">১০+ বছর</h4>
-                  <p className="text-[10px] text-brand-light/95 leading-tight">শিক্ষা ও গবেষণায় সেরা বিশ্বস্ত প্রতিষ্ঠান</p>
+                  <h4 className="text-xs font-bold text-[#143a1b]">১০+ বছর</h4>
+                  <p className="text-[10px] text-[#143a1b]/90 leading-tight">শিক্ষা ও গবেষণায় সেরা বিশ্বস্ত প্রতিষ্ঠান</p>
                 </div>
               </div>
             </div>
@@ -43,7 +43,7 @@ export default function AboutSection() {
 
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-900 leading-tight">
               BADN আপনার লক্ষ্য অর্জনে<br />
-              <span className="text-brand">সর্বোচ্চ সহায়তা করে!</span>
+              <span className="text-[#e17100]">সর্বোচ্চ সহায়তা করে!</span>
             </h2>
 
             <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
@@ -59,7 +59,7 @@ export default function AboutSection() {
                   key={item.id}
                   className="bg-[#fafdfa] hover:bg-brand-light/30 p-4 rounded-xl border border-gray-100 shadow-sm transition-all duration-300 flex items-start gap-4 hover:border-[#cbdccb]/40"
                 >
-                  <div className="w-10 h-10 rounded-full bg-brand text-white flex items-center justify-center font-bold text-sm shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-brand text-[#143a1b] flex items-center justify-center font-bold text-sm shrink-0">
                     {idx + 1}
                   </div>
                   <div>

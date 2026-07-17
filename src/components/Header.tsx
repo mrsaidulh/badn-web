@@ -268,7 +268,7 @@ export default function Header({ onOpenDashboard }: HeaderProps) {
 
                 <button
                   type="submit"
-                  className="w-full bg-brand hover:bg-brand-hover text-white font-bold py-2.5 rounded-xl text-xs transition-colors shadow-md hover:shadow-lg cursor-pointer"
+                  className="w-full bg-brand hover:bg-brand-hover text-[#143a1b] font-bold py-2.5 rounded-xl text-xs transition-colors shadow-md hover:shadow-lg cursor-pointer"
                 >
                   প্রবেশ করুন
                 </button>

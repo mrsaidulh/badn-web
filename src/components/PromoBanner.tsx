@@ -21,7 +21,7 @@ export default function PromoBanner() {
 
             <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 leading-tight">
               অনলাইন ক্লাস ও সেমিনার —<br />
-              <span className="text-brand">যেখানেই থাকুন, শিখুন প্রফেশনালি</span>
+              <span className="text-[#e17100]">যেখানেই থাকুন, শিখুন প্রফেশনালি</span>
             </h2>
 
             <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
@@ -50,7 +50,7 @@ export default function PromoBanner() {
 
             <button
               onClick={() => setIsModalOpen(true)}
-              className="w-full sm:w-auto inline-flex items-center justify-center bg-brand hover:bg-brand-hover text-white font-bold text-sm px-7 py-3.5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 gap-2 cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center bg-brand hover:bg-brand-hover text-[#143a1b] font-bold text-sm px-7 py-3.5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 gap-2 cursor-pointer"
             >
               <Video className="w-4 h-4 text-amber-400" />
               ফ্রি সেমিনারে অংশগ্রহণ করুন
@@ -87,8 +87,8 @@ export default function PromoBanner() {
                 </div>
 
                 {/* Middle Play Button */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-brand text-white flex items-center justify-center shadow-lg cursor-pointer group-hover:scale-110 transition-transform">
-                  <Play className="w-6 h-6 fill-white ml-1" />
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-brand text-[#143a1b] flex items-center justify-center shadow-lg cursor-pointer group-hover:scale-110 transition-transform">
+                  <Play className="w-6 h-6 fill-[#143a1b] ml-1" />
                 </div>
 
                 {/* Bottom Active Teacher Indicator */}

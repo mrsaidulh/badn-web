@@ -23,7 +23,7 @@ export default function SeminarsSection() {
             আমাদের সেমিনার ও ওয়ার্কশপসমূহ
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 leading-tight">
-            পুষ্টি বিষয়ক জ্ঞান অর্জনে আয়োজিত <span className="text-brand">কিছু সেমিনার</span>
+            পুষ্টি বিষয়ক জ্ঞান অর্জনে আয়োজিত <span className="text-[#e17100]">কিছু সেমিনার</span>
           </h2>
           <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
             BADN নিয়মিত বিভিন্ন পুষ্টি বিষয়ক সেমিনার আয়োজন করে থাকে। এই সেমিনারগুলোতে দেশি-বিদেশী বিশেষজ্ঞরা বিভিন্ন জটিল স্বাস্থ্য সমস্যা, প্রতিরোধ বা উত্তরণে নতুন নতুন বিজ্ঞানভিত্তিক তথ্য আলোচনা করে থাকেন।
@@ -48,7 +48,7 @@ export default function SeminarsSection() {
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                <span className="absolute bottom-4 left-4 bg-brand text-white font-bold text-[10px] uppercase px-2 py-0.5 rounded">
+                <span className="absolute bottom-4 left-4 bg-brand text-[#143a1b] font-bold text-[10px] uppercase px-2 py-0.5 rounded">
                   {seminar.organization.split(' ')[0]}
                 </span>
               </div>

@@ -40,7 +40,7 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#111827] leading-tight tracking-tight"
             >
-              <span className="text-brand block mb-1">পুষ্টিবিদ্যা এবং ডায়েটেটিক্স</span>
+              <span className="text-[#e17100] block mb-1">পুষ্টিবিদ্যা এবং ডায়েটেটিক্স</span>
               বিষয়ে প্রশিক্ষণ ও ক্যারিয়ার গঠনে দেশের সবচাইতে বড় প্ল্যাটফর্ম!
             </motion.h1>
 
@@ -63,7 +63,7 @@ export default function Hero() {
                 whileHover={{ scale: 1.04, y: -2, boxShadow: "0 10px 25px -5px rgba(27,77,36,0.3)" }}
                 whileTap={{ scale: 0.98 }}
                 href="#courses"
-                className="inline-flex items-center justify-center bg-brand hover:bg-brand-hover text-white text-sm font-bold px-7 py-3.5 rounded-xl shadow-lg transition-all duration-300 cursor-pointer"
+                className="inline-flex items-center justify-center bg-brand hover:bg-brand-hover text-[#143a1b] text-sm font-bold px-7 py-3.5 rounded-xl shadow-lg transition-all duration-300 cursor-pointer"
               >
                 প্রশিক্ষণ নিন
               </motion.a>
@@ -159,7 +159,7 @@ export default function Hero() {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.8, ease: "easeOut" }}
-                className="absolute top-4 right-4 bg-brand text-white text-[10px] uppercase tracking-wider font-extrabold px-3 py-1 rounded-full shadow-md border border-amber-500/20"
+                className="absolute top-4 right-4 bg-brand text-[#143a1b] text-[10px] uppercase tracking-wider font-extrabold px-3 py-1 rounded-full shadow-md border border-amber-500/20"
               >
                 Government Registered
               </motion.div>

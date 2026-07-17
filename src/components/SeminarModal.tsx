@@ -181,7 +181,7 @@ export default function SeminarModal({ seminar, isOpen, onClose }: SeminarModalP
                   {/* Call to action in Details Tab */}
                   <button
                     onClick={() => setActiveTab('register')}
-                    className="w-full bg-brand hover:bg-brand-hover text-white font-semibold py-2.5 px-4 rounded-xl shadow transition-all duration-300 flex items-center justify-center gap-2 text-sm cursor-pointer mt-4"
+                    className="w-full bg-brand hover:bg-brand-hover text-[#143a1b] font-semibold py-2.5 px-4 rounded-xl shadow transition-all duration-300 flex items-center justify-center gap-2 text-sm cursor-pointer mt-4"
                   >
                     <Users className="w-4 h-4" />
                     সেমিনারে যোগ দিতে রেজিস্ট্রেশন করুন
@@ -265,7 +265,7 @@ export default function SeminarModal({ seminar, isOpen, onClose }: SeminarModalP
 
                   <button
                     type="submit"
-                    className="w-full bg-brand hover:bg-brand-hover text-white font-bold py-2.5 px-4 rounded-xl shadow transition-all duration-300 flex items-center justify-center gap-2 text-sm cursor-pointer"
+                    className="w-full bg-brand hover:bg-brand-hover text-[#143a1b] font-bold py-2.5 px-4 rounded-xl shadow transition-all duration-300 flex items-center justify-center gap-2 text-sm cursor-pointer"
                   >
                     <Award className="w-4 h-4" />
                     ফ্রি সীট বুক করুন

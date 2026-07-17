@@ -30,7 +30,7 @@ export default function CoursesSection() {
             আমাদের অফারকৃত কোর্সসমূহ
           </span>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-900 leading-tight">
-            আপনার লক্ষ্য অর্জনে আমাদের <span className="text-brand">সেরা কোর্সগুলো</span>
+            আপনার লক্ষ্য অর্জনে আমাদের <span className="text-[#e17100]">সেরা কোর্সগুলো</span>
           </h2>
           <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
             দেশে-বিদেশে পেশাগত দায়িত্ব পালনে নানা অভিজ্ঞতার আলোকে তৈরি করা এই প্রশিক্ষণগুলো আপনার ক্লিনিক্যাল ক্যারিয়ার গঠনে নতুন পথ দেখাতে সক্ষম। বাস্তবমুখী ব্যবহারিক শিক্ষা আপনার আত্মবিশ্বাস বাড়িয়ে আপনাকে গড়ে তুলবে দেশের প্রথম সারির মেন্টর হিসেবে।
@@ -45,7 +45,7 @@ export default function CoursesSection() {
               onClick={() => setActiveCategory(cat)}
               className={`px-4.5 py-2.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
                 activeCategory === cat
-                  ? 'bg-brand text-white shadow-md'
+                  ? 'bg-brand text-[#143a1b] shadow-md'
                   : 'bg-brand-light text-brand hover:bg-[#cbdccb]/40'
               }`}
             >
@@ -138,7 +138,7 @@ export default function CoursesSection() {
 
                   <button
                     onClick={() => handleEnrollClick(course)}
-                    className="bg-brand hover:bg-brand-hover text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow transition-all duration-300 flex items-center gap-1 cursor-pointer"
+                    className="bg-brand hover:bg-brand-hover text-[#143a1b] text-xs font-bold px-4 py-2.5 rounded-xl shadow transition-all duration-300 flex items-center gap-1 cursor-pointer"
                   >
                     <span>ভর্তি হোন</span>
                     <ArrowRight className="w-3.5 h-3.5" />

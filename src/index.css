@@ -12,31 +12,42 @@ body {
   color: #1f2937;
 }
 
+:root {
+  --color-brand: #99C754;
+  --color-brand-hover: #143a1b;
+  --color-brand-light: #f0f7f0;
+  --color-brand-text: #143a1b;
+}
+
 /* Fix text selection visibility issues */
 ::selection {
-  background-color: #1b4d24;
-  color: #ffffff;
+  background-color: var(--color-brand);
+  color: var(--color-brand-text);
 }
 
 /* Custom styles to match the warm olive green brand color */
 .bg-brand-light {
-  background-color: #f0f7f0;
+  background-color: var(--color-brand-light);
 }
 
 .text-brand {
-  color: #1b4d24;
+  color: var(--color-brand);
 }
 
 .bg-brand {
-  background-color: #1b4d24;
+  background-color: var(--color-brand);
 }
 
 .bg-brand-hover {
-  background-color: #143a1b;
+  background-color: var(--color-brand-hover);
 }
 
 .border-brand {
-  border-color: #1b4d24;
+  border-color: var(--color-brand);
+}
+
+.text-brand-contrast {
+  color: var(--color-brand-text) !important;
 }
 
 /* Custom scrollbar */
@@ -119,7 +130,7 @@ body {
     height: 210mm !important;
     margin: auto !important; /* Centers it perfectly */
     padding: 20mm !important;
-    border: 12px double #1b4d24 !important;
+    border: 12px double var(--color-brand) !important;
     border-radius: 0 !important;
     box-shadow: none !important;
     background-color: #ffffff !important;
@@ -135,7 +146,7 @@ body {
 
   /* Maintain brand colors in print */
   #verified-certificate .text-brand {
-    color: #1b4d24 !important;
+    color: var(--color-brand) !important;
   }
   #verified-certificate .text-emerald-900 {
     color: #064e3b !important;

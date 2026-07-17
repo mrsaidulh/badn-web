@@ -83,7 +83,7 @@ export default function ContactAndFAQ() {
                 যোগাযোগ ফর্ম
               </span>
               <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900 mt-2.5 leading-snug">
-                যে কোনো পরামর্শের জন্য <span className="text-brand">যোগাযোগ করুন</span>
+                যে কোনো পরামর্শের জন্য <span className="text-[#e17100]">যোগাযোগ করুন</span>
               </h2>
               <p className="text-xs text-gray-500 mt-1">
                 নিচের ফর্মটি পূরণ করে আপনার জিজ্ঞাসা পাঠান। আমাদের প্রতিনিধি ২৪ ঘণ্টার মধ্যে যোগাযোগ করবেন।
@@ -186,7 +186,7 @@ export default function ContactAndFAQ() {
                 জিজ্ঞাসিত প্রশ্নাবলী (FAQ)
               </span>
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-gray-900 mt-2.5 leading-tight">
-                আপনার মনে আসা প্রশ্নের <span className="text-brand">উত্তর খুঁজে নিন!</span>
+                আপনার মনে আসা প্রশ্নের <span className="text-[#e17100]">উত্তর খুঁজে নিন!</span>
               </h2>
               <p className="text-xs sm:text-sm text-gray-500 mt-1 leading-relaxed">
                 আপনার সাধারণ প্রশ্নগুলোর উত্তরগুলো জেনে নিন, এর বাইরে জানার থাকলে আমাদের সাথে যোগাযোগ করতে দ্বিধা করবেন না।

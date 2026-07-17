@@ -17,11 +17,18 @@ import WhatsAppButton from './components/WhatsAppButton';
 import { ToastProvider } from './components/Toast';
 import { HERO_IMAGE } from './data';
 import { Award, ShieldAlert, X } from 'lucide-react';
+import { getCurrentTheme, applyTheme } from './lib/theme';
 
 export default function App() {
   const [isDashboardOpen, setIsDashboardOpen] = useState(false);
   const [showNotification, setShowNotification] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
+
+  // Load and apply the saved theme on component mount
+  useEffect(() => {
+    const currentTheme = getCurrentTheme();
+    applyTheme(currentTheme.id);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,7 +54,7 @@ export default function App() {
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
-      <div className="min-h-screen bg-[#fafdfa] flex flex-col text-gray-900 selection:bg-brand selection:text-white relative">
+      <div className="min-h-screen bg-[#fafdfa] flex flex-col text-gray-900 selection:bg-brand selection:text-[#143a1b] relative">
         <Helmet>
           {/* Document Title */}
           <title>Bangladesh Academy of Dietetics and Nutrition - BADN</title>
@@ -74,7 +81,7 @@ export default function App() {
 
           {/* Additional Useful Meta Tags */}
           <meta name="robots" content="index, follow" />
-          <meta name="theme-color" content="#1b4d24" />
+          <meta name="theme-color" content="#99C754" />
         </Helmet>
         
         {/* Dynamic top info alert bar */}
@@ -122,7 +129,7 @@ export default function App() {
         <div className="fixed bottom-6 left-6 z-30 no-print">
           <button
             onClick={() => setIsDashboardOpen(true)}
-            className="flex items-center gap-2 px-4 py-3 bg-brand text-white font-extrabold text-xs rounded-full shadow-2xl hover:bg-brand-hover hover:scale-105 transition-all duration-300 border border-amber-500/30 cursor-pointer animate-bounce"
+            className="flex items-center gap-2 px-4 py-3 bg-brand text-[#143a1b] font-extrabold text-xs rounded-full shadow-2xl hover:bg-brand-hover hover:scale-105 transition-all duration-300 border border-amber-500/30 cursor-pointer animate-bounce"
           >
             <ShieldAlert className="w-4 h-4 text-amber-400" />
             <span>এডমিন প্যানেল</span>
