@@ -15,7 +15,7 @@ export default function WhatsAppButton() {
     return () => clearTimeout(timer);
   }, []);
 
-  const whatsappNumber = '8801700000000'; // Admin WhatsApp Number
+  const whatsappNumber = '8801677250597'; // Admin WhatsApp Number
   const message = 'আসসালামু আলাইকুম, BADN একাডেমির কোর্সসমূহ এবং ভর্তি প্রক্রিয়া সম্পর্কে জানতে চাই।';
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 

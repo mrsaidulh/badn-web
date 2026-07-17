@@ -1,4 +1,4 @@
-import { Heart, MapPin, Mail, Clock, Phone } from 'lucide-react';
+import { Heart, MapPin, Mail, Clock, Phone, Facebook, Twitter, Globe } from 'lucide-react';
 import Logo from './Logo';
 
 export default function Footer() {
@@ -22,25 +22,27 @@ export default function Footer() {
             {/* Social Icons */}
             <div className="flex items-center gap-3 pt-2">
               <a
-                href="#"
-                className="w-8 h-8 rounded-full bg-brand/10 hover:bg-brand/20 text-brand-dark flex items-center justify-center text-xs font-semibold transition-colors"
-                title="Facebook"
+                href="https://www.facebook.com/badntrust"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-[#1877F2]/10 hover:bg-[#1877F2] text-[#1877F2] hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm"
+                title="Facebook Page"
               >
-                f
+                <Facebook className="w-4.5 h-4.5" />
               </a>
               <a
                 href="#"
-                className="w-8 h-8 rounded-full bg-brand/10 hover:bg-brand/20 text-brand-dark flex items-center justify-center text-xs font-semibold transition-colors"
+                className="w-9 h-9 rounded-full bg-brand/10 hover:bg-brand/20 text-brand-dark flex items-center justify-center transition-all duration-300 hover:scale-110"
                 title="Twitter"
               >
-                t
+                <Twitter className="w-4.5 h-4.5" />
               </a>
               <a
                 href="#"
-                className="w-8 h-8 rounded-full bg-brand/10 hover:bg-brand/20 text-brand-dark flex items-center justify-center text-xs font-semibold transition-colors"
-                title="Google"
+                className="w-9 h-9 rounded-full bg-brand/10 hover:bg-brand/20 text-brand-dark flex items-center justify-center transition-all duration-300 hover:scale-110"
+                title="Website"
               >
-                g
+                <Globe className="w-4.5 h-4.5" />
               </a>
             </div>
           </div>
@@ -80,14 +82,25 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 shrink-0 text-[#e04f21]" />
-                <a href="mailto:info@studyhubeducation.com" className="hover:text-[#e04f21] transition-colors font-medium">
-                  info@studyhubeducation.com
+                <a href="mailto:support@badn.org" className="hover:text-[#e04f21] transition-colors font-medium">
+                  support@badn.org
                 </a>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 shrink-0 text-[#e04f21]" />
-                <a href="tel:+8801700000000" className="hover:text-[#e04f21] transition-colors font-medium">
-                  +880 1700 000000 (বিকল্প)
+                <a href="tel:+8801677250597" className="hover:text-[#e04f21] transition-colors font-medium">
+                  +880 1677-250597
+                </a>
+              </div>
+              <div className="flex items-center gap-2">
+                <Facebook className="w-4 h-4 shrink-0 text-[#1877F2]" />
+                <a 
+                  href="https://www.facebook.com/badntrust" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="hover:text-[#1877F2] transition-colors font-semibold"
+                >
+                  facebook.com/badntrust
                 </a>
               </div>
             </div>
