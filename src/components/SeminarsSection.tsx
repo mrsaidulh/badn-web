@@ -1,12 +1,27 @@
-import { useState } from 'react';
-import { SEMINARS } from '../data';
+import { useState, useEffect } from 'react';
 import { Seminar } from '../types';
 import { Calendar, MapPin, ArrowUpRight } from 'lucide-react';
 import SeminarModal from './SeminarModal';
+import { getSeminarEvents } from '../lib/api';
 
 export default function SeminarsSection() {
+  const [seminars, setSeminars] = useState<Seminar[]>([]);
   const [selectedSeminar, setSelectedSeminar] = useState<Seminar | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    const loadSeminars = () => {
+      getSeminarEvents().then((data) => {
+        setSeminars(data);
+      });
+    };
+    loadSeminars();
+
+    window.addEventListener('seminars_updated', loadSeminars);
+    return () => {
+      window.removeEventListener('seminars_updated', loadSeminars);
+    };
+  }, []);
 
   const handleReadMoreClick = (seminar: Seminar) => {
     setSelectedSeminar(seminar);
@@ -32,7 +47,7 @@ export default function SeminarsSection() {
 
         {/* Seminars Grid layout */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {SEMINARS.map((seminar) => (
+          {seminars.map((seminar) => (
             <div
               key={seminar.id}
               className="bg-white rounded-2xl overflow-hidden shadow-md border border-gray-100 flex flex-col justify-between hover:shadow-2xl transition-all duration-300 group"

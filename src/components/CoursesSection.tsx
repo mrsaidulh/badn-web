@@ -1,19 +1,34 @@
-import { useState } from 'react';
-import { COURSES } from '../data';
+import { useState, useEffect } from 'react';
 import { Course } from '../types';
 import { Clock, BookOpen, Award, Users, Star, ArrowRight, Flame } from 'lucide-react';
 import EnrollModal from './EnrollModal';
+import { getCourses } from '../lib/api';
 
 export default function CoursesSection() {
+  const [courses, setCourses] = useState<Course[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [isEnrollOpen, setIsEnrollOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string>('All');
 
+  useEffect(() => {
+    const loadCourses = () => {
+      getCourses().then((data) => {
+        setCourses(data);
+      });
+    };
+    loadCourses();
+
+    window.addEventListener('courses_updated', loadCourses);
+    return () => {
+      window.removeEventListener('courses_updated', loadCourses);
+    };
+  }, []);
+
   const categories = ['All', 'Clinical Nutrition', 'Sports Nutrition', 'Child Nutrition'];
 
   const filteredCourses = activeCategory === 'All'
-    ? COURSES
-    : COURSES.filter(c => c.category === activeCategory);
+    ? courses
+    : courses.filter(c => c.category === activeCategory);
 
   const handleEnrollClick = (course: Course) => {
     setSelectedCourse(course);

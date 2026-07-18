@@ -1,21 +1,44 @@
-import { useState } from 'react';
-import { TESTIMONIALS } from '../data';
+import { useState, useEffect } from 'react';
+import { TESTIMONIALS as STATIC_TESTIMONIALS } from '../data';
 import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
+import { getTestimonials } from '../lib/api';
 
 export default function Testimonials() {
+  const [testimonials, setTestimonials] = useState<any[]>(STATIC_TESTIMONIALS);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const loadTestimonials = () => {
+      getTestimonials().then((data) => {
+        if (data && data.length > 0) {
+          setTestimonials(data);
+        }
+      });
+    };
+    loadTestimonials();
+
+    window.addEventListener('testimonials_updated', loadTestimonials);
+    return () => {
+      window.removeEventListener('testimonials_updated', loadTestimonials);
+    };
+  }, []);
 
   const handlePrev = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? TESTIMONIALS.length - 1 : prevIndex - 1
+      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
     );
   };
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === TESTIMONIALS.length - 1 ? 0 : prevIndex + 1
+      prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
     );
   };
+
+  if (!testimonials || testimonials.length === 0) return null;
+
+  // Ensure current index is within bounds (e.g. if items list gets smaller)
+  const currentTestimonial = testimonials[currentIndex] || testimonials[0];
 
   return (
     <section className="py-20 bg-white overflow-hidden relative">
@@ -49,7 +72,7 @@ export default function Testimonials() {
               {/* Star Rating & Quote Badge */}
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-1 text-amber-500">
-                  {[...Array(TESTIMONIALS[currentIndex].rating)].map((_, i) => (
+                  {[...Array(Number(currentTestimonial.rating || 5))].map((_, i) => (
                     <Star key={i} className="w-5 h-5 fill-amber-500" />
                   ))}
                 </div>
@@ -60,15 +83,15 @@ export default function Testimonials() {
 
               {/* Message quote */}
               <p className="text-base sm:text-lg text-gray-700 leading-relaxed font-medium italic text-justify">
-                " {TESTIMONIALS[currentIndex].feedback} "
+                " {currentTestimonial.feedback} "
               </p>
             </div>
 
             {/* Student metadata */}
             <div className="flex items-center gap-4 pt-6 border-t border-gray-100 mt-6 shrink-0">
               <img
-                src={TESTIMONIALS[currentIndex].image}
-                alt={TESTIMONIALS[currentIndex].name}
+                src={currentTestimonial.image}
+                alt={currentTestimonial.name}
                 className="w-14 h-14 rounded-full object-cover border-2 border-brand shadow-md"
                 loading="lazy"
                 decoding="async"
@@ -76,10 +99,10 @@ export default function Testimonials() {
               />
               <div className="text-left">
                 <h4 className="text-base font-extrabold text-gray-900 leading-tight">
-                  {TESTIMONIALS[currentIndex].name}
+                  {currentTestimonial.name}
                 </h4>
                 <p className="text-xs text-brand font-semibold mt-0.5">
-                  {TESTIMONIALS[currentIndex].role}
+                  {currentTestimonial.role}
                 </p>
               </div>
             </div>
@@ -98,7 +121,7 @@ export default function Testimonials() {
 
             {/* Bullet indicators */}
             <div className="flex items-center gap-2">
-              {TESTIMONIALS.map((_, idx) => (
+              {testimonials.map((_, idx) => (
                 <button
                   key={idx}
                   onClick={() => setCurrentIndex(idx)}

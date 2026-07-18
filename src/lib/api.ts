@@ -1,5 +1,6 @@
 // Full-stack API Client for Bangladesh Academy of Dietetics and Nutrition (BADN)
 // Synchronizes seamlessly between Server-side MySQL and client LocalStorage fallback.
+import { COURSES, SEMINARS as STATIC_SEMINAR_EVENTS, TESTIMONIALS as STATIC_TESTIMONIALS } from '../data';
 
 export async function getDbStatus() {
   try {
@@ -286,6 +287,186 @@ export async function deleteCertificate(id: string): Promise<boolean> {
     return result.success;
   } catch (err) {
     console.warn('API error deleting certificate:', err);
+    return true; // Return true as it succeeded locally
+  }
+}
+
+// ==================== DYNAMIC COURSES ====================
+
+export async function getCourses(): Promise<any[]> {
+  try {
+    const res = await fetch('/api/courses');
+    const result = await res.json();
+    if (result.success && result.data && result.data.length > 0) {
+      localStorage.setItem('badn_dynamic_courses', JSON.stringify(result.data));
+      return result.data;
+    }
+  } catch (err) {
+    console.warn('API error fetching courses. Using localStorage fallback:', err);
+  }
+  const local = localStorage.getItem('badn_dynamic_courses');
+  if (!local) {
+    localStorage.setItem('badn_dynamic_courses', JSON.stringify(COURSES));
+    return COURSES;
+  }
+  return JSON.parse(local);
+}
+
+export async function addCourse(course: any): Promise<boolean> {
+  const local = await getCourses();
+  const index = local.findIndex((c: any) => c.id === course.id);
+  if (index >= 0) {
+    local[index] = course;
+  } else {
+    local.push(course);
+  }
+  localStorage.setItem('badn_dynamic_courses', JSON.stringify(local));
+
+  try {
+    const res = await fetch('/api/courses', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(course)
+    });
+    const result = await res.json();
+    return result.success;
+  } catch (err) {
+    console.warn('API error adding/updating course:', err);
+    return true; // Return true as it succeeded locally
+  }
+}
+
+export async function deleteCourse(id: string): Promise<boolean> {
+  const local = await getCourses();
+  const filtered = local.filter((c: any) => c.id !== id);
+  localStorage.setItem('badn_dynamic_courses', JSON.stringify(filtered));
+
+  try {
+    const res = await fetch(`/api/courses/${id}`, { method: 'DELETE' });
+    const result = await res.json();
+    return result.success;
+  } catch (err) {
+    console.warn('API error deleting course:', err);
+    return true; // Return true as it succeeded locally
+  }
+}
+
+// ==================== DYNAMIC SEMINAR EVENTS ====================
+
+export async function getSeminarEvents(): Promise<any[]> {
+  try {
+    const res = await fetch('/api/seminar-events');
+    const result = await res.json();
+    if (result.success && result.data && result.data.length > 0) {
+      localStorage.setItem('badn_dynamic_seminar_events', JSON.stringify(result.data));
+      return result.data;
+    }
+  } catch (err) {
+    console.warn('API error fetching seminar events. Using localStorage fallback:', err);
+  }
+  const local = localStorage.getItem('badn_dynamic_seminar_events');
+  if (!local) {
+    localStorage.setItem('badn_dynamic_seminar_events', JSON.stringify(STATIC_SEMINAR_EVENTS));
+    return STATIC_SEMINAR_EVENTS;
+  }
+  return JSON.parse(local);
+}
+
+export async function addSeminarEvent(seminar: any): Promise<boolean> {
+  const local = await getSeminarEvents();
+  const index = local.findIndex((s: any) => s.id === seminar.id);
+  if (index >= 0) {
+    local[index] = seminar;
+  } else {
+    local.push(seminar);
+  }
+  localStorage.setItem('badn_dynamic_seminar_events', JSON.stringify(local));
+
+  try {
+    const res = await fetch('/api/seminar-events', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(seminar)
+    });
+    const result = await res.json();
+    return result.success;
+  } catch (err) {
+    console.warn('API error adding/updating seminar event:', err);
+    return true; // Return true as it succeeded locally
+  }
+}
+
+export async function deleteSeminarEvent(id: string): Promise<boolean> {
+  const local = await getSeminarEvents();
+  const filtered = local.filter((s: any) => s.id !== id);
+  localStorage.setItem('badn_dynamic_seminar_events', JSON.stringify(filtered));
+
+  try {
+    const res = await fetch(`/api/seminar-events/${id}`, { method: 'DELETE' });
+    const result = await res.json();
+    return result.success;
+  } catch (err) {
+    console.warn('API error deleting seminar event:', err);
+    return true; // Return true as it succeeded locally
+  }
+}
+
+// ==================== DYNAMIC TESTIMONIALS ====================
+
+export async function getTestimonials(): Promise<any[]> {
+  try {
+    const res = await fetch('/api/testimonials');
+    const result = await res.json();
+    if (result.success && result.data && result.data.length > 0) {
+      localStorage.setItem('badn_dynamic_testimonials', JSON.stringify(result.data));
+      return result.data;
+    }
+  } catch (err) {
+    console.warn('API error fetching testimonials. Using localStorage fallback:', err);
+  }
+  const local = localStorage.getItem('badn_dynamic_testimonials');
+  if (!local) {
+    localStorage.setItem('badn_dynamic_testimonials', JSON.stringify(STATIC_TESTIMONIALS));
+    return STATIC_TESTIMONIALS;
+  }
+  return JSON.parse(local);
+}
+
+export async function addTestimonial(testimonial: any): Promise<boolean> {
+  const local = await getTestimonials();
+  const index = local.findIndex((t: any) => t.id === testimonial.id);
+  if (index >= 0) {
+    local[index] = testimonial;
+  } else {
+    local.push(testimonial);
+  }
+  localStorage.setItem('badn_dynamic_testimonials', JSON.stringify(local));
+
+  try {
+    const res = await fetch('/api/testimonials', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(testimonial)
+    });
+    const result = await res.json();
+    return result.success;
+  } catch (err) {
+    console.warn('API error adding/updating testimonial:', err);
+    return true; // Return true as it succeeded locally
+  }
+}
+
+export async function deleteTestimonial(id: string): Promise<boolean> {
+  const local = await getTestimonials();
+  const filtered = local.filter((t: any) => t.id !== id);
+  localStorage.setItem('badn_dynamic_testimonials', JSON.stringify(filtered));
+
+  try {
+    const res = await fetch(`/api/testimonials/${id}`, { method: 'DELETE' });
+    const result = await res.json();
+    return result.success;
+  } catch (err) {
+    console.warn('API error deleting testimonial:', err);
     return true; // Return true as it succeeded locally
   }
 }

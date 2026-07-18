@@ -641,6 +641,149 @@ app.delete('/api/certificates/:id', async (req, res) => {
   }
 });
 
+// ==================== DYNAMIC CONTENT ENDPOINTS ====================
+
+// Courses
+app.get('/api/courses', async (req, res) => {
+  const db = await getDbPool();
+  if (!db) {
+    return res.json({ success: false, message: 'Database not connected. Local fallback active.' });
+  }
+  try {
+    const [rows] = await db.query('SELECT * FROM courses');
+    res.json({ success: true, source: 'database', data: rows });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.post('/api/courses', async (req, res) => {
+  const db = await getDbPool();
+  if (!db) {
+    return res.json({ success: false, message: 'Database not connected. Local fallback active.' });
+  }
+  const { id, title, duration, liveClasses, recordedClasses, orientation, exams, classDuration, price, originalPrice, image, category, rating, reviewsCount, description, seatsLeft, startDate } = req.body;
+  try {
+    await db.query(
+      `INSERT INTO courses (id, title, duration, liveClasses, recordedClasses, orientation, exams, classDuration, price, originalPrice, image, category, rating, reviewsCount, description, seatsLeft, startDate) 
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+       ON DUPLICATE KEY UPDATE title = VALUES(title), duration = VALUES(duration), liveClasses = VALUES(liveClasses), recordedClasses = VALUES(recordedClasses), orientation = VALUES(orientation), exams = VALUES(exams), classDuration = VALUES(classDuration), price = VALUES(price), originalPrice = VALUES(originalPrice), image = VALUES(image), category = VALUES(category), rating = VALUES(rating), reviewsCount = VALUES(reviewsCount), description = VALUES(description), seatsLeft = VALUES(seatsLeft), startDate = VALUES(startDate)`,
+      [id, title, duration, liveClasses, recordedClasses, orientation, exams, classDuration, price, originalPrice, image, category, rating, reviewsCount, description, seatsLeft, startDate]
+    );
+    res.json({ success: true });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.delete('/api/courses/:id', async (req, res) => {
+  const db = await getDbPool();
+  if (!db) {
+    return res.json({ success: false, message: 'Database not connected. Local fallback active.' });
+  }
+  const { id } = req.params;
+  try {
+    await db.query('DELETE FROM courses WHERE id = ?', [id]);
+    res.json({ success: true });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Seminar Events
+app.get('/api/seminar-events', async (req, res) => {
+  const db = await getDbPool();
+  if (!db) {
+    return res.json({ success: false, message: 'Database not connected. Local fallback active.' });
+  }
+  try {
+    const [rows] = await db.query('SELECT * FROM seminars');
+    res.json({ success: true, source: 'database', data: rows });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.post('/api/seminar-events', async (req, res) => {
+  const db = await getDbPool();
+  if (!db) {
+    return res.json({ success: false, message: 'Database not connected. Local fallback active.' });
+  }
+  const { id, title, organization, description, expertName, expertRole, date, location, image } = req.body;
+  try {
+    await db.query(
+      `INSERT INTO seminars (id, title, organization, description, expertName, expertRole, date, location, image) 
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+       ON DUPLICATE KEY UPDATE title = VALUES(title), organization = VALUES(organization), description = VALUES(description), expertName = VALUES(expertName), expertRole = VALUES(expertRole), date = VALUES(date), location = VALUES(location), image = VALUES(image)`,
+      [id, title, organization, description, expertName, expertRole, date, location, image]
+    );
+    res.json({ success: true });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.delete('/api/seminar-events/:id', async (req, res) => {
+  const db = await getDbPool();
+  if (!db) {
+    return res.json({ success: false, message: 'Database not connected. Local fallback active.' });
+  }
+  const { id } = req.params;
+  try {
+    await db.query('DELETE FROM seminars WHERE id = ?', [id]);
+    res.json({ success: true });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Testimonials
+app.get('/api/testimonials', async (req, res) => {
+  const db = await getDbPool();
+  if (!db) {
+    return res.json({ success: false, message: 'Database not connected. Local fallback active.' });
+  }
+  try {
+    const [rows] = await db.query('SELECT * FROM testimonials');
+    res.json({ success: true, source: 'database', data: rows });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.post('/api/testimonials', async (req, res) => {
+  const db = await getDbPool();
+  if (!db) {
+    return res.json({ success: false, message: 'Database not connected. Local fallback active.' });
+  }
+  const { id, name, role, feedback, image, rating } = req.body;
+  try {
+    await db.query(
+      `INSERT INTO testimonials (id, name, role, feedback, image, rating) 
+       VALUES (?, ?, ?, ?, ?, ?)
+       ON DUPLICATE KEY UPDATE name = VALUES(name), role = VALUES(role), feedback = VALUES(feedback), image = VALUES(image), rating = VALUES(rating)`,
+      [id, name, role, feedback, image, rating]
+    );
+    res.json({ success: true });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.delete('/api/testimonials/:id', async (req, res) => {
+  const db = await getDbPool();
+  if (!db) {
+    return res.json({ success: false, message: 'Database not connected. Local fallback active.' });
+  }
+  const { id } = req.params;
+  try {
+    await db.query('DELETE FROM testimonials WHERE id = ?', [id]);
+    res.json({ success: true });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // ==================== STATIC ASSETS & VITE MIDDLEWARE ====================
 
 async function startServer() {
