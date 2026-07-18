@@ -66,9 +66,9 @@ export default function AdminContentManager() {
       const cList = await getCourses();
       const sList = await getSeminarEvents();
       const tList = await getTestimonials();
-      setCourses(Array.isArray(cList) ? cList : []);
-      setSeminars(Array.isArray(sList) ? sList : []);
-      setTestimonials(Array.isArray(tList) ? tList : []);
+      setCourses(cList);
+      setSeminars(sList);
+      setTestimonials(tList);
     } catch (err) {
       console.error('Error loading contents:', err);
     } finally {

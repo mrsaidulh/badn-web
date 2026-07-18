@@ -3,7 +3,6 @@ import { Menu, X, Award, ShieldAlert, LogIn, Heart, Sun, Moon } from 'lucide-rea
 import { AnimatePresence, motion } from 'motion/react';
 import { useToast } from './Toast';
 import Logo from './Logo';
-import { safeLocalStorage } from '../lib/storage';
 
 interface HeaderProps {
   onOpenDashboard: () => void;
@@ -16,16 +15,16 @@ export default function Header({ onOpenDashboard }: HeaderProps) {
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    return safeLocalStorage.getItem('badn_dark_mode') === 'true';
+    return localStorage.getItem('badn_dark_mode') === 'true';
   });
 
   useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add('dark');
-      safeLocalStorage.setItem('badn_dark_mode', 'true');
+      localStorage.setItem('badn_dark_mode', 'true');
     } else {
       document.documentElement.classList.remove('dark');
-      safeLocalStorage.setItem('badn_dark_mode', 'false');
+      localStorage.setItem('badn_dark_mode', 'false');
     }
     // Dispatch a custom event to notify other components if necessary
     window.dispatchEvent(new CustomEvent('dark_mode_changed', { detail: isDarkMode }));

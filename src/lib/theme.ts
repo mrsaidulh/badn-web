@@ -1,8 +1,6 @@
 // Theme configuration and dynamic management for BADN
 // Allows changing the website color palette dynamically from the Admin Panel.
 
-import { safeLocalStorage } from './storage';
-
 export interface Theme {
   id: string;
   name: string;
@@ -64,7 +62,7 @@ export function applyTheme(themeId: string): Theme {
   root.style.setProperty('--color-brand-hover-text', theme.hoverText);
   
   // Persist the choice in local storage
-  safeLocalStorage.setItem('badn_theme_id', theme.id);
+  localStorage.setItem('badn_theme_id', theme.id);
   
   // Fire a custom event to notify components about the theme change
   window.dispatchEvent(new CustomEvent('theme_changed', { detail: theme }));
@@ -73,7 +71,6 @@ export function applyTheme(themeId: string): Theme {
 }
 
 export function getCurrentTheme(): Theme {
-  const savedId = safeLocalStorage.getItem('badn_theme_id') || 'olive';
+  const savedId = localStorage.getItem('badn_theme_id') || 'olive';
   return THEMES.find(t => t.id === savedId) || THEMES[0];
 }
-
