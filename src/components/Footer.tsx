@@ -12,7 +12,7 @@ export default function Footer() {
           {/* Column 1 - Brand description */}
           <div className="md:col-span-4 space-y-4 text-left">
             <div className="flex items-center gap-2.5 min-w-0">
-              <Logo showText={true} theme="color" />
+              <Logo size="w-16 h-16 sm:w-20 sm:h-20" showText={true} theme="color" />
             </div>
 
             <p className="text-xs sm:text-sm text-gray-700 leading-relaxed font-normal">

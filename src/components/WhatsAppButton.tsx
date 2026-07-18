@@ -31,10 +31,10 @@ export default function WhatsAppButton() {
             initial={{ opacity: 0, scale: 0.8, y: 10, x: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 10, x: 10 }}
-            className="mb-3 bg-white text-gray-800 p-3.5 rounded-2xl shadow-2xl border border-[#cbdccb]/40 text-xs font-bold w-72 max-w-[280px] relative flex items-start gap-2.5 text-left"
+            className="mb-3 bg-white text-gray-800 p-3.5 rounded-2xl shadow-2xl border border-amber-200/40 text-xs font-bold w-72 max-w-[280px] relative flex items-start gap-2.5 text-left"
           >
             <div className="flex-1">
-              <span className="text-[11px] text-emerald-600 block mb-0.5 font-bold">
+              <span className="text-[11px] text-[#e97c00] block mb-0.5 font-bold">
                 সরাসরি যোগাযোগ
               </span>
               <p className="text-gray-700 leading-relaxed font-semibold">
@@ -49,12 +49,12 @@ export default function WhatsAppButton() {
               <X className="w-3.5 h-3.5" />
             </button>
             {/* Small speech bubble arrow */}
-            <div className="absolute -bottom-1.5 right-5 w-3 h-3 bg-white border-l border-b border-[#cbdccb]/40 rotate-45" />
+            <div className="absolute -bottom-1.5 right-5 w-3 h-3 bg-white border-l border-b border-amber-200/40 rotate-45" />
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Floating Green WhatsApp Button */}
+      {/* Floating Orange WhatsApp Button */}
       <motion.a
         href={whatsappUrl}
         target="_blank"
@@ -65,14 +65,14 @@ export default function WhatsAppButton() {
         transition={{ delay: 1, type: 'spring', stiffness: 260, damping: 20 }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
-        className="relative flex items-center justify-center w-14 h-14 text-white rounded-full shadow-[0_8px_30px_rgba(37,211,102,0.4)] hover:shadow-[0_8px_40px_rgba(37,211,102,0.6)] transition-all duration-300 group cursor-pointer"
-        style={{ backgroundColor: '#25D366' }}
+        className="relative flex items-center justify-center w-14 h-14 text-white rounded-full shadow-[0_8px_30px_rgba(233,124,0,0.4)] hover:shadow-[0_8px_40px_rgba(233,124,0,0.6)] transition-all duration-300 group cursor-pointer"
+        style={{ backgroundColor: '#e97c00' }}
         aria-label="Chat with BADN administration on WhatsApp"
       >
         {/* Double animated rings for realistic pulse */}
         <span 
           className="absolute inset-0 rounded-full opacity-30 animate-ping group-hover:animate-none scale-105" 
-          style={{ backgroundColor: '#25D366' }}
+          style={{ backgroundColor: '#e97c00' }}
         />
         
         {/* Core Icon SVG */}

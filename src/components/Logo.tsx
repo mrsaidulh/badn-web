@@ -5,6 +5,7 @@ interface LogoProps {
   theme?: 'light' | 'dark' | 'color';
   className?: string;
   style?: CSSProperties;
+  size?: number | string;
 }
 
 export function LogoIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
@@ -160,15 +161,37 @@ export function LogoIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
   );
 }
 
-export default function Logo({ showText = true, theme = 'color', className, style }: LogoProps) {
+export default function Logo({ showText = false, theme = 'color', className, style, size }: LogoProps) {
+  let sizeClasses = "w-14 h-14 sm:w-16 sm:h-16"; // default logo is bigger now
+  let customStyle: CSSProperties = { ...style };
+
+  if (size) {
+    if (typeof size === 'number') {
+      customStyle.width = `${size}px`;
+      customStyle.height = `${size}px`;
+      sizeClasses = "";
+    } else if (typeof size === 'string') {
+      if (size.startsWith('w-') || size.includes('h-')) {
+        sizeClasses = size;
+      } else {
+        customStyle.width = size;
+        customStyle.height = size;
+        sizeClasses = "";
+      }
+    }
+  }
+
   return (
-    <div className={`flex items-center gap-3 sm:gap-4 ${className || ''}`} style={style}>
+    <div className={`flex items-center gap-3 sm:gap-4 ${className || ''}`} style={customStyle}>
       {/* Logo Graphic */}
-      <LogoIcon className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 drop-shadow-md hover:scale-105 transition-transform duration-300" />
+      <LogoIcon 
+        className={`${sizeClasses} shrink-0 drop-shadow-md hover:scale-105 transition-transform duration-300`} 
+        style={size && typeof size === 'number' ? { width: `${size}px`, height: `${size}px` } : undefined}
+      />
       
       {/* Logo Typography */}
       {showText && (
-        <div className="flex flex-col min-w-0 select-none">
+        <div className="flex flex-col min-w-0 select-none text-left">
           <span className="text-xl sm:text-2xl font-black tracking-tight text-brand leading-none">
             BADN
           </span>

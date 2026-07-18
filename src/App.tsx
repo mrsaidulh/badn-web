@@ -121,25 +121,53 @@ export default function App() {
         
         {/* Dynamic top info alert bar */}
         {showNotification && (
-          <div className="bg-amber-600 text-white text-[11px] sm:text-xs font-bold py-2.5 px-4 text-center relative flex items-center justify-center gap-1.5 shrink-0 select-none z-50">
-            <Award className="w-4 h-4 text-amber-300 shrink-0" />
-            <motion.span
+          <div className="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-white text-[11px] sm:text-xs font-bold py-2.5 px-4 text-center relative flex items-center justify-center gap-2 shrink-0 select-none z-50 shadow-[0_2px_15px_rgba(217,119,6,0.25)] border-b border-amber-400/20">
+            <motion.div
               animate={{
-                scale: [1, 1.03, 1],
-                opacity: [0.95, 1, 0.95]
+                rotate: [0, -12, 12, -12, 0],
+                scale: [1, 1.2, 1],
               }}
               transition={{
-                duration: 2,
+                duration: 2.5,
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
-              className="inline-block origin-center"
+              className="shrink-0 flex items-center"
             >
-              নতুন সেশনে ভর্তি চলছে ! দ্রুত ভর্তি হয়ে আপনার আসন নিশ্চিত করুন!
-            </motion.span>
+              <Award className="w-4.5 h-4.5 text-yellow-300 drop-shadow-[0_0_5px_rgba(253,224,71,0.6)]" />
+            </motion.div>
+            
+            <div className="flex items-center gap-2 flex-wrap justify-center">
+              <span className="bg-red-500 text-white text-[9px] px-1.5 py-0.5 rounded-sm uppercase tracking-wider font-extrabold flex items-center gap-1 animate-pulse border border-red-400/30">
+                <span className="w-1.5 h-1.5 rounded-full bg-white inline-block animate-ping" />
+                Live
+              </span>
+              
+              <motion.span
+                animate={{
+                  scale: [1, 1.04, 1],
+                  color: ["#ffffff", "#fef08a", "#fde047", "#fef08a", "#ffffff"],
+                  textShadow: [
+                    "0 0 0px rgba(253, 224, 71, 0)",
+                    "0 0 10px rgba(253, 224, 71, 0.8)",
+                    "0 0 4px rgba(253, 224, 71, 0.4)",
+                    "0 0 0px rgba(253, 224, 71, 0)"
+                  ]
+                }}
+                transition={{
+                  duration: 2.5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                className="inline-block origin-center tracking-wide font-extrabold text-[12px] sm:text-sm drop-shadow-sm"
+              >
+                নতুন সেশনে ভর্তি চলছে ! দ্রুত ভর্তি হয়ে আপনার আসন নিশ্চিত করুন!
+              </motion.span>
+            </div>
+            
             <button
               onClick={() => setShowNotification(false)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/80 hover:text-white cursor-pointer"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/80 hover:text-white cursor-pointer hover:scale-110 transition-transform"
               aria-label="Close notification"
             >
               <X className="w-4 h-4" />
