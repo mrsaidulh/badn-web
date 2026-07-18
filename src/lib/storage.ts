@@ -68,3 +68,14 @@ export const safeSessionStorage = {
     }
   }
 };
+
+export function safeJsonParse(val: string | null, fallback: any = []): any {
+  if (!val) return fallback;
+  try {
+    return JSON.parse(val);
+  } catch (e) {
+    console.warn('JSON parsing error, using fallback:', e);
+    return fallback;
+  }
+}
+

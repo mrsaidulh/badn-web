@@ -1,7 +1,7 @@
 // Full-stack API Client for Bangladesh Academy of Dietetics and Nutrition (BADN)
 // Synchronizes seamlessly between Server-side MySQL and client LocalStorage fallback.
 import { COURSES, SEMINARS as STATIC_SEMINAR_EVENTS, TESTIMONIALS as STATIC_TESTIMONIALS } from '../data';
-import { safeLocalStorage } from './storage';
+import { safeLocalStorage, safeJsonParse } from './storage';
 
 export async function getDbStatus() {
   try {
@@ -26,12 +26,12 @@ export async function getEnrollments(): Promise<any[]> {
   } catch (err) {
     console.warn('API error fetching enrollments. Using localStorage fallback:', err);
   }
-  return JSON.parse(safeLocalStorage.getItem('badn_enrollments') || '[]');
+  return safeJsonParse(safeLocalStorage.getItem('badn_enrollments'), []);
 }
 
 export async function addEnrollment(enrollment: any): Promise<boolean> {
   // Sync to local storage first
-  const local = JSON.parse(safeLocalStorage.getItem('badn_enrollments') || '[]');
+  const local = safeJsonParse(safeLocalStorage.getItem('badn_enrollments'), []);
   safeLocalStorage.setItem('badn_enrollments', JSON.stringify([...local, enrollment]));
 
   try {
@@ -50,7 +50,7 @@ export async function addEnrollment(enrollment: any): Promise<boolean> {
 
 export async function updateEnrollmentStatus(id: string, status: string): Promise<boolean> {
   // Sync local storage
-  const local = JSON.parse(safeLocalStorage.getItem('badn_enrollments') || '[]');
+  const local = safeJsonParse(safeLocalStorage.getItem('badn_enrollments'), []);
   const updated = local.map((item: any) => item.id === id ? { ...item, status } : item);
   safeLocalStorage.setItem('badn_enrollments', JSON.stringify(updated));
 
@@ -70,7 +70,7 @@ export async function updateEnrollmentStatus(id: string, status: string): Promis
 
 export async function deleteEnrollment(id: string): Promise<boolean> {
   // Sync local storage
-  const local = JSON.parse(safeLocalStorage.getItem('badn_enrollments') || '[]');
+  const local = safeJsonParse(safeLocalStorage.getItem('badn_enrollments'), []);
   const filtered = local.filter((item: any) => item.id !== id);
   safeLocalStorage.setItem('badn_enrollments', JSON.stringify(filtered));
 
@@ -97,11 +97,11 @@ export async function getSeminars(): Promise<any[]> {
   } catch (err) {
     console.warn('API error fetching seminars. Using localStorage fallback:', err);
   }
-  return JSON.parse(safeLocalStorage.getItem('badn_seminar_registrations') || '[]');
+  return safeJsonParse(safeLocalStorage.getItem('badn_seminar_registrations'), []);
 }
 
 export async function addSeminarRegistration(registration: any): Promise<boolean> {
-  const local = JSON.parse(safeLocalStorage.getItem('badn_seminar_registrations') || '[]');
+  const local = safeJsonParse(safeLocalStorage.getItem('badn_seminar_registrations'), []);
   safeLocalStorage.setItem('badn_seminar_registrations', JSON.stringify([...local, registration]));
 
   try {
@@ -119,7 +119,7 @@ export async function addSeminarRegistration(registration: any): Promise<boolean
 }
 
 export async function updateSeminarRegistrationStatus(id: string, status: string): Promise<boolean> {
-  const local = JSON.parse(safeLocalStorage.getItem('badn_seminar_registrations') || '[]');
+  const local = safeJsonParse(safeLocalStorage.getItem('badn_seminar_registrations'), []);
   const updated = local.map((item: any) => item.id === id ? { ...item, status } : item);
   safeLocalStorage.setItem('badn_seminar_registrations', JSON.stringify(updated));
 
@@ -138,7 +138,7 @@ export async function updateSeminarRegistrationStatus(id: string, status: string
 }
 
 export async function deleteSeminarRegistration(id: string): Promise<boolean> {
-  const local = JSON.parse(safeLocalStorage.getItem('badn_seminar_registrations') || '[]');
+  const local = safeJsonParse(safeLocalStorage.getItem('badn_seminar_registrations'), []);
   const filtered = local.filter((item: any) => item.id !== id);
   safeLocalStorage.setItem('badn_seminar_registrations', JSON.stringify(filtered));
 
@@ -165,11 +165,11 @@ export async function getInquiries(): Promise<any[]> {
   } catch (err) {
     console.warn('API error fetching inquiries. Using localStorage fallback:', err);
   }
-  return JSON.parse(safeLocalStorage.getItem('badn_contact_messages') || '[]');
+  return safeJsonParse(safeLocalStorage.getItem('badn_contact_messages'), []);
 }
 
 export async function addInquiry(inquiry: any): Promise<boolean> {
-  const local = JSON.parse(safeLocalStorage.getItem('badn_contact_messages') || '[]');
+  const local = safeJsonParse(safeLocalStorage.getItem('badn_contact_messages'), []);
   safeLocalStorage.setItem('badn_contact_messages', JSON.stringify([...local, inquiry]));
 
   try {
@@ -187,7 +187,7 @@ export async function addInquiry(inquiry: any): Promise<boolean> {
 }
 
 export async function deleteInquiry(id: string): Promise<boolean> {
-  const local = JSON.parse(safeLocalStorage.getItem('badn_contact_messages') || '[]');
+  const local = safeJsonParse(safeLocalStorage.getItem('badn_contact_messages'), []);
   const filtered = local.filter((item: any) => item.id !== id);
   safeLocalStorage.setItem('badn_contact_messages', JSON.stringify(filtered));
 
@@ -236,7 +236,7 @@ export async function getCertificates(): Promise<any[]> {
     safeLocalStorage.setItem('badn_certificates', JSON.stringify(DEFAULT_LOCAL_CERTS));
     return DEFAULT_LOCAL_CERTS;
   }
-  return JSON.parse(local);
+  return safeJsonParse(local, DEFAULT_LOCAL_CERTS);
 }
 
 export async function getCertificateById(id: string): Promise<any | null> {
@@ -310,7 +310,7 @@ export async function getCourses(): Promise<any[]> {
     safeLocalStorage.setItem('badn_dynamic_courses', JSON.stringify(COURSES));
     return COURSES;
   }
-  return JSON.parse(local);
+  return safeJsonParse(local, COURSES);
 }
 
 export async function addCourse(course: any): Promise<boolean> {
@@ -370,7 +370,7 @@ export async function getSeminarEvents(): Promise<any[]> {
     safeLocalStorage.setItem('badn_dynamic_seminar_events', JSON.stringify(STATIC_SEMINAR_EVENTS));
     return STATIC_SEMINAR_EVENTS;
   }
-  return JSON.parse(local);
+  return safeJsonParse(local, STATIC_SEMINAR_EVENTS);
 }
 
 export async function addSeminarEvent(seminar: any): Promise<boolean> {
@@ -430,7 +430,7 @@ export async function getTestimonials(): Promise<any[]> {
     safeLocalStorage.setItem('badn_dynamic_testimonials', JSON.stringify(STATIC_TESTIMONIALS));
     return STATIC_TESTIMONIALS;
   }
-  return JSON.parse(local);
+  return safeJsonParse(local, STATIC_TESTIMONIALS);
 }
 
 export async function addTestimonial(testimonial: any): Promise<boolean> {

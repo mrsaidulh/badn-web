@@ -107,9 +107,9 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
     const inqs = await getInquiries();
     const status = await getDbStatus();
 
-    setEnrollments(enrolls);
-    setSeminars(sems);
-    setInquiries(inqs);
+    setEnrollments(Array.isArray(enrolls) ? enrolls : []);
+    setSeminars(Array.isArray(sems) ? sems : []);
+    setInquiries(Array.isArray(inqs) ? inqs : []);
     setDbStatus(status);
   };
 
