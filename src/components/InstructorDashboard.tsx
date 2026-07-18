@@ -18,6 +18,7 @@ import {
 } from '../lib/api';
 
 import { THEMES, applyTheme, getCurrentTheme, Theme } from '../lib/theme';
+import { safeSessionStorage } from '../lib/storage';
 import AdminContentManager from './AdminContentManager';
 
 // ==========================================
@@ -44,7 +45,7 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
 
   // Admin Login States
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
-    return sessionStorage.getItem('badn_admin_logged_in') === 'true';
+    return safeSessionStorage.getItem('badn_admin_logged_in') === 'true';
   });
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -57,7 +58,7 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
 
     if (username.trim().toLowerCase() === ADMIN_USERNAME.toLowerCase() && password === ADMIN_PASSWORD) {
       setIsLoggedIn(true);
-      sessionStorage.setItem('badn_admin_logged_in', 'true');
+      safeSessionStorage.setItem('badn_admin_logged_in', 'true');
       setUsername('');
       setPassword('');
     } else {
@@ -67,7 +68,7 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    sessionStorage.removeItem('badn_admin_logged_in');
+    safeSessionStorage.removeItem('badn_admin_logged_in');
     onClose();
   };
 
