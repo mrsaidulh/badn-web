@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { motion } from 'motion/react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import FeatureGrid from './components/FeatureGrid';
@@ -23,6 +24,22 @@ export default function App() {
   const [isDashboardOpen, setIsDashboardOpen] = useState(false);
   const [showNotification, setShowNotification] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isAdminPath, setIsAdminPath] = useState(false);
+
+  // Check route for admin page
+  useEffect(() => {
+    const checkAdminPath = () => {
+      const pathname = window.location.pathname.toLowerCase();
+      setIsAdminPath(pathname === '/admin' || pathname === '/admin/');
+    };
+
+    checkAdminPath();
+
+    window.addEventListener('popstate', checkAdminPath);
+    return () => {
+      window.removeEventListener('popstate', checkAdminPath);
+    };
+  }, []);
 
   // Load and apply the saved theme on component mount
   useEffect(() => {
@@ -44,6 +61,24 @@ export default function App() {
     
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  if (isAdminPath) {
+    return (
+      <ToastProvider>
+        <Helmet>
+          <title>BADN Admin Dashboard - বাংলাদেশ একাডেমি অব ডায়েটেটিক্স অ্যান্ড নিউট্রিশন</title>
+          <meta name="robots" content="noindex, nofollow" />
+        </Helmet>
+        <InstructorDashboard
+          isOpen={true}
+          onClose={() => {
+            window.location.href = '/';
+          }}
+          isFullPage={true}
+        />
+      </ToastProvider>
+    );
+  }
 
   return (
     <ToastProvider>
@@ -88,7 +123,20 @@ export default function App() {
         {showNotification && (
           <div className="bg-amber-600 text-white text-[11px] sm:text-xs font-bold py-2.5 px-4 text-center relative flex items-center justify-center gap-1.5 shrink-0 select-none z-50">
             <Award className="w-4 h-4 text-amber-300 shrink-0" />
-            <span>নতুন সেশনের ভর্তি চলছে! ১৫ই জুলাই এর পূর্বে ভর্তি হলে পাবেন বিশেষ ২০% ফ্ল্যাট ডিসকাউন্ট!</span>
+            <motion.span
+              animate={{
+                scale: [1, 1.03, 1],
+                opacity: [0.95, 1, 0.95]
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="inline-block origin-center"
+            >
+              নতুন সেশনে ভর্তি চলছে ! দ্রুত ভর্তি হয়ে আপনার আসন নিশ্চিত করুন!
+            </motion.span>
             <button
               onClick={() => setShowNotification(false)}
               className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/80 hover:text-white cursor-pointer"

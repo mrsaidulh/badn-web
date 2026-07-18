@@ -62,7 +62,7 @@ export default function Header({ onOpenDashboard }: HeaderProps) {
           
           {/* Logo Brand exactly like BADN */}
           <a href="#home" className="flex items-center min-w-0 hover:opacity-90 transition-opacity">
-            <Logo showText={true} theme="color" />
+            <Logo showText={false} theme="color" />
           </a>
 
           {/* Desktop Navigation Links */}

@@ -29,9 +29,10 @@ const ADMIN_PASSWORD = 'Password123';
 interface InstructorDashboardProps {
   isOpen: boolean;
   onClose: () => void;
+  isFullPage?: boolean;
 }
 
-export default function InstructorDashboard({ isOpen, onClose }: InstructorDashboardProps) {
+export default function InstructorDashboard({ isOpen, onClose, isFullPage = false }: InstructorDashboardProps) {
   const [enrollments, setEnrollments] = useState<any[]>([]);
   const [seminars, setSeminars] = useState<any[]>([]);
   const [inquiries, setInquiries] = useState<any[]>([]);
@@ -207,23 +208,29 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
 
   return (
     <AnimatePresence>
-      {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      {(isOpen || isFullPage) && (
+        <div className={isFullPage ? "fixed inset-0 z-50 flex flex-col bg-white" : "fixed inset-0 z-50 flex items-center justify-center p-4"}>
           {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-          />
+          {!isFullPage && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={onClose}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            />
+          )}
 
           {/* Modal Container */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden z-10 border border-[#cbdccb]/40 h-[90vh] max-h-[calc(100vh-2rem)] flex flex-col"
+            initial={isFullPage ? { opacity: 0 } : { opacity: 0, scale: 0.95, y: 20 }}
+            animate={isFullPage ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
+            exit={isFullPage ? { opacity: 0 } : { opacity: 0, scale: 0.95, y: 20 }}
+            className={
+              isFullPage
+                ? "relative w-full h-full bg-white flex flex-col"
+                : "relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden z-10 border border-[#cbdccb]/40 h-[90vh] max-h-[calc(100vh-2rem)] flex flex-col"
+            }
           >
             {/* Header */}
             <div className="p-6 bg-brand text-brand-contrast flex justify-between items-center shrink-0">
@@ -259,9 +266,15 @@ export default function InstructorDashboard({ isOpen, onClose }: InstructorDashb
                 )}
                 <button
                   onClick={onClose}
-                  className="text-brand-contrast/80 hover:text-brand-contrast hover:bg-black/10 p-2 rounded-full transition-colors"
+                  className={
+                    isFullPage
+                      ? "flex items-center gap-1.5 px-3 py-1.5 bg-black/15 hover:bg-black/30 text-xs font-bold rounded-lg transition-colors border border-white/10 cursor-pointer"
+                      : "text-brand-contrast/80 hover:text-brand-contrast hover:bg-black/10 p-2 rounded-full transition-colors"
+                  }
+                  title={isFullPage ? "হোম পেজে ফিরে যান" : "বন্ধ করুন"}
                 >
                   <X className="w-5 h-5" />
+                  {isFullPage && <span>হোম পেজ</span>}
                 </button>
               </div>
             </div>
