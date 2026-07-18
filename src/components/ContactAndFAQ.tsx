@@ -4,17 +4,19 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Send, CheckCircle2, ChevronDown, HelpCircle, PhoneCall } from 'lucide-react';
 import { addInquiry } from '../lib/api';
 import { useToast } from './Toast';
+import { safeSessionStorage, safeJsonParse } from '../lib/storage';
 
 export default function ContactAndFAQ() {
   const { success: showSuccessToast } = useToast();
   const [formData, setFormData] = useState(() => {
-    try {
-      const saved = sessionStorage.getItem('badn_contact_form');
-      if (saved) {
-        return JSON.parse(saved);
-      }
-    } catch (e) {
-      console.error('Failed to parse saved contact form data', e);
+    const saved = safeSessionStorage.getItem('badn_contact_form');
+    if (saved) {
+      return safeJsonParse(saved, {
+        firstName: '',
+        lastName: '',
+        email: '',
+        message: ''
+      });
     }
     return {
       firstName: '',
@@ -27,11 +29,7 @@ export default function ContactAndFAQ() {
   const [openFaqId, setOpenFaqId] = useState<string | null>('faq1');
 
   useEffect(() => {
-    try {
-      sessionStorage.setItem('badn_contact_form', JSON.stringify(formData));
-    } catch (e) {
-      console.error('Failed to write contact form data to sessionStorage', e);
-    }
+    safeSessionStorage.setItem('badn_contact_form', JSON.stringify(formData));
   }, [formData]);
 
   const handleContactSubmit = (e: FormEvent) => {
@@ -53,11 +51,7 @@ export default function ContactAndFAQ() {
     setFormData({ firstName: '', lastName: '', email: '', message: '' });
     
     // Clear storage on successful submission
-    try {
-      sessionStorage.removeItem('badn_contact_form');
-    } catch (e) {
-      console.error('Failed to clear sessionStorage', e);
-    }
+    safeSessionStorage.removeItem('badn_contact_form');
 
     setTimeout(() => {
       setIsSubmitted(false);

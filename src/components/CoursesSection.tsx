@@ -13,7 +13,7 @@ export default function CoursesSection() {
   useEffect(() => {
     const loadCourses = () => {
       getCourses().then((data) => {
-        setCourses(data);
+        setCourses(Array.isArray(data) ? data : []);
       });
     };
     loadCourses();

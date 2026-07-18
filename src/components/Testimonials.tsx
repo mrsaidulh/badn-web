@@ -10,7 +10,7 @@ export default function Testimonials() {
   useEffect(() => {
     const loadTestimonials = () => {
       getTestimonials().then((data) => {
-        if (data && data.length > 0) {
+        if (Array.isArray(data) && data.length > 0) {
           setTestimonials(data);
         }
       });

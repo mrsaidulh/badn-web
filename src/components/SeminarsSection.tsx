@@ -12,7 +12,7 @@ export default function SeminarsSection() {
   useEffect(() => {
     const loadSeminars = () => {
       getSeminarEvents().then((data) => {
-        setSeminars(data);
+        setSeminars(Array.isArray(data) ? data : []);
       });
     };
     loadSeminars();
