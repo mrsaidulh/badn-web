@@ -64,7 +64,7 @@ export default function SeminarsSection() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                 <span className="absolute bottom-4 left-4 bg-brand text-brand-contrast font-bold text-[10px] uppercase px-2 py-0.5 rounded">
-                  {seminar.organization.split(' ')[0]}
+                  {seminar.organization ? seminar.organization.split(' ')[0] : 'BADN'}
                 </span>
               </div>
 
@@ -89,7 +89,7 @@ export default function SeminarsSection() {
                 <div className="pt-4 border-t border-gray-50 flex items-center justify-between">
                   <span className="text-xs font-semibold text-amber-700 flex items-center gap-1">
                     <MapPin className="w-3.5 h-3.5 shrink-0 text-amber-700" />
-                    <span>{seminar.location.split(' ')[0]}</span>
+                    <span>{seminar.location ? seminar.location.split(' ')[0] : 'Dhaka'}</span>
                   </span>
 
                   <button
