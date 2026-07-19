@@ -13,62 +13,77 @@ const PORT = 3000;
 
 // Database connection pool (lazy initialized)
 let pool: mysql.Pool | null = null;
-let dbInitialized = false;
+let dbInitializationPromise: Promise<mysql.Pool | null> | null = null;
 
 async function getDbPool() {
   if (pool) return pool;
+  if (dbInitializationPromise) return dbInitializationPromise;
 
-  const host = process.env.DB_HOST;
-  const user = process.env.DB_USER;
-  const password = process.env.DB_PASSWORD;
-  const database = process.env.DB_NAME || 'badn_db';
-  const port = parseInt(process.env.DB_PORT || '3306', 10);
+  dbInitializationPromise = (async () => {
+    const host = process.env.DB_HOST;
+    const user = process.env.DB_USER;
+    const password = process.env.DB_PASSWORD;
+    const database = process.env.DB_NAME || 'badn_db';
+    const port = parseInt(process.env.DB_PORT || '3306', 10);
 
-  if (!host) {
-    console.warn('⚠️ DB_HOST environment variable is not defined. Using client-side LocalStorage fallback for demo/development.');
-    return null;
-  }
-
-  try {
-    // Connect without a database first, to ensure database existence
-    const tempConnection = await mysql.createConnection({
-      host,
-      user,
-      password,
-      port
-    });
-
-    console.log(`📡 Connected to MySQL server at ${host}:${port}. Checking database "${database}"...`);
-    await tempConnection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\``);
-    await tempConnection.end();
-
-    // Create the connection pool with the selected database
-    pool = mysql.createPool({
-      host,
-      user,
-      password,
-      database,
-      port,
-      waitForConnections: true,
-      connectionLimit: 10,
-      queueLimit: 0
-    });
-
-    // Automatically create tables if they do not exist
-    if (!dbInitialized) {
-      await initializeTables(pool);
-      dbInitialized = true;
+    if (!host) {
+      console.warn('⚠️ DB_HOST environment variable is not defined. Using client-side LocalStorage fallback for demo/development.');
+      return null;
     }
 
-    return pool;
-  } catch (error: any) {
-    console.error('❌ Failed to connect or initialize MySQL database:', error.message);
-    pool = null;
-    return null;
-  }
+    try {
+      // Connect without a database first, to ensure database existence
+      const tempConnection = await mysql.createConnection({
+        host,
+        user,
+        password,
+        port
+      });
+
+      console.log(`📡 Connected to MySQL server at ${host}:${port}. Checking database "${database}"...`);
+      await tempConnection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\``);
+      await tempConnection.end();
+
+      // Create the connection pool with the selected database
+      const newPool = mysql.createPool({
+        host,
+        user,
+        password,
+        database,
+        port,
+        waitForConnections: true,
+        connectionLimit: 10,
+        queueLimit: 0
+      });
+
+      // Automatically create tables if they do not exist
+      await initializeTables(newPool);
+
+      pool = newPool;
+      return pool;
+    } catch (error: any) {
+      console.error('❌ Failed to connect or initialize MySQL database:', error.message);
+      pool = null;
+      dbInitializationPromise = null; // Reset so that next request can retry if failed
+      return null;
+    }
+  })();
+
+  return dbInitializationPromise;
 }
 
 async function initializeTables(dbPool: mysql.Pool) {
+  try {
+    // Check if tables are already initialized by querying 'users' table presence
+    const [rows]: any = await dbPool.query("SHOW TABLES LIKE 'users'");
+    if (rows && rows.length > 0) {
+      console.log('📡 Connected to MySQL database. Table structure is already verified.');
+      return;
+    }
+  } catch (err: any) {
+    console.warn('⚠️ Error checking table existence, proceeding with safety creation:', err.message);
+  }
+
   console.log('📦 Automatically initializing database tables...');
   
   // Users Table
