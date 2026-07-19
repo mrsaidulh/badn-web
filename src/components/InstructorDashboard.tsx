@@ -236,48 +236,48 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
             }
           >
             {/* Header */}
-            <div className="py-3 px-5 bg-brand text-brand-contrast flex justify-between items-center shrink-0 border-b border-brand-hover/25">
+            <div className="p-6 bg-brand text-brand-contrast flex justify-between items-center shrink-0">
               <div>
-                <h3 className="text-sm sm:text-base font-extrabold flex items-center gap-2">
-                  <Award className="w-4 h-4 text-amber-500" />
-                  BADN Instructor & Admin Panel (VPS & SQL)
+                <h3 className="text-xl font-bold flex items-center gap-2">
+                  <Award className="w-5 h-5 text-amber-500" />
+                  BADN ইন্ট্রাক্টর ও এডমিন প্যানেল (VPS & SQL Simulator)
                 </h3>
-                <p className="text-[11px] opacity-90 mt-0.5">
-                  Manage course enrollments, seminar bookings, and student inquiries in real-time.
+                <p className="text-xs opacity-85 mt-1">
+                  এই প্যানেল থেকে আপনি ভর্তিকৃত ছাত্র-ছাত্রী, সেমিনারে অংশগ্রহণকারী এবং জিজ্ঞাসাসমূহ রিয়েল-টাইমে দেখতে ও নিয়ন্ত্রণ করতে পারবেন।
                 </p>
                 {dbStatus && (
-                  <div className={`mt-1 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-black border ${
+                  <div className={`mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-extrabold border ${
                     dbStatus.connected 
                       ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' 
                       : 'bg-amber-500/20 text-amber-300 border-amber-500/30'
                   }`}>
-                    <span className={`w-1.5 h-1.5 rounded-full ${dbStatus.connected ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
-                    <span>Database: {dbStatus.connected ? `Online (Real-Time MySQL: ${dbStatus.database})` : 'Simulation (LocalStorage Mode)'}</span>
+                    <span className={`w-2 h-2 rounded-full ${dbStatus.connected ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
+                    <span>MySQL: {dbStatus.connected ? `রিয়েল-টাইম কানেক্টেড (${dbStatus.database})` : 'লোকাল লোকালস্টোরেজ মোড অ্যাক্টিভ (VPS-এ কানেক্ট হবে)'}</span>
                   </div>
                 )}
               </div>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 {isLoggedIn && (
                   <button
                     onClick={handleLogout}
-                    className="flex items-center gap-1 px-2.5 py-1 bg-black/20 hover:bg-black/35 text-[10px] font-black rounded-lg transition-colors border border-white/10 cursor-pointer"
-                    title="Logout"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-black/20 hover:bg-black/35 text-xs font-bold rounded-lg transition-colors border border-white/10 cursor-pointer"
+                    title="লগআউট করুন"
                   >
-                    <LogOut className="w-3.5 h-3.5 text-red-400" />
-                    <span>Logout</span>
+                    <LogOut className="w-4 h-4 text-red-400" />
+                    <span>লগআউট</span>
                   </button>
                 )}
                 <button
                   onClick={onClose}
                   className={
                     isFullPage
-                      ? "flex items-center gap-1 px-2.5 py-1 bg-black/15 hover:bg-black/30 text-[10px] font-black rounded-lg transition-colors border border-white/10 cursor-pointer"
-                      : "text-brand-contrast/80 hover:text-brand-contrast hover:bg-black/10 p-1.5 rounded-full transition-colors"
+                      ? "flex items-center gap-1.5 px-3 py-1.5 bg-black/15 hover:bg-black/30 text-xs font-bold rounded-lg transition-colors border border-white/10 cursor-pointer"
+                      : "text-brand-contrast/80 hover:text-brand-contrast hover:bg-black/10 p-2 rounded-full transition-colors"
                   }
-                  title={isFullPage ? "Back to Home Page" : "Close"}
+                  title={isFullPage ? "হোম পেজে ফিরে যান" : "বন্ধ করুন"}
                 >
-                  <X className="w-4 h-4" />
-                  {isFullPage && <span>Home Page</span>}
+                  <X className="w-5 h-5" />
+                  {isFullPage && <span>হোম পেজ</span>}
                 </button>
               </div>
             </div>
@@ -287,35 +287,35 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                 <motion.div
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="w-full max-w-sm bg-white dark:bg-[#121b14] p-5 sm:p-6 rounded-2xl border border-gray-200/80 dark:border-[#223326] shadow-xl space-y-4"
+                  className="w-full max-w-md bg-white dark:bg-[#121b14] p-6 sm:p-8 rounded-2xl border border-gray-200/80 dark:border-[#223326] shadow-xl space-y-6"
                 >
-                  <div className="text-center space-y-1.5">
-                    <div className="mx-auto w-10 h-10 bg-brand-light dark:bg-[#1d2d21] rounded-full flex items-center justify-center text-brand">
-                      <Lock className="w-5 h-5" />
+                  <div className="text-center space-y-2">
+                    <div className="mx-auto w-12 h-12 bg-brand-light dark:bg-[#1d2d21] rounded-full flex items-center justify-center text-brand">
+                      <Lock className="w-6 h-6" />
                     </div>
-                    <h4 className="text-base font-extrabold text-gray-900 dark:text-white">Admin Login</h4>
-                    <p className="text-[11px] text-gray-500 dark:text-gray-400">
-                      Please enter your credentials to access the control panel.
+                    <h4 className="text-lg font-bold text-gray-900 dark:text-white">এডমিন লগইন (Admin Login)</h4>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      প্যানেলটি অ্যাক্সেস করতে অনুগ্রহ করে আপনার ইউজারনেম ও পাসওয়ার্ড দিয়ে লগইন করুন।
                     </p>
                   </div>
 
-                  <form onSubmit={handleLogin} className="space-y-3">
+                  <form onSubmit={handleLogin} className="space-y-4">
                     {loginError && (
                       <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="p-2.5 bg-red-50 dark:bg-red-950/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-900/40 rounded-xl text-[11px] font-semibold flex items-center gap-2"
+                        className="p-3 bg-red-50 dark:bg-red-950/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-900/40 rounded-xl text-xs font-semibold flex items-center gap-2"
                       >
-                        <ShieldAlert className="w-3.5 h-3.5 shrink-0" />
+                        <ShieldAlert className="w-4 h-4 shrink-0" />
                         <span>{loginError}</span>
                       </motion.div>
                     )}
 
                     <div className="space-y-1">
-                      <label className="block text-[10px] font-extrabold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Username:</label>
+                      <label className="block text-xs font-bold text-gray-700 dark:text-gray-300">ইউজারনেম (Username):</label>
                       <div className="relative">
-                        <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                          <User className="w-3.5 h-3.5" />
+                        <span className="absolute left-3.5 top-1/2 transform -translate-y-1/2 text-gray-400">
+                          <User className="w-4 h-4" />
                         </span>
                         <input
                           type="text"
@@ -323,16 +323,16 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                           onChange={(e) => setUsername(e.target.value)}
                           placeholder="admin"
                           required
-                          className="w-full pl-9 pr-3 py-2 text-xs border border-gray-300 dark:border-[#223326] rounded-xl focus:outline-none focus:ring-1 focus:ring-brand bg-gray-50 dark:bg-[#0c140e] text-gray-800 dark:text-white font-medium"
+                          className="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-300 dark:border-[#223326] rounded-xl focus:outline-none focus:ring-2 focus:ring-brand bg-gray-50 dark:bg-[#0c140e] text-gray-800 dark:text-white font-medium"
                         />
                       </div>
                     </div>
 
                     <div className="space-y-1">
-                      <label className="block text-[10px] font-extrabold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Password:</label>
+                      <label className="block text-xs font-bold text-gray-700 dark:text-gray-300">পাসওয়ার্ড (Password):</label>
                       <div className="relative">
-                        <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                          <Lock className="w-3.5 h-3.5" />
+                        <span className="absolute left-3.5 top-1/2 transform -translate-y-1/2 text-gray-400">
+                          <Lock className="w-4 h-4" />
                         </span>
                         <input
                           type={showPassword ? "text" : "password"}
@@ -340,24 +340,24 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                           onChange={(e) => setPassword(e.target.value)}
                           placeholder="••••••••"
                           required
-                          className="w-full pl-9 pr-9 py-2 text-xs border border-gray-300 dark:border-[#223326] rounded-xl focus:outline-none focus:ring-1 focus:ring-brand bg-gray-50 dark:bg-[#0c140e] text-gray-800 dark:text-white font-medium"
+                          className="w-full pl-10 pr-10 py-2.5 text-sm border border-gray-300 dark:border-[#223326] rounded-xl focus:outline-none focus:ring-2 focus:ring-brand bg-gray-50 dark:bg-[#0c140e] text-gray-800 dark:text-white font-medium"
                         />
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
                           className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 cursor-pointer"
                         >
-                          {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                          {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                         </button>
                       </div>
                     </div>
 
                     <button
                       type="submit"
-                      className="w-full py-2.5 bg-brand text-brand-contrast hover:text-white text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 hover:bg-brand-hover cursor-pointer shadow-md transition-all mt-4"
+                      className="w-full py-3 bg-brand text-brand-contrast hover:text-white text-xs sm:text-sm font-bold rounded-xl flex items-center justify-center gap-1.5 hover:bg-brand-hover cursor-pointer shadow-md transition-all mt-6"
                     >
-                      <LogIn className="w-3.5 h-3.5" />
-                      Sign In
+                      <LogIn className="w-4 h-4" />
+                      লগইন করুন
                     </button>
                   </form>
                 </motion.div>
@@ -372,79 +372,79 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                     className="flex items-center gap-2 px-3 py-1.5 bg-black/10 rounded-xl font-bold text-xs cursor-pointer active:scale-95 transition-transform"
                   >
                     <Menu className="w-4 h-4" />
-                    <span>Admin Menu</span>
+                    <span>এডমিন মেনু</span>
                   </button>
                   <span className="text-xs font-bold tracking-wider uppercase">
-                    {activeTab === 'overview' && '📊 Overview'}
-                    {activeTab === 'enrollments' && '📥 Enrollments'}
-                    {activeTab === 'seminars' && '📅 Seminars'}
-                    {activeTab === 'inquiries' && '✉️ Inquiries'}
-                    {activeTab === 'certificates' && '🎓 Certificates'}
-                    {activeTab === 'content' && '📝 Content'}
+                    {activeTab === 'overview' && '📊 ড্যাশবোর্ড ওভারভিউ'}
+                    {activeTab === 'enrollments' && '📥 কোর্স ভর্তি আবেদন'}
+                    {activeTab === 'seminars' && '📅 সেমিনার বুকিং'}
+                    {activeTab === 'inquiries' && '✉️ জিজ্ঞাসা ও মেসেজ'}
+                    {activeTab === 'certificates' && '🎓 সার্টিফিকেট জেনারেটর'}
+                    {activeTab === 'content' && '📝 কন্টেন্ট ম্যানেজমেন্ট'}
                   </span>
                 </div>
 
                 {/* Sidebar Section */}
                 <div className={`
                   ${isMobileMenuOpen ? 'flex' : 'hidden'} 
-                  md:flex flex-col w-full md:w-60 bg-white border-r border-[#cbdccb]/30 shrink-0 overflow-y-auto transition-all duration-300
+                  md:flex flex-col w-full md:w-72 bg-white border-r border-[#cbdccb]/30 shrink-0 overflow-y-auto transition-all duration-300
                   absolute md:relative inset-x-0 bottom-0 top-[48px] md:top-0 z-40 md:z-auto
                 `}>
                   {/* Sidebar Header/User info */}
-                  <div className="p-4 border-b border-gray-100 bg-brand-light/25 flex items-center gap-2.5">
-                    <div className="w-9 h-9 rounded-xl bg-brand text-brand-contrast flex items-center justify-center font-bold text-xs shadow-md shrink-0">
+                  <div className="p-5 border-b border-gray-100 bg-brand-light/25 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-brand text-brand-contrast flex items-center justify-center font-bold text-sm shadow-md shrink-0">
                       AD
                     </div>
                     <div>
-                      <h4 className="text-[11px] font-extrabold text-gray-900">Super Admin</h4>
-                      <p className="text-[9px] font-medium text-gray-500">System Controller</p>
+                      <h4 className="text-xs font-extrabold text-gray-900">নিয়ন্ত্রণকারী এডমিন</h4>
+                      <p className="text-[10px] font-medium text-gray-500">অনলাইন পোর্টাল এডমিন</p>
                     </div>
                   </div>
 
                   {/* Sidebar Menu Items */}
-                  <div className="p-3 space-y-4 flex-1">
+                  <div className="p-4 space-y-5 flex-1">
                     
                     {/* Category 1: General */}
-                    <div className="space-y-1">
-                      <span className="text-[8px] font-black text-gray-400 uppercase tracking-wider block px-2">
-                        General
+                    <div className="space-y-1.5">
+                      <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest block px-2">
+                        সাধারণ ওভারভিউ
                       </span>
                       <button
                         onClick={() => { setActiveTab('overview'); setIsMobileMenuOpen(false); }}
-                        className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl text-[11px] font-extrabold transition-all cursor-pointer ${
+                        className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                           activeTab === 'overview'
                             ? 'bg-brand text-brand-contrast shadow-sm'
                             : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                         }`}
                       >
-                        <div className="flex items-center gap-1.5">
-                          <LayoutDashboard className="w-3.5 h-3.5 shrink-0" />
-                          <span>Dashboard Overview</span>
+                        <div className="flex items-center gap-2">
+                          <LayoutDashboard className="w-4 h-4 shrink-0" />
+                          <span>📊 ড্যাশবোর্ড ওভারভিউ</span>
                         </div>
-                        <ChevronRight className="w-3 h-3 opacity-60" />
+                        <ChevronRight className="w-3.5 h-3.5 opacity-60" />
                       </button>
                     </div>
 
                     {/* Category 2: Registrations */}
-                    <div className="space-y-1">
-                      <span className="text-[8px] font-black text-gray-400 uppercase tracking-wider block px-2">
-                        Registrations
+                    <div className="space-y-1.5">
+                      <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest block px-2">
+                        অপারেশন ও আবেদনসমূহ
                       </span>
                       
                       {/* Course Enrollments */}
                       <button
                         onClick={() => { setActiveTab('enrollments'); setIsMobileMenuOpen(false); }}
-                        className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl text-[11px] font-extrabold transition-all cursor-pointer ${
+                        className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                           activeTab === 'enrollments'
                             ? 'bg-brand text-brand-contrast shadow-sm'
                             : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                         }`}
                       >
-                        <div className="flex items-center gap-1.5">
-                          <Users className="w-3.5 h-3.5 shrink-0" />
-                          <span>Course Enrollments</span>
+                        <div className="flex items-center gap-2">
+                          <Users className="w-4 h-4 shrink-0" />
+                          <span>📥 কোর্স ভর্তি আবেদন</span>
                         </div>
-                        <span className={`text-[8px] font-extrabold px-1.5 py-0.5 rounded-full ${activeTab === 'enrollments' ? 'bg-white text-brand' : 'bg-brand-light text-brand'}`}>
+                        <span className={`text-[9px] font-extrabold px-1.5 py-0.5 rounded-full ${activeTab === 'enrollments' ? 'bg-white text-brand' : 'bg-brand-light text-brand'}`}>
                           {enrollments.length}
                         </span>
                       </button>
@@ -452,105 +452,105 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                       {/* Seminar Bookings */}
                       <button
                         onClick={() => { setActiveTab('seminars'); setIsMobileMenuOpen(false); }}
-                        className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl text-[11px] font-extrabold transition-all cursor-pointer ${
+                        className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                           activeTab === 'seminars'
                             ? 'bg-brand text-brand-contrast shadow-sm'
                             : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                         }`}
                       >
-                        <div className="flex items-center gap-1.5">
-                          <BookOpen className="w-3.5 h-3.5 shrink-0" />
-                          <span>Seminar Bookings</span>
+                        <div className="flex items-center gap-2">
+                          <BookOpen className="w-4 h-4 shrink-0" />
+                          <span>📅 সেমিনার বুকিং</span>
                         </div>
-                        <span className={`text-[8px] font-extrabold px-1.5 py-0.5 rounded-full ${activeTab === 'seminars' ? 'bg-white text-brand' : 'bg-brand-light text-brand'}`}>
+                        <span className={`text-[9px] font-extrabold px-1.5 py-0.5 rounded-full ${activeTab === 'seminars' ? 'bg-white text-brand' : 'bg-brand-light text-brand'}`}>
                           {seminars.length}
                         </span>
                       </button>
                     </div>
 
                     {/* Category 3: Communications */}
-                    <div className="space-y-1">
-                      <span className="text-[8px] font-black text-gray-400 uppercase tracking-wider block px-2">
-                        Communications
+                    <div className="space-y-1.5">
+                      <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest block px-2">
+                        শিক্ষার্থী যোগাযোগ
                       </span>
 
                       {/* Inquiries */}
                       <button
                         onClick={() => { setActiveTab('inquiries'); setIsMobileMenuOpen(false); }}
-                        className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl text-[11px] font-extrabold transition-all cursor-pointer ${
+                        className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                           activeTab === 'inquiries'
                             ? 'bg-brand text-brand-contrast shadow-sm'
                             : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                         }`}
                       >
-                        <div className="flex items-center gap-1.5">
-                          <MessageSquare className="w-3.5 h-3.5 shrink-0" />
-                          <span>Inquiries & Messages</span>
+                        <div className="flex items-center gap-2">
+                          <MessageSquare className="w-4 h-4 shrink-0" />
+                          <span>✉️ জিজ্ঞাসা ও মেসেজ</span>
                         </div>
-                        <span className={`text-[8px] font-extrabold px-1.5 py-0.5 rounded-full ${activeTab === 'inquiries' ? 'bg-white text-brand' : 'bg-brand-light text-brand'}`}>
+                        <span className={`text-[9px] font-extrabold px-1.5 py-0.5 rounded-full ${activeTab === 'inquiries' ? 'bg-white text-brand' : 'bg-brand-light text-brand'}`}>
                           {inquiries.length}
                         </span>
                       </button>
                     </div>
 
                     {/* Category 4: Tools */}
-                    <div className="space-y-1">
-                      <span className="text-[8px] font-black text-gray-400 uppercase tracking-wider block px-2">
-                        Tools
+                    <div className="space-y-1.5">
+                      <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest block px-2">
+                        সনদপত্র ও টুলস
                       </span>
 
                       {/* Certificates */}
                       <button
                         onClick={() => { setActiveTab('certificates'); setIsMobileMenuOpen(false); }}
-                        className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl text-[11px] font-extrabold transition-all cursor-pointer ${
+                        className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                           activeTab === 'certificates'
                             ? 'bg-brand text-brand-contrast shadow-sm'
                             : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                         }`}
                       >
-                        <div className="flex items-center gap-1.5">
-                          <Award className="w-3.5 h-3.5 shrink-0" />
-                          <span>Certificate Generator</span>
+                        <div className="flex items-center gap-2">
+                          <Award className="w-4 h-4 shrink-0" />
+                          <span>🎓 সার্টিফিকেট জেনারেটর</span>
                         </div>
-                        <ChevronRight className="w-3 h-3 opacity-60" />
+                        <ChevronRight className="w-3.5 h-3.5 opacity-60" />
                       </button>
                     </div>
 
                     {/* Category 5: Content */}
-                    <div className="space-y-1">
-                      <span className="text-[8px] font-black text-gray-400 uppercase tracking-wider block px-2">
-                        Administration
+                    <div className="space-y-1.5">
+                      <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest block px-2">
+                        কন্টেন্ট এডমিনিস্ট্রেশন
                       </span>
 
                       {/* Content Management */}
                       <button
                         onClick={() => { setActiveTab('content'); setIsMobileMenuOpen(false); }}
-                        className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl text-[11px] font-extrabold transition-all cursor-pointer ${
+                        className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                           activeTab === 'content'
                             ? 'bg-[#e97c00] text-white shadow-sm'
                             : 'text-gray-600 hover:text-[#e97c00] hover:bg-orange-50'
                         }`}
                       >
-                        <div className="flex items-center gap-1.5">
-                          <Layers className="w-3.5 h-3.5 shrink-0" />
-                          <span>Live Content Editor</span>
+                        <div className="flex items-center gap-2">
+                          <Layers className="w-4 h-4 shrink-0" />
+                          <span>📝 লাইভ কন্টেন্ট আপডেট</span>
                         </div>
-                        <ChevronRight className="w-3 h-3 opacity-60" />
+                        <ChevronRight className="w-3.5 h-3.5 opacity-60" />
                       </button>
                     </div>
 
                   </div>
 
                   {/* Sidebar Footer with Logout */}
-                  <div className="p-3 border-t border-gray-100 bg-gray-50 flex items-center justify-between">
+                  <div className="p-4 border-t border-gray-100 bg-gray-50 flex items-center justify-between">
                     <button
                       onClick={handleLogout}
-                      className="flex items-center gap-1 text-[10px] font-black text-red-600 hover:bg-red-50 px-2 py-1 rounded-lg border border-red-200 transition-colors cursor-pointer"
+                      className="flex items-center gap-1.5 text-[11px] font-extrabold text-red-600 hover:bg-red-50 px-2.5 py-1.5 rounded-lg border border-red-200 transition-colors cursor-pointer"
                     >
-                      <LogOut className="w-3 h-3" />
-                      <span>Logout</span>
+                      <LogOut className="w-3.5 h-3.5" />
+                      <span>লগআউট করুন</span>
                     </button>
-                    <span className="text-[8px] text-gray-400 font-mono">v1.2.0-Live</span>
+                    <span className="text-[9px] text-gray-400 font-mono">v1.2.0-Live</span>
                   </div>
 
                 </div>
@@ -559,22 +559,22 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                 <div className="flex-1 flex flex-col overflow-hidden">
                   
                   {/* Top Action / Swatches Bar */}
-                  <div className="bg-white border-b border-[#cbdccb]/30 px-5 py-2 flex flex-col sm:flex-row items-center justify-between shrink-0 gap-2">
-                    <div className="flex items-center gap-1.5">
-                      <Settings className="w-3.5 h-3.5 text-brand" />
-                      <h4 className="text-[11px] font-extrabold text-gray-700 uppercase tracking-wider">
-                        {activeTab === 'overview' && 'Dashboard Overview'}
-                        {activeTab === 'enrollments' && 'Course Enrollment Applications'}
-                        {activeTab === 'seminars' && 'Seminar Booking Registrations'}
-                        {activeTab === 'inquiries' && 'Student Inquiries & Messages'}
-                        {activeTab === 'certificates' && 'Badge & Certificate Generator'}
-                        {activeTab === 'content' && 'Live Website Content Editor'}
+                  <div className="bg-white border-b border-[#cbdccb]/30 px-6 py-2.5 flex flex-col sm:flex-row items-center justify-between shrink-0 gap-3">
+                    <div className="flex items-center gap-2">
+                      <Settings className="w-4 h-4 text-brand" />
+                      <h4 className="text-xs font-bold text-gray-700">
+                        {activeTab === 'overview' && '📊 ড্যাশবোর্ড ওভারভিউ'}
+                        {activeTab === 'enrollments' && '📥 কোর্স ভর্তি আবেদন তালিকা'}
+                        {activeTab === 'seminars' && '📅 সেমিনার বুকিং তালিকা'}
+                        {activeTab === 'inquiries' && '✉️ জিজ্ঞাসা ও শিক্ষার্থী মেসেজ'}
+                        {activeTab === 'certificates' && '🎓 ব্যাজ ও সার্টিফিকেট জেনারেটর'}
+                        {activeTab === 'content' && '📝 লাইভ ওয়েবসাইট কন্টেন্ট এডিটর'}
                       </h4>
                     </div>
 
                     {/* Website Theme Selector inside main panel */}
                     <div className="flex items-center gap-2 bg-gray-50 px-3 py-1 rounded-xl border border-gray-200 shadow-inner">
-                      <span className="text-[10px] font-bold text-gray-600">Website Theme:</span>
+                      <span className="text-[10px] font-bold text-gray-600">ওয়েবসাইট থিম:</span>
                       <div className="flex gap-1.5">
                         {THEMES.map((theme) => (
                           <button
@@ -603,11 +603,11 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                           </div>
                           <div className="space-y-2 relative z-10">
                             <span className="text-[9px] bg-white/20 text-white font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider">
-                              Admin Portal Active
+                              এডমিন পোর্টাল অ্যাক্টিভ
                             </span>
-                            <h2 className="text-xl sm:text-2xl font-black">Welcome to the BADN Admin Dashboard!</h2>
+                            <h2 className="text-xl sm:text-2xl font-black">স্বাগতম, BADN এডমিন ড্যাশবোর্ডে!</h2>
                             <p className="text-xs opacity-90 max-w-xl leading-relaxed">
-                              Manage academy students, seminar registrations, content updates, and verify submissions in real-time using the sidebar navigation.
+                              এখানে আপনি আপনার একাডেমি বা অ্যাসোসিয়েশনের শিক্ষার্থীদের তথ্য পরিচালনা করতে পারেন। বাম পাশের ক্যাটাগরি মেনু থেকে আপনি রিয়েল-টাইমে যেকোনো বিভাগে গিয়ে তথ্য যাচাই করতে পারবেন।
                             </p>
                           </div>
                         </div>
@@ -622,9 +622,9 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                               <Users className="w-6 h-6" />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <h4 className="text-[10px] text-gray-500 font-extrabold uppercase truncate">Total Course Applications</h4>
+                              <h4 className="text-[10px] text-gray-500 font-extrabold uppercase truncate">মোট ভর্তি আবেদন</h4>
                               <p className="text-2xl font-black text-gray-900 mt-0.5">{enrollments.length}</p>
-                              <span className="text-[10px] text-emerald-700 font-bold flex items-center gap-0.5 mt-0.5">Manage Applications <ChevronRight className="w-3 h-3" /></span>
+                              <span className="text-[10px] text-emerald-700 font-bold flex items-center gap-0.5 mt-0.5">আবেদন পরিচালনা করুন <ChevronRight className="w-3 h-3" /></span>
                             </div>
                           </button>
 
@@ -636,9 +636,9 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                               <BookOpen className="w-6 h-6" />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <h4 className="text-[10px] text-gray-500 font-extrabold uppercase truncate">Seminar Bookings</h4>
+                              <h4 className="text-[10px] text-gray-500 font-extrabold uppercase truncate">সেমিনার বুকিং</h4>
                               <p className="text-2xl font-black text-gray-900 mt-0.5">{seminars.length}</p>
-                              <span className="text-[10px] text-blue-700 font-bold flex items-center gap-0.5 mt-0.5">View Bookings <ChevronRight className="w-3 h-3" /></span>
+                              <span className="text-[10px] text-blue-700 font-bold flex items-center gap-0.5 mt-0.5">বুকিংসমূহ দেখুন <ChevronRight className="w-3 h-3" /></span>
                             </div>
                           </button>
 
@@ -650,9 +650,9 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                               <MessageSquare className="w-6 h-6" />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <h4 className="text-[10px] text-gray-500 font-extrabold uppercase truncate">Student Inquiries</h4>
+                              <h4 className="text-[10px] text-gray-500 font-extrabold uppercase truncate">যোগাযোগ জিজ্ঞাসা</h4>
                               <p className="text-2xl font-black text-gray-900 mt-0.5">{inquiries.length}</p>
-                              <span className="text-[10px] text-purple-700 font-bold flex items-center gap-0.5 mt-0.5">View Inquiries <ChevronRight className="w-3 h-3" /></span>
+                              <span className="text-[10px] text-purple-700 font-bold flex items-center gap-0.5 mt-0.5">জিজ্ঞাসা ও মেসেজ দেখুন <ChevronRight className="w-3 h-3" /></span>
                             </div>
                           </button>
                         </div>
@@ -664,22 +664,22 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                           <div className="bg-white p-5 rounded-2xl border border-[#cbdccb]/20 shadow-sm space-y-4">
                             <h4 className="text-xs font-extrabold uppercase tracking-wider text-gray-500 flex items-center gap-1.5">
                               <Database className="w-4 h-4 text-brand" />
-                              Database Connection Status
+                              ডেটাবেস সংযোগ পরিস্থিতি
                             </h4>
                             {dbStatus && (
                               <div className="space-y-3">
                                 <div className="p-3 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between">
-                                  <span className="text-xs text-gray-600 font-semibold">Connection Type:</span>
+                                  <span className="text-xs text-gray-600 font-semibold">সংযোগ টাইপ:</span>
                                   <span className="text-xs font-extrabold text-gray-800 uppercase font-mono">{dbStatus.connected ? 'MySQL Real-Time API' : 'Client-Side Sim (LocalStorage)'}</span>
                                 </div>
                                 <div className="p-3 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between">
-                                  <span className="text-xs text-gray-600 font-semibold">Database Name:</span>
+                                  <span className="text-xs text-gray-600 font-semibold">ডেটাবেস নাম:</span>
                                   <span className="text-xs font-mono font-bold text-[#e97c00]">{dbStatus.database || 'badn_db_simulation'}</span>
                                 </div>
                                 <div className="p-3 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between">
-                                  <span className="text-xs text-gray-600 font-semibold">Connection Status:</span>
+                                  <span className="text-xs text-gray-600 font-semibold">সংযোগ অবস্থা:</span>
                                   <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full ${dbStatus.connected ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800'}`}>
-                                    {dbStatus.connected ? 'Connected (Real-Time Synchronized)' : 'Simulation Mode (LocalStorage Mode)'}
+                                    {dbStatus.connected ? 'কানেক্টেড (Real-Time Synchronized)' : 'সিমুলেশন মোড (রিয়েল-টাইমে ডেটা সেভড)'}
                                   </span>
                                 </div>
                               </div>
@@ -690,20 +690,20 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                           <div className="bg-white p-5 rounded-2xl border border-[#cbdccb]/20 shadow-sm space-y-4">
                             <h4 className="text-xs font-extrabold uppercase tracking-wider text-gray-500 flex items-center gap-1.5">
                               <Info className="w-4 h-4 text-amber-600" />
-                              Quick Administrator Guide
+                              ব্যবহারকারীর দ্রুত নির্দেশিকা
                             </h4>
                             <div className="text-xs text-gray-600 space-y-2.5 leading-relaxed">
                               <div className="flex gap-2">
-                                <span className="text-amber-500 font-bold shrink-0">1.</span>
-                                <p><span className="font-bold text-gray-900">Verification:</span> Review new course enrollment applications and click the checkmark button to approve student enrollment.</p>
+                                <span className="text-amber-500 font-bold shrink-0">১.</span>
+                                <p><span className="font-bold text-gray-900">ভর্তি যাচাই:</span> যেকোনো নতুন ভর্তি আবেদন দেখার সাথে সাথে "অনুমোদন করুন" বাটনে ক্লিক করে ছাত্র-ছাত্রীকে এনরোল করতে পারবেন।</p>
                               </div>
                               <div className="flex gap-2">
-                                <span className="text-amber-500 font-bold shrink-0">2.</span>
-                                <p><span className="font-bold text-gray-900">Certificates:</span> Use the Certificate Generator to quickly issue and download professional PDF/print certificates for approved students.</p>
+                                <span className="text-amber-500 font-bold shrink-0">২.</span>
+                                <p><span className="font-bold text-gray-900">সার্টিফিকেট ও সনদ:</span> "সার্টিফিকেট জেনারেটর" থেকে শিক্ষার্থীর নাম ও কোর্স নির্বাচন করে এক ক্লিকে রিয়েল-টাইম ইউনিক সনদ তৈরি ও ডাউনলোড করুন।</p>
                               </div>
                               <div className="flex gap-2">
-                                <span className="text-amber-500 font-bold shrink-0">3.</span>
-                                <p><span className="font-bold text-gray-900">Live Content Updates:</span> Add, update, or remove courses, upcoming seminars, and student testimonials directly into the active landing page.</p>
+                                <span className="text-amber-500 font-bold shrink-0">৩.</span>
+                                <p><span className="font-bold text-gray-900">লাইভ কন্টেন্ট আপডেট:</span> "লাইভ কন্টেন্ট আপডেট" বিভাগ থেকে নতুন নতুন কোর্স, ওয়ার্কশপ বা প্রশংসামূলক রিভিউ তাৎক্ষণিক আপলোড করতে পারেন।</p>
                               </div>
                             </div>
                           </div>
@@ -717,7 +717,7 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                 <div className="space-y-4">
                   {enrollments.length === 0 ? (
                     <div className="text-center py-12 text-gray-400 text-sm">
-                      No enrollment applications submitted yet.
+                      কোনো ভর্তির আবেদন এখনও জমা হয়নি। ল্যান্ডিং পেজে কোর্স কার্ডের "ভর্তি হোন" বাটনে ক্লিক করে প্রথম আবেদন করুন!
                     </div>
                   ) : (
                     enrollments.map((enr: any) => (
@@ -728,12 +728,12 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                           </span>
                           <h4 className="text-sm font-bold text-gray-900 mt-1">{enr.studentName}</h4>
                           <div className="text-xs text-gray-500 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-0.5 mt-1">
-                            <p>📞 Phone: {enr.phone}</p>
-                            <p>✉️ Email: {enr.email}</p>
-                            <p>🧬 Background: {enr.background}</p>
-                            <p>💳 Payment: {enr.paymentMethod}</p>
+                            <p>📞 ফোন: {enr.phone}</p>
+                            <p>✉️ ইমেইল: {enr.email}</p>
+                            <p>🧬 ব্যাকগ্রাউন্ড: {enr.background}</p>
+                            <p>💳 পেমেন্ট: {enr.paymentMethod}</p>
                           </div>
-                          {enr.note && <p className="text-xs italic text-amber-800 bg-amber-50 px-2 py-1 rounded-md mt-1 border border-amber-100">📝 Note: {enr.note}</p>}
+                          {enr.note && <p className="text-xs italic text-amber-800 bg-amber-50 px-2 py-1 rounded-md mt-1 border border-amber-100">📝 নোট: {enr.note}</p>}
                         </div>
 
                         <div className="flex sm:flex-col items-end gap-2 shrink-0">
@@ -741,7 +741,7 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                             enr.status === 'Approved' ? 'bg-green-100 text-green-800' :
                             enr.status === 'Rejected' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800'
                           }`}>
-                            {enr.status === 'Approved' ? 'Approved' : enr.status === 'Rejected' ? 'Rejected' : 'Pending Verification'}
+                            {enr.status === 'Approved' ? 'ভর্তি অনুমোদিত' : enr.status === 'Rejected' ? 'বাতিলকৃত' : 'যাচাই করা হচ্ছে'}
                           </span>
 
                           <div className="flex gap-1.5 mt-1">
@@ -749,7 +749,7 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                               <button
                                 onClick={() => handleStatusChange(enr.id, 'enrollment', 'Approved')}
                                 className="p-1 text-xs font-bold bg-green-50 hover:bg-green-100 text-green-700 rounded border border-green-200 cursor-pointer"
-                                title="Approve Enrollment"
+                                title="অনুমোদন করুন"
                               >
                                 <CheckCircle className="w-4 h-4" />
                               </button>
@@ -757,7 +757,7 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                             <button
                               onClick={() => handleDelete(enr.id, 'enrollment')}
                               className="p-1 text-xs font-bold bg-red-50 hover:bg-red-100 text-red-700 rounded border border-red-200 cursor-pointer"
-                              title="Delete"
+                              title="মুছে ফেলুন"
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>
@@ -773,7 +773,7 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                 <div className="space-y-4">
                   {seminars.length === 0 ? (
                     <div className="text-center py-12 text-gray-400 text-sm">
-                      No seminar registrations found yet.
+                      কোনো সেমিনার বুকিং পাওয়া যায়নি। সেমিনার সেকশন থেকে প্রথম বুকিং দিন!
                     </div>
                   ) : (
                     seminars.map((reg: any) => (
@@ -784,10 +784,10 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                           </span>
                           <h4 className="text-sm font-bold text-gray-900 mt-1">{reg.studentName}</h4>
                           <div className="text-xs text-gray-500 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-0.5 mt-1">
-                            <p>📞 Phone: {reg.phone}</p>
-                            <p>✉️ Email: {reg.email}</p>
-                            <p>💼 Profession: {reg.profession}</p>
-                            <p>📅 Registration Date: {reg.date}</p>
+                            <p>📞 ফোন: {reg.phone}</p>
+                            <p>✉️ ইমেইল: {reg.email}</p>
+                            <p>💼 পেশা: {reg.profession}</p>
+                            <p>📅 বুকিং তারিখ: {reg.date}</p>
                           </div>
                         </div>
 
@@ -795,7 +795,7 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                           <button
                             onClick={() => handleDelete(reg.id, 'seminar')}
                             className="p-1.5 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg border border-red-200 cursor-pointer"
-                            title="Delete"
+                            title="মুছে ফেলুন"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
@@ -810,7 +810,7 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                 <div className="space-y-4">
                   {inquiries.length === 0 ? (
                     <div className="text-center py-12 text-gray-400 text-sm">
-                      No messages or inquiries received yet.
+                      কোনো মেসেজ বা জিজ্ঞাসা নেই। যোগাযোগের ফর্মটি পূরণ করে মেসেজ পাঠান!
                     </div>
                   ) : (
                     inquiries.map((inq: any) => (
@@ -820,12 +820,12 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                             <h4 className="text-sm font-bold text-gray-900">
                               {inq.firstName} {inq.lastName}
                             </h4>
-                            <p className="text-xs text-gray-500">{inq.email} | 📅 Date: {inq.date}</p>
+                            <p className="text-xs text-gray-500">{inq.email} | 📅 {inq.date}</p>
                           </div>
                           <button
                             onClick={() => handleDelete(inq.id, 'inquiry')}
                             className="p-1 bg-red-50 hover:bg-red-100 text-red-700 rounded border border-red-200 cursor-pointer"
-                            title="Delete"
+                            title="মুছে ফেলুন"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
@@ -879,10 +879,10 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                     <div>
                       <h4 className="text-sm font-bold text-emerald-900 flex items-center gap-1.5">
                         <Award className="w-4 h-4 text-emerald-600" />
-                        Professional Certificate Generator & Printer
+                        প্রফেশনাল সার্টিফিকেট জেনারেটর ও প্রিন্টার
                       </h4>
                       <p className="text-xs text-gray-600 mt-0.5">
-                        Generate and print professional, verified certificates from approved student enrollments or customize manually.
+                        এখানে শিক্ষার্থীর নাম লিখে বা ভর্তি আবেদন থেকে সরাসরি যেকোনো শিক্ষার্থীর জন্য প্রিন্ট-রেডি সার্টিফিকেট জেনারেট করতে পারবেন।
                       </p>
                     </div>
                   </div>
@@ -891,13 +891,13 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                     {/* Controls */}
                     <div className="xl:col-span-4 bg-white p-5 rounded-2xl border border-gray-200/80 shadow-sm space-y-4">
                       <h5 className="text-xs font-bold uppercase tracking-wider text-gray-500 border-b border-gray-100 pb-2">
-                        Customize Certificate
+                        সার্টিফিকেট কাস্টমাইজ করুন
                       </h5>
 
                       {/* Dropdown list from approved student database */}
                       {enrollments.filter((e: any) => e.status === 'Approved').length > 0 ? (
                         <div className="space-y-1">
-                          <label className="block text-xs font-bold text-emerald-700">Approved Students Roster:</label>
+                          <label className="block text-xs font-bold text-emerald-700">অনুমোদিত ছাত্র-ছাত্রী তালিকা:</label>
                           <select
                             onChange={(e) => {
                               const val = e.target.value;
@@ -911,7 +911,7 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                             }}
                             className="w-full text-xs p-2.5 border border-gray-300 rounded-lg bg-emerald-50/50 text-emerald-900 focus:outline-none focus:ring-1 focus:ring-brand font-semibold cursor-pointer"
                           >
-                            <option value="">-- Select Approved Student --</option>
+                            <option value="">-- শিক্ষার্থী নির্বাচন করুন --</option>
                             {enrollments.filter((e: any) => e.status === 'Approved').map((enr: any) => (
                               <option key={enr.id} value={enr.id}>
                                 {enr.studentName} ({enr.courseTitle})
@@ -921,37 +921,37 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                         </div>
                       ) : (
                         <p className="text-[10px] text-gray-400 bg-gray-50 p-2 rounded border border-dashed border-gray-200">
-                          💡 When approved students exist, you can select their details directly from here.
+                          💡 কোনো অনুমোদিত শিক্ষার্থী থাকলে সরাসরি এখান থেকে তার তথ্য নির্বাচন করা যাবে।
                         </p>
                       )}
 
                       {/* Manual Name */}
                       <div className="space-y-1">
-                        <label className="block text-xs font-bold text-gray-700">Student Name (English/Bengali):</label>
+                        <label className="block text-xs font-bold text-gray-700">শিক্ষার্থীর নাম (বাংলা/ইংরেজি):</label>
                         <input
                           type="text"
                           value={certStudentName}
                           onChange={(e) => setCertStudentName(e.target.value)}
-                          placeholder="e.g. Jinnatul Zahra Oishe"
+                          placeholder="উদা: জিন্নাতুল জাহরা ঐশী"
                           className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand bg-gray-50 text-gray-800"
                         />
                       </div>
 
                       {/* Course Selection */}
                       <div className="space-y-1">
-                        <label className="block text-xs font-bold text-gray-700">Course / Program Title:</label>
+                        <label className="block text-xs font-bold text-gray-700">কোর্সের নাম:</label>
                         <input
                           type="text"
                           value={certCourseTitle}
                           onChange={(e) => setCertCourseTitle(e.target.value)}
-                          placeholder="e.g. Professional Certificate in Digital Health"
+                          placeholder="উদা: ডিজিটাল হেলথ ও বেসিক নিউট্রিশন"
                           className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand bg-gray-50 text-gray-800"
                         />
                       </div>
 
                       {/* Certificate ID */}
                       <div className="space-y-1">
-                        <label className="block text-xs font-bold text-gray-700">Certificate ID:</label>
+                        <label className="block text-xs font-bold text-gray-700">সার্টিফিকেট আইডি:</label>
                         <div className="flex gap-2">
                           <input
                             type="text"
@@ -964,7 +964,7 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                             type="button"
                             onClick={generateRandomCertId}
                             className="p-2.5 bg-gray-100 hover:bg-gray-200 border border-gray-300 text-gray-700 rounded-lg cursor-pointer"
-                            title="Generate New ID"
+                            title="নতুন আইডি জেনারেট করুন"
                           >
                             <RefreshCw className="w-4 h-4" />
                           </button>
@@ -973,12 +973,12 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
 
                       {/* Issue Date */}
                       <div className="space-y-1">
-                        <label className="block text-xs font-bold text-gray-700">Date of Issuance:</label>
+                        <label className="block text-xs font-bold text-gray-700">ইস্যুর তারিখ:</label>
                         <input
                           type="text"
                           value={certIssueDate}
                           onChange={(e) => setCertIssueDate(e.target.value)}
-                          placeholder="e.g. July 05, 2026"
+                          placeholder="উদা: ০৫ জুলাই, ২০২৬"
                           className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand bg-gray-50 text-gray-800"
                         />
                       </div>
@@ -990,7 +990,7 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                         className="w-full py-3 bg-brand text-brand-contrast hover:text-white text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 hover:bg-brand-hover cursor-pointer shadow-md transition-all mt-6"
                       >
                         <Printer className="w-4 h-4" />
-                        Print / Export Certificate
+                        সার্টিফিকেট প্রিন্ট করুন (Print Certificate)
                       </button>
 
                       {/* DB Save and Verify Button */}
@@ -1000,7 +1000,7 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                           setCertSaveSuccess(false);
                           setCertSaveError('');
                           if (!certStudentName.trim()) {
-                            setCertSaveError('Please enter the student\'s name.');
+                            setCertSaveError('দয়া করে শিক্ষার্থীর নাম লিখুন।');
                             return;
                           }
                           try {
@@ -1014,7 +1014,7 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                             if (success) {
                               setCertSaveSuccess(true);
                             } else {
-                              setCertSaveError('Failed to save to database. Please try again.');
+                              setCertSaveError('সংরক্ষণ করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।');
                             }
                           } catch (err: any) {
                             setCertSaveError(err.message || 'Error occurred');
@@ -1023,12 +1023,12 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                         className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 cursor-pointer shadow-md transition-all mt-2"
                       >
                         <CheckCircle className="w-4 h-4 text-emerald-100" />
-                        Verify & Save to Database
+                        ডাটাবেজে সংরক্ষণ ও ভেরিফাইড করুন
                       </button>
 
                       {certSaveSuccess && (
                         <div className="text-[11px] text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-lg p-2.5 font-semibold text-center mt-2 animate-pulse">
-                          ✓ Certificate successfully saved & added to the online verification database!
+                          ✓ সার্টিফিকেটটি সফলভাবে সংরক্ষিত ও ভেরিফাইড তালিকায় যুক্ত হয়েছে!
                         </div>
                       )}
 
@@ -1039,7 +1039,7 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                       )}
 
                       <div className="text-[10px] text-gray-400 bg-amber-50 p-2.5 rounded-lg border border-amber-100 leading-normal">
-                        ⚠️ <strong>Print Tips:</strong> In your browser print dialog, enable "Background Graphics" and set margins to "None" for pixel-perfect layout and rendering.
+                        ⚠️ <strong>প্রিন্ট টিপস:</strong> ব্রাউজার প্রিন্ট ডায়ালগ আসার পর "Background Graphics" অপশনটি চালু করুন এবং মার্জিন "None" রাখুন যাতে ব্যাকগ্রাউন্ড কালার ও ডিজাইন পারফেক্ট আসে।
                       </div>
                     </div>
 
@@ -1048,14 +1048,14 @@ export default function InstructorDashboard({ isOpen, onClose, isFullPage = fals
                       <div className="flex justify-between items-center bg-emerald-50/50 p-3 rounded-xl border border-emerald-200/40">
                         <span className="text-xs text-emerald-800 font-bold flex items-center gap-1.5">
                           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-                          Real-Time Print Preview (Landscape Format)
+                          রিয়েল-টাইম প্রিন্ট প্রিভিউ (ল্যান্ডস্কেপ ফরম্যাট)
                         </span>
                         <button
                           onClick={() => window.print()}
                           className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-md transition-all"
                         >
                           <Printer className="w-4 h-4" />
-                          Print
+                          প্রিন্ট (Print)
                         </button>
                       </div>
 

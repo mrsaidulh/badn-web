@@ -27,12 +27,12 @@ export default function AdminContentManager() {
 
   // --- Course Form Fields ---
   const [courseTitle, setCourseTitle] = useState('');
-  const [courseDuration, setCourseDuration] = useState('2 Months');
+  const [courseDuration, setCourseDuration] = useState('২ মাস (2 Months)');
   const [courseLiveClasses, setCourseLiveClasses] = useState(16);
   const [courseRecordedClasses, setCourseRecordedClasses] = useState(1);
   const [courseOrientation, setCourseOrientation] = useState(1);
   const [courseExams, setCourseExams] = useState(2);
-  const [courseClassDuration, setCourseClassDuration] = useState('2 Hours per Class (40 Hours Total)');
+  const [courseClassDuration, setCourseClassDuration] = useState('২ ঘণ্টা করে মোট ৪০ ঘণ্টা');
   const [coursePrice, setCoursePrice] = useState(12000);
   const [courseOriginalPrice, setCourseOriginalPrice] = useState(15000);
   const [courseImage, setCourseImage] = useState('');
@@ -41,7 +41,7 @@ export default function AdminContentManager() {
   const [courseReviewsCount, setCourseReviewsCount] = useState(120);
   const [courseDescription, setCourseDescription] = useState('');
   const [courseSeatsLeft, setCourseSeatsLeft] = useState(8);
-  const [courseStartDate, setCourseStartDate] = useState('August 15, 2026');
+  const [courseStartDate, setCourseStartDate] = useState('১৫ আগস্ট, ২০২৬');
 
   // --- Seminar Form Fields ---
   const [seminarTitle, setSeminarTitle] = useState('');
@@ -49,13 +49,13 @@ export default function AdminContentManager() {
   const [seminarDescription, setSeminarDescription] = useState('');
   const [seminarExpertName, setSeminarExpertName] = useState('');
   const [seminarExpertRole, setSeminarExpertRole] = useState('');
-  const [seminarDate, setSeminarDate] = useState('August 15, 2026');
-  const [seminarLocation, setSeminarLocation] = useState('PG Hospital Auditorium, Dhaka');
+  const [seminarDate, setSeminarDate] = useState('১৫ আগস্ট, ২০২৬');
+  const [seminarLocation, setSeminarLocation] = useState('ঢাকার পিজি হাসপাতাল অডিটোরিয়াম, ঢাকা');
   const [seminarImage, setSeminarImage] = useState('');
 
   // --- Testimonial Form Fields ---
   const [testName, setTestName] = useState('');
-  const [testRole, setTestRole] = useState('Nutritionist & Dietitian');
+  const [testRole, setTestRole] = useState('পুষ্টিবিদ ও ডায়েটেশিয়ান');
   const [testFeedback, setTestFeedback] = useState('');
   const [testImage, setTestImage] = useState('');
   const [testRating, setTestRating] = useState(5);
@@ -93,12 +93,12 @@ export default function AdminContentManager() {
   const handleOpenAddCourse = () => {
     setEditingId(null);
     setCourseTitle('');
-    setCourseDuration('2 Months');
+    setCourseDuration('২ মাস (2 Months)');
     setCourseLiveClasses(16);
     setCourseRecordedClasses(1);
     setCourseOrientation(1);
     setCourseExams(2);
-    setCourseClassDuration('2 Hours per Class (40 Hours Total)');
+    setCourseClassDuration('২ ঘণ্টা করে মোট ৪০ ঘণ্টা');
     setCoursePrice(12000);
     setCourseOriginalPrice(15000);
     setCourseImage('https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&q=80&w=600');
@@ -107,7 +107,7 @@ export default function AdminContentManager() {
     setCourseReviewsCount(120);
     setCourseDescription('');
     setCourseSeatsLeft(8);
-    setCourseStartDate('August 15, 2026');
+    setCourseStartDate('১৫ আগস্ট, ২০২৬');
     setIsFormOpen(true);
   };
 
@@ -128,14 +128,14 @@ export default function AdminContentManager() {
     setCourseReviewsCount(course.reviewsCount || 120);
     setCourseDescription(course.description);
     setCourseSeatsLeft(course.seatsLeft);
-    setCourseStartDate(course.startDate || 'August 15, 2026');
+    setCourseStartDate(course.startDate || '১৫ আগস্ট, ২০২৬');
     setIsFormOpen(true);
   };
 
   const handleSaveCourse = async (e: FormEvent) => {
     e.preventDefault();
     if (!courseTitle.trim()) {
-      triggerNotification('Please enter the course title!', true);
+      triggerNotification('কোর্সের শিরোনাম লিখুন!', true);
       return;
     }
 
@@ -162,24 +162,24 @@ export default function AdminContentManager() {
 
     const success = await addCourse(payload);
     if (success) {
-      triggerNotification(editingId ? 'Course successfully updated!' : 'New course successfully uploaded!');
+      triggerNotification(editingId ? 'কোর্স সফলভাবে আপডেট করা হয়েছে!' : 'নতুন কোর্স সফলভাবে আপলোড করা হয়েছে!');
       setIsFormOpen(false);
       loadAllContent();
       window.dispatchEvent(new CustomEvent('courses_updated'));
     } else {
-      triggerNotification('Failed to save course. Please try again.', true);
+      triggerNotification('কোর্স সংরক্ষণ করা সম্ভব হয়নি। আবার চেষ্টা করুন।', true);
     }
   };
 
   const handleDeleteCourse = async (id: string) => {
-    if (confirm('Are you sure you want to delete this course?')) {
+    if (confirm('আপনি কি নিশ্চিত যে এই কোর্সটি মুছে ফেলতে চান?')) {
       const success = await deleteCourse(id);
       if (success) {
-        triggerNotification('Course successfully deleted!');
+        triggerNotification('কোর্স সফলভাবে মুছে ফেলা হয়েছে!');
         loadAllContent();
         window.dispatchEvent(new CustomEvent('courses_updated'));
       } else {
-        triggerNotification('Failed to delete course.', true);
+        triggerNotification('কোর্স মুছতে সমস্যা হয়েছে।', true);
       }
     }
   };
@@ -192,8 +192,8 @@ export default function AdminContentManager() {
     setSeminarDescription('');
     setSeminarExpertName('');
     setSeminarExpertRole('');
-    setSeminarDate('August 15, 2026');
-    setSeminarLocation('PG Hospital Auditorium, Dhaka');
+    setSeminarDate('১৫ আগস্ট, ২০২৬');
+    setSeminarLocation('ঢাকার পিজি হাসপাতাল অডিটোরিয়াম, ঢাকা');
     setSeminarImage('https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&q=80&w=600');
     setIsFormOpen(true);
   };
@@ -214,7 +214,7 @@ export default function AdminContentManager() {
   const handleSaveSeminar = async (e: FormEvent) => {
     e.preventDefault();
     if (!seminarTitle.trim()) {
-      triggerNotification('Please enter the seminar title!', true);
+      triggerNotification('সেমিনারের শিরোনাম লিখুন!', true);
       return;
     }
 
@@ -233,24 +233,24 @@ export default function AdminContentManager() {
 
     const success = await addSeminarEvent(payload);
     if (success) {
-      triggerNotification(editingId ? 'Seminar event successfully updated!' : 'New seminar event successfully created!');
+      triggerNotification(editingId ? 'সেমিনার ইভেন্ট সফলভাবে আপডেট করা হয়েছে!' : 'নতুন সেমিনার ইভেন্ট সফলভাবে তৈরি করা হয়েছে!');
       setIsFormOpen(false);
       loadAllContent();
       window.dispatchEvent(new CustomEvent('seminars_updated'));
     } else {
-      triggerNotification('Failed to save seminar.', true);
+      triggerNotification('সেমিনার সংরক্ষণ করা সম্ভব হয়নি।', true);
     }
   };
 
   const handleDeleteSeminar = async (id: string) => {
-    if (confirm('Are you sure you want to delete this seminar event?')) {
+    if (confirm('আপনি কি নিশ্চিত যে এই সেমিনার ইভেন্টটি মুছে ফেলতে চান?')) {
       const success = await deleteSeminarEvent(id);
       if (success) {
-        triggerNotification('Seminar event successfully deleted!');
+        triggerNotification('সেমিনার ইভেন্ট সফলভাবে মুছে ফেলা হয়েছে!');
         loadAllContent();
         window.dispatchEvent(new CustomEvent('seminars_updated'));
       } else {
-        triggerNotification('Failed to delete seminar.', true);
+        triggerNotification('সেমিনার মুছতে সমস্যা হয়েছে।', true);
       }
     }
   };
@@ -259,7 +259,7 @@ export default function AdminContentManager() {
   const handleOpenAddTestimonial = () => {
     setEditingId(null);
     setTestName('');
-    setTestRole('Nutritionist & Trainee');
+    setTestRole('পুষ্টিবিদ ও ট্রেইনি');
     setTestFeedback('');
     setTestImage('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=150');
     setTestRating(5);
@@ -279,7 +279,7 @@ export default function AdminContentManager() {
   const handleSaveTestimonial = async (e: FormEvent) => {
     e.preventDefault();
     if (!testName.trim() || !testFeedback.trim()) {
-      triggerNotification('Please provide both the student name and feedback!', true);
+      triggerNotification('শিক্ষার্থীর নাম ও মতামত উভয়ই পূরণ করুন!', true);
       return;
     }
 
@@ -295,24 +295,24 @@ export default function AdminContentManager() {
 
     const success = await addTestimonial(payload);
     if (success) {
-      triggerNotification(editingId ? 'Review successfully updated!' : 'New review successfully added!');
+      triggerNotification(editingId ? 'রিভিউ সফলভাবে আপডেট করা হয়েছে!' : 'নতুন রিভিউ সফলভাবে যুক্ত করা হয়েছে!');
       setIsFormOpen(false);
       loadAllContent();
       window.dispatchEvent(new CustomEvent('testimonials_updated'));
     } else {
-      triggerNotification('Failed to save review.', true);
+      triggerNotification('রিভিউ সংরক্ষণ করা সম্ভব হয়নি।', true);
     }
   };
 
   const handleDeleteTestimonial = async (id: string) => {
-    if (confirm('Are you sure you want to delete this testimonial?')) {
+    if (confirm('আপনি কি নিশ্চিত যে এই রিভিউটি মুছে ফেলতে চান?')) {
       const success = await deleteTestimonial(id);
       if (success) {
-        triggerNotification('Review successfully deleted!');
+        triggerNotification('রিভিউ সফলভাবে মুছে ফেলা হয়েছে!');
         loadAllContent();
         window.dispatchEvent(new CustomEvent('testimonials_updated'));
       } else {
-        triggerNotification('Failed to delete review.', true);
+        triggerNotification('রিভিউ মুছতে সমস্যা হয়েছে।', true);
       }
     }
   };
@@ -332,7 +332,7 @@ export default function AdminContentManager() {
             }`}
           >
             <Layers className="w-4 h-4" />
-            <span>Courses ({courses.length})</span>
+            <span>কোর্সসমূহ ({courses.length})</span>
           </button>
           <button
             onClick={() => { setSubTab('seminars'); setIsFormOpen(false); }}
@@ -343,7 +343,7 @@ export default function AdminContentManager() {
             }`}
           >
             <Calendar className="w-4 h-4" />
-            <span>Seminar Events ({seminars.length})</span>
+            <span>সেমিনার ইভেন্টসমূহ ({seminars.length})</span>
           </button>
           <button
             onClick={() => { setSubTab('testimonials'); setIsFormOpen(false); }}
@@ -354,14 +354,14 @@ export default function AdminContentManager() {
             }`}
           >
             <MessageSquare className="w-4 h-4" />
-            <span>Student Reviews ({testimonials.length})</span>
+            <span>প্রশিক্ষণার্থীদের রিভিউসমূহ ({testimonials.length})</span>
           </button>
         </div>
 
         <button
           onClick={loadAllContent}
           className="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-700 border border-gray-300 transition-all cursor-pointer"
-          title="Refresh List"
+          title="রিফ্রেশ করুন"
         >
           {loading ? <Loader2 className="w-4 h-4 animate-spin text-[#e97c00]" /> : <RefreshCw className="w-4 h-4" />}
         </button>
@@ -387,7 +387,7 @@ export default function AdminContentManager() {
           <div className="flex justify-between items-center border-b border-gray-100 pb-3">
             <h4 className="text-sm font-extrabold text-[#e97c00] uppercase tracking-wider flex items-center gap-1.5">
               <Plus className="w-5 h-5" />
-              {editingId ? 'Edit Content Item' : 'Upload New Content'}
+              {editingId ? 'আইটেম এডিট করুন (Edit Content)' : 'নতুন কন্টেন্ট আপলোড করুন (Upload New Content)'}
             </h4>
             <button
               onClick={() => setIsFormOpen(false)}
@@ -401,32 +401,32 @@ export default function AdminContentManager() {
           {subTab === 'courses' && (
             <form onSubmit={handleSaveCourse} className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-700">Course Title:</label>
+                <label className="text-xs font-bold text-gray-700">কোর্সের শিরোনাম (Title):</label>
                 <input
                   type="text"
                   value={courseTitle}
                   onChange={(e) => setCourseTitle(e.target.value)}
-                  placeholder="e.g. Certificate Course in Clinical Nutrition & Dietetics"
+                  placeholder="উদা: সার্টিফিকেট কোর্স - ক্লিনিক্যাল নিউট্রিশন এন্ড ডায়েটেটিক্স (সিসিএনডি)"
                   required
                   className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:ring-1 focus:ring-brand bg-gray-50 font-semibold"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-700">Category:</label>
+                <label className="text-xs font-bold text-gray-700">ক্যাটাগরি (Category):</label>
                 <select
                   value={courseCategory}
                   onChange={(e) => setCourseCategory(e.target.value)}
                   className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:ring-1 focus:ring-brand bg-gray-50 font-semibold cursor-pointer"
                 >
-                  <option value="Clinical Nutrition">Clinical Nutrition</option>
-                  <option value="Sports Nutrition">Sports Nutrition</option>
-                  <option value="Child Nutrition">Child Nutrition</option>
+                  <option value="Clinical Nutrition">Clinical Nutrition (ক্লিনিক্যাল)</option>
+                  <option value="Sports Nutrition">Sports Nutrition (স্পোর্টস)</option>
+                  <option value="Child Nutrition">Child Nutrition (শিশু পুষ্টি)</option>
                 </select>
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-700">Enrollment Fee (Price - ৳):</label>
+                <label className="text-xs font-bold text-gray-700">ভর্তি ফি (Price - ৳):</label>
                 <input
                   type="number"
                   value={coursePrice}
@@ -438,7 +438,7 @@ export default function AdminContentManager() {
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-700">Original Fee (Original Price - ৳):</label>
+                <label className="text-xs font-bold text-gray-700">আসল ফি (Original Price - ৳):</label>
                 <input
                   type="number"
                   value={courseOriginalPrice}
@@ -450,29 +450,29 @@ export default function AdminContentManager() {
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-700">Course Duration:</label>
+                <label className="text-xs font-bold text-gray-700">কোর্সের সময়কাল (Duration):</label>
                 <input
                   type="text"
                   value={courseDuration}
                   onChange={(e) => setCourseDuration(e.target.value)}
-                  placeholder="e.g. 2 Months"
+                  placeholder="২ মাস (2 Months)"
                   className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:ring-1 focus:ring-brand bg-gray-50"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-700">Class Information (Text):</label>
+                <label className="text-xs font-bold text-gray-700">ক্লাসের তথ্য (Class Duration Text):</label>
                 <input
                   type="text"
                   value={courseClassDuration}
                   onChange={(e) => setCourseClassDuration(e.target.value)}
-                  placeholder="e.g. 2 Hours per Class, 40 Hours Total"
+                  placeholder="২ ঘণ্টা করে মোট ৪০ ঘণ্টা"
                   className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:ring-1 focus:ring-brand bg-gray-50"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-700">Live Classes Count:</label>
+                <label className="text-xs font-bold text-gray-700">লাইভ ক্লাস সংখ্যা:</label>
                 <input
                   type="number"
                   value={courseLiveClasses}
@@ -482,7 +482,7 @@ export default function AdminContentManager() {
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-700">Recorded Classes Count:</label>
+                <label className="text-xs font-bold text-gray-700">রেকর্ড ক্লাস সংখ্যা:</label>
                 <input
                   type="number"
                   value={courseRecordedClasses}
@@ -492,7 +492,7 @@ export default function AdminContentManager() {
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-700">Orientations Count:</label>
+                <label className="text-xs font-bold text-gray-700">ওরিয়েন্টেশন সংখ্যা:</label>
                 <input
                   type="number"
                   value={courseOrientation}
@@ -502,7 +502,7 @@ export default function AdminContentManager() {
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-700">Exams Count:</label>
+                <label className="text-xs font-bold text-gray-700">পরীক্ষা সংখ্যা:</label>
                 <input
                   type="number"
                   value={courseExams}
@@ -512,18 +512,18 @@ export default function AdminContentManager() {
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-700">Start Date:</label>
+                <label className="text-xs font-bold text-gray-700">শুরুর তারিখ (Start Date):</label>
                 <input
                   type="text"
                   value={courseStartDate}
                   onChange={(e) => setCourseStartDate(e.target.value)}
-                  placeholder="e.g. August 15, 2026"
+                  placeholder="১৫ জুলাই, ২০২৬"
                   className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:ring-1 focus:ring-brand bg-gray-50"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-700">Seats Remaining:</label>
+                <label className="text-xs font-bold text-gray-700">বাকি থাকা সিট সংখ্যা:</label>
                 <input
                   type="number"
                   value={courseSeatsLeft}
@@ -533,7 +533,7 @@ export default function AdminContentManager() {
               </div>
 
               <div className="space-y-1 md:col-span-2">
-                <label className="text-xs font-bold text-gray-700">Thumbnail Image URL:</label>
+                <label className="text-xs font-bold text-gray-700">মিডিয়া / থাম্বনেইল ছবি URL:</label>
                 <div className="flex gap-2">
                   <input
                     type="text"
@@ -549,12 +549,12 @@ export default function AdminContentManager() {
               </div>
 
               <div className="space-y-1 md:col-span-2">
-                <label className="text-xs font-bold text-gray-700">Course Description:</label>
+                <label className="text-xs font-bold text-gray-700">কোর্সের সংক্ষিপ্ত বিবরণ (Description):</label>
                 <textarea
                   value={courseDescription}
                   onChange={(e) => setCourseDescription(e.target.value)}
                   rows={3}
-                  placeholder="Write detailed course descriptions..."
+                  placeholder="কোর্সের বিস্তারিত এখানে লিখুন..."
                   className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:ring-1 focus:ring-brand bg-gray-50 leading-relaxed"
                 />
               </div>
@@ -565,13 +565,13 @@ export default function AdminContentManager() {
                   onClick={() => setIsFormOpen(false)}
                   className="px-4 py-2 border border-gray-300 rounded-lg text-xs font-bold text-gray-700 hover:bg-gray-50 cursor-pointer"
                 >
-                  Cancel
+                  বাতিল করুন
                 </button>
                 <button
                   type="submit"
                   className="px-5 py-2 bg-[#e97c00] hover:bg-[#d06e00] text-white rounded-lg text-xs font-bold shadow transition-all cursor-pointer"
                 >
-                  ✓ Save Course
+                  ✓ কোর্স সংরক্ষণ করুন
                 </button>
               </div>
             </form>
@@ -580,52 +580,52 @@ export default function AdminContentManager() {
           {subTab === 'seminars' && (
             <form onSubmit={handleSaveSeminar} className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1 md:col-span-2">
-                <label className="text-xs font-bold text-gray-700">Seminar Title:</label>
+                <label className="text-xs font-bold text-gray-700">সেমিনারের শিরোনাম (Title):</label>
                 <input
                   type="text"
                   value={seminarTitle}
                   onChange={(e) => setSeminarTitle(e.target.value)}
-                  placeholder="e.g. International Seminar on Critical Care Nutrition"
+                  placeholder="উদা: ক্রিটিক্যাল কেয়ার নিউট্রিশন নিয়ে আন্তর্জাতিক সেমিনার"
                   required
                   className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:ring-1 focus:ring-brand bg-gray-50 font-semibold"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-700">Host Organization:</label>
+                <label className="text-xs font-bold text-gray-700">আয়োজক প্রতিষ্ঠান (Organization):</label>
                 <input
                   type="text"
                   value={seminarOrganization}
                   onChange={(e) => setSeminarOrganization(e.target.value)}
-                  placeholder="BADN International"
+                  placeholder="BADN ইন্টারন্যাশনাল"
                   className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:ring-1 focus:ring-brand bg-gray-50"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-700">Date & Time:</label>
+                <label className="text-xs font-bold text-gray-700">তারিখ ও সময় (Date):</label>
                 <input
                   type="text"
                   value={seminarDate}
                   onChange={(e) => setSeminarDate(e.target.value)}
-                  placeholder="e.g. August 15, 2026"
+                  placeholder="১৮ এপ্রিল, ২০২৬"
                   className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:ring-1 focus:ring-brand bg-gray-50"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-700">Expert Speaker Name:</label>
+                <label className="text-xs font-bold text-gray-700">বিশেষজ্ঞ স্পিকারের নাম (Expert Name):</label>
                 <input
                   type="text"
                   value={seminarExpertName}
                   onChange={(e) => setSeminarExpertName(e.target.value)}
-                  placeholder="e.g. Sanghamitra Chakraborty"
+                  placeholder="উদা: সাংহামিত্রা চক্রবর্তী"
                   className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:ring-1 focus:ring-brand bg-gray-50 font-semibold"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-700">Speaker Designation / Role:</label>
+                <label className="text-xs font-bold text-gray-700">স্পিকারের পদবী (Expert Designation):</label>
                 <input
                   type="text"
                   value={seminarExpertRole}
@@ -636,18 +636,18 @@ export default function AdminContentManager() {
               </div>
 
               <div className="space-y-1 md:col-span-2">
-                <label className="text-xs font-bold text-gray-700">Venue / Location:</label>
+                <label className="text-xs font-bold text-gray-700">সেমিনারের স্থান (Location):</label>
                 <input
                   type="text"
                   value={seminarLocation}
                   onChange={(e) => setSeminarLocation(e.target.value)}
-                  placeholder="BIRDEM Hospital Auditorium, Dhaka"
+                  placeholder="বারডেম হাসপাতাল অডিটোরিয়াম, ঢাকা"
                   className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:ring-1 focus:ring-brand bg-gray-50"
                 />
               </div>
 
               <div className="space-y-1 md:col-span-2">
-                <label className="text-xs font-bold text-gray-700">Banner / Media Image URL:</label>
+                <label className="text-xs font-bold text-gray-700">ব্যানার / মিডিয়া ছবি URL:</label>
                 <div className="flex gap-2">
                   <input
                     type="text"
@@ -663,12 +663,12 @@ export default function AdminContentManager() {
               </div>
 
               <div className="space-y-1 md:col-span-2">
-                <label className="text-xs font-bold text-gray-700">Seminar Description:</label>
+                <label className="text-xs font-bold text-gray-700">সেমিনারের বিবরণ (Description):</label>
                 <textarea
                   value={seminarDescription}
                   onChange={(e) => setSeminarDescription(e.target.value)}
                   rows={3}
-                  placeholder="Write detailed event information..."
+                  placeholder="সেমিনার বা ওয়ার্কশপের বিস্তারিত এখানে লিখুন..."
                   className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:ring-1 focus:ring-brand bg-gray-50 leading-relaxed"
                 />
               </div>
@@ -679,13 +679,13 @@ export default function AdminContentManager() {
                   onClick={() => setIsFormOpen(false)}
                   className="px-4 py-2 border border-gray-300 rounded-lg text-xs font-bold text-gray-700 hover:bg-gray-50 cursor-pointer"
                 >
-                  Cancel
+                  বাতিল করুন
                 </button>
                 <button
                   type="submit"
                   className="px-5 py-2 bg-[#e97c00] hover:bg-[#d06e00] text-white rounded-lg text-xs font-bold shadow transition-all cursor-pointer"
                 >
-                  ✓ Save Seminar
+                  ✓ সেমিনার সংরক্ষণ করুন
                 </button>
               </div>
             </form>
@@ -694,44 +694,44 @@ export default function AdminContentManager() {
           {subTab === 'testimonials' && (
             <form onSubmit={handleSaveTestimonial} className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-700">Student Name:</label>
+                <label className="text-xs font-bold text-gray-700">শিক্ষার্থীর নাম (Student Name):</label>
                 <input
                   type="text"
                   value={testName}
                   onChange={(e) => setTestName(e.target.value)}
-                  placeholder="e.g. Jinnatul Zahra Oishe"
+                  placeholder="উদা: জিন্নাতুল জাহরা ঐশী"
                   required
                   className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:ring-1 focus:ring-brand bg-gray-50 font-bold"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-700">Designation / Role:</label>
+                <label className="text-xs font-bold text-gray-700">পরিচয় / পদবী (Designation):</label>
                 <input
                   type="text"
                   value={testRole}
                   onChange={(e) => setTestRole(e.target.value)}
-                  placeholder="e.g. Nutrition Graduate & Dietitian"
+                  placeholder="উদা: নিউট্রিয়াম গ্র্যাজুয়েট ও পুষ্টিবিদ"
                   required
                   className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:ring-1 focus:ring-brand bg-gray-50"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-700">Rating (1-5 Stars):</label>
+                <label className="text-xs font-bold text-gray-700">রেটিং (Rating 1-5 Star):</label>
                 <select
                   value={testRating}
                   onChange={(e) => setTestRating(Number(e.target.value))}
                   className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:ring-1 focus:ring-brand bg-gray-50 font-semibold cursor-pointer"
                 >
-                  <option value={5}>⭐⭐⭐⭐⭐ (5 Stars)</option>
-                  <option value={4}>⭐⭐⭐⭐ (4 Stars)</option>
-                  <option value={3}>⭐⭐⭐ (3 Stars)</option>
+                  <option value={5}>⭐⭐⭐⭐⭐ (৫ স্টার)</option>
+                  <option value={4}>⭐⭐⭐⭐ (৪ স্টার)</option>
+                  <option value={3}>⭐⭐⭐ (৩ স্টার)</option>
                 </select>
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-700">Avatar / Profile Image URL:</label>
+                <label className="text-xs font-bold text-gray-700">প্রোফাইল ছবি URL:</label>
                 <div className="flex gap-2">
                   <input
                     type="text"
@@ -747,13 +747,13 @@ export default function AdminContentManager() {
               </div>
 
               <div className="space-y-1 md:col-span-2">
-                <label className="text-xs font-bold text-gray-700">Student Feedback / Testimonial:</label>
+                <label className="text-xs font-bold text-gray-700">শিক্ষার্থীর মতামত (Feedback):</label>
                 <textarea
                   value={testFeedback}
                   onChange={(e) => setTestFeedback(e.target.value)}
                   rows={4}
                   required
-                  placeholder="Describe the student's learning experience and review..."
+                  placeholder="এখানে শিক্ষার্থীর বাস্তব মূল্যায়ন বা প্রশংসামূলক মতামত লিখুন..."
                   className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:ring-1 focus:ring-brand bg-gray-50 leading-relaxed text-justify"
                 />
               </div>
@@ -764,13 +764,13 @@ export default function AdminContentManager() {
                   onClick={() => setIsFormOpen(false)}
                   className="px-4 py-2 border border-gray-300 rounded-lg text-xs font-bold text-gray-700 hover:bg-gray-50 cursor-pointer"
                 >
-                  Cancel
+                  বাতিল করুন
                 </button>
                 <button
                   type="submit"
                   className="px-5 py-2 bg-[#e97c00] hover:bg-[#d06e00] text-white rounded-lg text-xs font-bold shadow transition-all cursor-pointer"
                 >
-                  ✓ Save Review
+                  ✓ রিভিউ সংরক্ষণ করুন
                 </button>
               </div>
             </form>
@@ -782,7 +782,7 @@ export default function AdminContentManager() {
       <div className="space-y-4">
         <div className="flex justify-between items-center">
           <h5 className="text-xs font-bold uppercase tracking-wider text-gray-500">
-            Active Elements Database (Live Panel)
+            বিদ্যমান আইটেম তালিকা (Current Active Elements)
           </h5>
 
           {!isFormOpen && (
@@ -796,8 +796,8 @@ export default function AdminContentManager() {
             >
               <Plus className="w-4 h-4" />
               <span>
-                {subTab === 'courses' ? 'Add Course' : 
-                 subTab === 'seminars' ? 'Add Seminar' : 'Add Review'}
+                {subTab === 'courses' ? 'নতুন কোর্স আপলোড' : 
+                 subTab === 'seminars' ? 'নতুন সেমিনার আপলোড' : 'নতুন রিভিউ যুক্ত করুন'}
               </span>
             </button>
           )}
@@ -807,7 +807,7 @@ export default function AdminContentManager() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {courses.length === 0 ? (
               <div className="col-span-2 text-center py-12 text-gray-400 text-xs">
-                No courses found. Click the button above to upload your first course!
+                কোনো কোর্স খুঁজে পাওয়া যায়নি। উপরের বাটনটি ক্লিক করে প্রথম কোর্স আপলোড করুন!
               </div>
             ) : (
               courses.map((course) => (
@@ -823,21 +823,21 @@ export default function AdminContentManager() {
                       {course.title}
                     </h4>
                     <p className="text-[11px] text-gray-500 font-bold">
-                      ৳ {Number(course.price || 0).toLocaleString('en-US')} | {course.duration} | {course.liveClasses} Live Classes
+                      ৳ {Number(course.price || 0).toLocaleString('bn-BD')} | {course.duration} | {course.liveClasses}টি লাইভ ক্লাস
                     </p>
                   </div>
                   <div className="flex flex-col gap-1 shrink-0">
                     <button
                       onClick={() => handleEditCourse(course)}
                       className="p-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded border border-gray-300 cursor-pointer"
-                      title="Edit Course"
+                      title="সম্পাদনা করুন"
                     >
                       <Edit className="w-3.5 h-3.5" />
                     </button>
                     <button
                       onClick={() => handleDeleteCourse(course.id)}
                       className="p-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded border border-red-200 cursor-pointer"
-                      title="Delete Course"
+                      title="মুছে ফেলুন"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
@@ -852,7 +852,7 @@ export default function AdminContentManager() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {seminars.length === 0 ? (
               <div className="col-span-2 text-center py-12 text-gray-400 text-xs">
-                No seminar events found. Click the button above to upload your first seminar!
+                কোনো সেমিনার ইভেন্ট খুঁজে পাওয়া যায়নি।
               </div>
             ) : (
               seminars.map((seminar) => (
@@ -875,14 +875,14 @@ export default function AdminContentManager() {
                     <button
                       onClick={() => handleEditSeminar(seminar)}
                       className="p-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded border border-gray-300 cursor-pointer"
-                      title="Edit Seminar"
+                      title="সম্পাদনা করুন"
                     >
                       <Edit className="w-3.5 h-3.5" />
                     </button>
                     <button
                       onClick={() => handleDeleteSeminar(seminar.id)}
                       className="p-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded border border-red-200 cursor-pointer"
-                      title="Delete Seminar"
+                      title="মুছে ফেলুন"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
@@ -897,7 +897,7 @@ export default function AdminContentManager() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {testimonials.length === 0 ? (
               <div className="col-span-2 text-center py-12 text-gray-400 text-xs">
-                No reviews or testimonials found. Click the button above to add your first testimonial!
+                কোনো রিভিউ বা প্রশংসামূলক মতামত খুঁজে পাওয়া যায়নি।
               </div>
             ) : (
               testimonials.map((test) => (
@@ -921,14 +921,14 @@ export default function AdminContentManager() {
                     <button
                       onClick={() => handleEditTestimonial(test)}
                       className="p-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded border border-gray-300 cursor-pointer"
-                      title="Edit Review"
+                      title="সম্পাদনা করুন"
                     >
                       <Edit className="w-3.5 h-3.5" />
                     </button>
                     <button
                       onClick={() => handleDeleteTestimonial(test.id)}
                       className="p-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded border border-red-200 cursor-pointer"
-                      title="Delete Review"
+                      title="মুছে ফেলুন"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
