@@ -135,7 +135,7 @@ export default function EnrollModal({ course, isOpen, onClose }: EnrollModalProp
                       <span>{course.liveClasses} টি লাইভ ক্লাস</span>
                     </div>
                     <div className="flex items-center gap-1 font-bold text-base">
-                      <span className="text-[#e17100] dark:text-[#ff9800] rounded-lg shadow-sm transition-transform duration-300 hover:scale-105 inline-block">৳ {course.price.toLocaleString('bn-BD')}</span>
+                      <span className="text-[#e17100] dark:text-[#ff9800] rounded-lg shadow-sm transition-transform duration-300 hover:scale-105 inline-block">৳ {Number(course.price || 0).toLocaleString('bn-BD')}</span>
                     </div>
                   </div>
 

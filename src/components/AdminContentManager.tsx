@@ -823,7 +823,7 @@ export default function AdminContentManager() {
                       {course.title}
                     </h4>
                     <p className="text-[11px] text-gray-500 font-bold">
-                      ৳ {course.price.toLocaleString('bn-BD')} | {course.duration} | {course.liveClasses}টি লাইভ ক্লাস
+                      ৳ {Number(course.price || 0).toLocaleString('bn-BD')} | {course.duration} | {course.liveClasses}টি লাইভ ক্লাস
                     </p>
                   </div>
                   <div className="flex flex-col gap-1 shrink-0">

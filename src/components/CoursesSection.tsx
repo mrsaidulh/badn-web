@@ -108,7 +108,7 @@ export default function CoursesSection() {
                   {/* Rating reviews details */}
                   <div className="flex items-center gap-1.5 text-xs text-amber-500 font-bold">
                     <Star className="w-4 h-4 fill-amber-500" />
-                    <span>{course.rating.toFixed(1)}</span>
+                    <span>{Number(course.rating || 5).toFixed(1)}</span>
                     <span className="text-gray-400 font-medium">({course.reviewsCount} মতামত)</span>
                   </div>
 
@@ -144,10 +144,10 @@ export default function CoursesSection() {
                 <div className="flex items-center justify-between pt-2 border-t border-gray-100 shrink-0">
                   <div>
                     <span className="text-[10px] text-gray-400 line-through block font-medium">
-                      ৳ {course.originalPrice.toLocaleString('bn-BD')}
+                      ৳ {Number(course.originalPrice || 0).toLocaleString('bn-BD')}
                     </span>
                     <span className="text-lg font-extrabold text-amber-600">
-                      ৳ {course.price.toLocaleString('bn-BD')} মাত্র
+                      ৳ {Number(course.price || 0).toLocaleString('bn-BD')} মাত্র
                     </span>
                   </div>
 
