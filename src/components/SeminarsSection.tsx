@@ -53,17 +53,50 @@ export default function SeminarsSection() {
               className="bg-white rounded-2xl overflow-hidden shadow-md border border-gray-100 flex flex-col justify-between hover:shadow-2xl transition-all duration-300 group"
             >
               {/* Seminar Image overlay */}
-              <div className="relative h-44 sm:h-48 overflow-hidden shrink-0">
-                <img
-                  src={seminar.image}
-                  alt={seminar.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
-                  loading="lazy"
-                  decoding="async"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                <span className="absolute bottom-4 left-4 bg-brand text-brand-contrast font-bold text-[10px] uppercase px-2 py-0.5 rounded">
+              <div className="relative h-48 sm:h-54 overflow-hidden shrink-0 bg-gray-100">
+                <picture>
+                  {seminar.id === 's1' ? (
+                    <>
+                      <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/seminar-6-mobile.webp" />
+                      <source type="image/webp" srcSet="/optimized/seminar-6.webp" />
+                    </>
+                  ) : seminar.id === 's2' ? (
+                    <>
+                      <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/seminar-inter-mobile.webp" />
+                      <source type="image/webp" srcSet="/optimized/seminar-inter.webp" />
+                    </>
+                  ) : (
+                    <>
+                      <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/seminar-5-mobile.webp" />
+                      <source type="image/webp" srcSet="/optimized/seminar-5.webp" />
+                    </>
+                  )}
+                  <img
+                    src={
+                      seminar.id === 's1'
+                        ? 'https://i.ibb.co.com/B25ChBhp/6.jpg'
+                        : seminar.id === 's2'
+                        ? 'https://i.ibb.co.com/gFhP2QLp/Seminar-inter.png'
+                        : seminar.image
+                    }
+                    onError={(e) => {
+                      if (seminar.id === 's1') {
+                        (e.target as HTMLImageElement).src = '/seminar-user-6.jpg';
+                      } else if (seminar.id === 's2') {
+                        (e.target as HTMLImageElement).src = '/seminar-user-inter.png';
+                      }
+                    }}
+                    alt={seminar.title}
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-all duration-500"
+                    width={400}
+                    height={216}
+                    loading="lazy"
+                    decoding="async"
+                    referrerPolicy="no-referrer"
+                  />
+                </picture>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                <span className="absolute bottom-4 left-4 bg-brand text-brand-contrast font-bold text-[10px] uppercase px-2 py-0.5 rounded shadow">
                   {seminar.organization ? seminar.organization.split(' ')[0] : 'BADN'}
                 </span>
               </div>

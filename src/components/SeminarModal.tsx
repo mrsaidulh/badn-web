@@ -85,15 +85,46 @@ export default function SeminarModal({ seminar, isOpen, onClose }: SeminarModalP
             className="relative w-full max-w-xl bg-white rounded-2xl shadow-2xl overflow-hidden z-10 border border-[#cbdccb]/40 max-h-[calc(100vh-2rem)] flex flex-col"
           >
             {/* Image / Header */}
-            <div className="relative h-48 sm:h-56 shrink-0">
-              <img
-                src={seminar.image}
-                alt={seminar.title}
-                className="w-full h-full object-cover"
-                loading="lazy"
-                decoding="async"
-                referrerPolicy="no-referrer"
-              />
+            <div className="relative h-48 sm:h-56 shrink-0 bg-gray-900">
+              <picture>
+                {seminar.id === 's1' ? (
+                  <>
+                    <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/seminar-6-mobile.webp" />
+                    <source type="image/webp" srcSet="/optimized/seminar-6.webp" />
+                  </>
+                ) : seminar.id === 's2' ? (
+                  <>
+                    <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/seminar-inter-mobile.webp" />
+                    <source type="image/webp" srcSet="/optimized/seminar-inter.webp" />
+                  </>
+                ) : (
+                  <>
+                    <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/seminar-5-mobile.webp" />
+                    <source type="image/webp" srcSet="/optimized/seminar-5.webp" />
+                  </>
+                )}
+                <img
+                  src={
+                    seminar.id === 's1'
+                      ? 'https://i.ibb.co.com/B25ChBhp/6.jpg'
+                      : seminar.id === 's2'
+                      ? 'https://i.ibb.co.com/gFhP2QLp/Seminar-inter.png'
+                      : seminar.image
+                  }
+                  onError={(e) => {
+                    if (seminar.id === 's1') {
+                      (e.target as HTMLImageElement).src = '/seminar-user-6.jpg';
+                    } else if (seminar.id === 's2') {
+                      (e.target as HTMLImageElement).src = '/seminar-user-inter.png';
+                    }
+                  }}
+                  alt={seminar.title}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                />
+              </picture>
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-6">
                 <span className="inline-block text-[11px] font-bold text-white bg-amber-600 px-2.5 py-0.5 rounded-full mb-1.5 w-fit">
                   আন্তর্জাতিক সেমিনার

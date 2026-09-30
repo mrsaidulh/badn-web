@@ -145,45 +145,33 @@ export default function Hero() {
               initial={{ opacity: 0, x: 40, scale: 0.97 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white"
+              className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-white"
             >
-              <img
-                src={HERO_IMAGE}
-                alt="Bangladesh Academy of Dietetics and Nutrition Clinical Training"
-                className="w-full h-auto object-cover max-h-[420px]"
-                referrerPolicy="no-referrer"
-              />
-              
-              {/* Badge overlay on top of banner */}
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.8, ease: "easeOut" }}
-                className="absolute top-4 right-4 bg-brand text-brand-contrast text-[10px] uppercase tracking-wider font-extrabold px-3 py-1 rounded-full shadow-md border border-amber-500/20"
-              >
-                Government Registered
-              </motion.div>
-
-              {/* Float Card for Interactive Feeling */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.7, ease: "easeOut" }}
-                className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm p-3.5 rounded-xl shadow-lg border border-[#cbdccb]/20 flex items-center justify-between"
-              >
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-white font-bold text-xs shadow">
-                    ★
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-bold text-gray-900 leading-tight">দেশসেরা অভিজ্ঞ মেন্টরস</h4>
-                    <p className="text-[10px] text-gray-500">লাইভ সেশন ও কেস ভিত্তিক সমাধান</p>
-                  </div>
-                </div>
-                <span className="text-[10px] bg-emerald-100 text-brand font-bold px-2 py-0.5 rounded-full">
-                  সিসিএনডি
-                </span>
-              </motion.div>
+              <picture>
+                <source
+                  type="image/webp"
+                  media="(max-width: 640px)"
+                  srcSet="/optimized/hero-9-mobile.webp"
+                />
+                <source
+                  type="image/webp"
+                  srcSet="/optimized/hero-9.webp"
+                />
+                <img
+                  src={HERO_IMAGE}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = '/hero-user-9.png';
+                  }}
+                  alt="BADN - Bangladesh Academy of Dietetics and Nutrition"
+                  className="w-full h-auto object-cover rounded-xl block"
+                  width={600}
+                  height={400}
+                  fetchPriority="high"
+                  loading="eager"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                />
+              </picture>
             </motion.div>
 
           </div>

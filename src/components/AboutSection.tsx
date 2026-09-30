@@ -1,7 +1,10 @@
-import { ABOUT_FEATURES, WORKSHOP_MAIN_IMAGE } from '../data';
+import { useState } from 'react';
+import { ABOUT_FEATURES, WORKSHOP_MAIN_IMAGE, WORKSHOP_FALLBACK_IMAGE } from '../data';
 import { Award, CheckCircle, Video, Users, Sparkles } from 'lucide-react';
 
 export default function AboutSection() {
+  const [imageSrc, setImageSrc] = useState<string>(WORKSHOP_MAIN_IMAGE);
+
   return (
     <section id="about" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -11,15 +14,33 @@ export default function AboutSection() {
           <div className="lg:col-span-5 relative">
             <div className="absolute inset-y-8 -inset-x-4 bg-brand-light rounded-3xl -z-10 transform -rotate-2" />
             
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white aspect-square max-h-[460px]">
-              <img
-                src={WORKSHOP_MAIN_IMAGE}
-                alt="BADN Certificate Distribution Graduation Ceremony"
-                className="w-full h-full object-cover"
-                loading="lazy"
-                decoding="async"
-                referrerPolicy="no-referrer"
-              />
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-gray-100 aspect-[4/3] max-h-[460px]">
+              <picture>
+                <source
+                  type="image/webp"
+                  media="(max-width: 640px)"
+                  srcSet="/optimized/about-workshop-3-mobile.webp"
+                />
+                <source
+                  type="image/webp"
+                  srcSet="/optimized/about-workshop-3.webp"
+                />
+                <img
+                  src={imageSrc}
+                  onError={() => {
+                    if (imageSrc !== WORKSHOP_FALLBACK_IMAGE) {
+                      setImageSrc(WORKSHOP_FALLBACK_IMAGE);
+                    }
+                  }}
+                  alt="BADN Certificate Distribution Graduation Ceremony"
+                  className="w-full h-full object-cover"
+                  width={500}
+                  height={375}
+                  loading="lazy"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                />
+              </picture>
 
               {/* Verified Badge overlay */}
               <div className="absolute bottom-6 right-6 bg-brand text-brand-contrast p-4 rounded-2xl shadow-xl flex items-center gap-3 border border-amber-500/20 max-w-[200px] backdrop-blur-sm">

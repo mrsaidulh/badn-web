@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { SEMINAR_VIDEO_PLACEHOLDER, SEMINARS } from '../data';
-import { Video, Award, Users, Play, Radio } from 'lucide-react';
+import { SEMINARS, PROMO_BANNER_IMAGE, PROMO_BANNER_FALLBACK_IMAGE } from '../data';
+import { Video, Radio } from 'lucide-react';
 import SeminarModal from './SeminarModal';
 
 export default function PromoBanner() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [bannerImg, setBannerImg] = useState<string>(PROMO_BANNER_IMAGE);
   const targetSeminar = SEMINARS[0]; // Let's use the first seminar for quick free seat booking
 
   return (
@@ -61,40 +62,42 @@ export default function PromoBanner() {
           <div className="lg:col-span-6 relative">
             <div className="absolute inset-0 bg-brand-light/40 rounded-3xl blur-xl -z-10" />
             
-            <div className="relative rounded-2xl overflow-hidden shadow-xl border border-[#cbdccb]/40 bg-gray-900 aspect-video group">
-              <img
-                src={SEMINAR_VIDEO_PLACEHOLDER}
-                alt="BADN Online nutrition seminar student grid on Zoom"
-                className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500 opacity-90"
-                loading="lazy"
-                decoding="async"
-                referrerPolicy="no-referrer"
-              />
+            <div 
+              onClick={() => setIsModalOpen(true)}
+              className="relative rounded-2xl overflow-hidden shadow-xl border-4 border-white bg-gray-100 aspect-video max-h-[460px] group cursor-pointer"
+            >
+              <picture>
+                <source
+                  type="image/webp"
+                  media="(max-width: 640px)"
+                  srcSet="/optimized/course-8-mobile.webp"
+                />
+                <source
+                  type="image/webp"
+                  srcSet="/optimized/course-8.webp"
+                />
+                <img
+                  src={bannerImg}
+                  onError={() => {
+                    if (bannerImg !== PROMO_BANNER_FALLBACK_IMAGE) {
+                      setBannerImg(PROMO_BANNER_FALLBACK_IMAGE);
+                    }
+                  }}
+                  alt="BADN Online Interactive Class Session"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
+                  width={640}
+                  height={360}
+                  loading="lazy"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                />
+              </picture>
 
-              {/* Interface grid overlay simulating live students */}
-              <div className="absolute inset-0 bg-black/30 p-4 flex flex-col justify-between">
-                
-                {/* Top status */}
-                <div className="flex justify-between items-center">
-                  <span className="bg-red-600 text-white font-black text-[9px] uppercase px-2 py-0.5 rounded flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 bg-white rounded-full animate-ping" />
-                    LIVE
-                  </span>
-                  <span className="bg-black/60 text-white text-[10px] font-semibold px-2 py-0.5 rounded backdrop-blur-sm flex items-center gap-1">
-                    <Users className="w-3 h-3 text-brand-light" />
-                    ৩৪০ জন সংযুক্ত
-                  </span>
-                </div>
-
-                {/* Middle Play Button */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-brand text-brand-contrast flex items-center justify-center shadow-lg cursor-pointer group-hover:scale-110 transition-transform">
-                  <Play className="w-6 h-6 fill-current ml-1" />
-                </div>
-
-                {/* Bottom Active Teacher Indicator */}
-                <div className="flex items-center justify-between text-[11px] text-white/90 bg-black/60 backdrop-blur-sm p-2 rounded-lg mt-auto">
-                  <span className="font-semibold">সঞ্চালনায়: ডায়েটেশিয়ান সাজেদা কাশেম জোতি</span>
-                  <span className="text-[10px] text-amber-400 font-bold">CCND Certificate Course</span>
+              {/* Interface overlay simulating live students */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex flex-col justify-end pointer-events-none">
+                <div className="flex items-center justify-between text-[11px] text-white/95 bg-black/60 backdrop-blur-sm p-2 rounded-lg border border-white/10">
+                  <span className="font-semibold">অনলাইন ক্লাস ও সেমিনার</span>
+                  <span className="text-[10px] text-amber-400 font-bold">BADN Academy</span>
                 </div>
               </div>
             </div>

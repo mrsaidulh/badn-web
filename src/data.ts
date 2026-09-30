@@ -1,14 +1,36 @@
 import { Course, Seminar, Testimonial, FAQ, FeatureItem } from './types';
 
-// Let's import the actual generated images
+// User exact original banner
+import renalNutritionBanner from './assets/images/renal_nutrition_user_banner.png';
 import heroBanner from './assets/images/hero_nutrition_banner_1783175357872.jpg';
 import classroomSeminarImg from './assets/images/classroom_seminar_1783175376672.jpg';
 import graduationWorkshopImg from './assets/images/nutritionist_workshop_1783175413017.jpg';
+import aboutWorkshopUser2Img from './assets/images/about_workshop_user_2.jpg';
+import aboutWorkshopUser3Img from './assets/images/about_workshop_user_3.jpg';
+import promoBannerUser4Img from './assets/images/promo_banner_user_4.jpg';
+import seminarUser5Img from './assets/images/seminar_user_5.jpg';
+import seminarUser6Img from './assets/images/seminar_user_6.jpg';
+import seminarUserInterImg from './assets/images/seminar_user_inter.png';
 import courseThumbnailImg from './assets/images/course_thumbnail_1783175481540.jpg';
+import heroUser9Img from './assets/images/hero_user_9.png';
+import courseUser8Img from './assets/images/course_user_8.jpg';
+import courseUser10Img from './assets/images/course_user_10.png';
+import courseUser11Img from './assets/images/course_user_11.png';
+import badnLogoCroppedImg from './assets/images/badn_logo_cropped.png';
 
-export const HERO_IMAGE = heroBanner;
+export const HERO_IMAGE = 'https://i.ibb.co.com/wNgD30g1/9.png';
+export const HERO_FALLBACK_IMAGE = heroUser9Img;
+export const BADN_LOGO_IMAGE = 'https://i.ibb.co.com/Cs3J3TgL/badn-logo-png.png';
+export const BADN_LOGO_FALLBACK = badnLogoCroppedImg;
 export const SEMINAR_VIDEO_PLACEHOLDER = classroomSeminarImg;
-export const WORKSHOP_MAIN_IMAGE = graduationWorkshopImg;
+export const WORKSHOP_MAIN_IMAGE = 'https://i.ibb.co.com/3mP31tt1/3.jpg';
+export const WORKSHOP_FALLBACK_IMAGE = aboutWorkshopUser3Img;
+export const PROMO_BANNER_IMAGE = 'https://i.ibb.co.com/cKnMCsN1/8.jpg';
+export const PROMO_BANNER_FALLBACK_IMAGE = courseUser8Img;
+export const SEMINAR_FALLBACK_IMAGE = seminarUser6Img;
+export const SEMINAR_INTER_FALLBACK_IMAGE = seminarUserInterImg;
+export const COURSE_2_FALLBACK_IMAGE = courseUser10Img;
+export const COURSE_3_FALLBACK_IMAGE = courseUser11Img;
 
 export const FEATURES: FeatureItem[] = [
   {
@@ -61,7 +83,7 @@ export const COURSES: Course[] = [
     classDuration: '২ ঘণ্টা করে মোট ৪০ ঘণ্টা',
     price: 12000,
     originalPrice: 15000,
-    image: courseThumbnailImg,
+    image: 'https://i.ibb.co.com/v4wkMNH2/2.jpg',
     category: 'Clinical Nutrition',
     rating: 4.9,
     reviewsCount: 320,
@@ -80,7 +102,7 @@ export const COURSES: Course[] = [
     classDuration: '২ ঘণ্টা করে মোট ৪৮ ঘণ্টা',
     price: 16000,
     originalPrice: 20000,
-    image: heroBanner, // Reusing high-quality asset
+    image: 'https://i.ibb.co.com/chWrS0Qb/10.png',
     category: 'Sports Nutrition',
     rating: 4.8,
     reviewsCount: 145,
@@ -99,7 +121,7 @@ export const COURSES: Course[] = [
     classDuration: '১.৫ ঘণ্টা করে মোট ২০ ঘণ্টা',
     price: 8000,
     originalPrice: 10000,
-    image: classroomSeminarImg, // Reusing classroom seminar image
+    image: 'https://i.ibb.co.com/6J49g293/11.png',
     category: 'Child Nutrition',
     rating: 5.0,
     reviewsCount: 98,
@@ -169,7 +191,7 @@ export const SEMINARS: Seminar[] = [
     expertRole: 'HOD, Nutrition & Dietetics, Medica Hospital, কলকাতা',
     date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
     location: 'বারডেম হাসপাতাল অডিটোরিয়াম, ঢাকা',
-    image: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&q=80&w=800&h=450'
+    image: 'https://i.ibb.co.com/B25ChBhp/6.jpg'
   },
   {
     id: 's2',
@@ -180,7 +202,7 @@ export const SEMINARS: Seminar[] = [
     expertRole: 'গবেষক, নিউট্রিজেনেটিক্স ইনস্টিটিউট',
     date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
     location: 'প্যান প্যাসিফিক সোনারগাঁও, ঢাকা',
-    image: 'https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?auto=format&fit=crop&q=80&w=800&h=450'
+    image: 'https://i.ibb.co.com/gFhP2QLp/Seminar-inter.png'
   },
   {
     id: 's3',

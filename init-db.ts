@@ -188,7 +188,7 @@ async function run() {
           classDuration: '২ ঘণ্টা করে মোট ৪০ ঘণ্টা',
           price: 12000.00,
           originalPrice: 15000.00,
-          image: '/src/assets/images/course_thumbnail_1783175481540.jpg',
+          image: 'https://i.ibb.co.com/v4wkMNH2/2.jpg',
           category: 'Clinical Nutrition',
           rating: 4.9,
           reviewsCount: 320,
@@ -207,7 +207,7 @@ async function run() {
           classDuration: '২ ঘণ্টা করে মোট ৪৮ ঘণ্টা',
           price: 16000.00,
           originalPrice: 20000.00,
-          image: '/src/assets/images/hero_nutrition_banner_1783175357872.jpg',
+          image: 'https://i.ibb.co.com/chWrS0Qb/10.png',
           category: 'Sports Nutrition',
           rating: 4.8,
           reviewsCount: 145,
@@ -226,7 +226,7 @@ async function run() {
           classDuration: '১.৫ ঘণ্টা করে মোট ২০ ঘণ্টা',
           price: 8000.00,
           originalPrice: 10000.00,
-          image: '/src/assets/images/classroom_seminar_1783175376672.jpg',
+          image: 'https://i.ibb.co.com/6J49g293/11.png',
           category: 'Child Nutrition',
           rating: 5.0,
           reviewsCount: 98,
@@ -267,7 +267,7 @@ async function run() {
           expertRole: 'HOD, Nutrition & Dietetics, Medica Hospital, কলকাতা',
           date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
           location: 'বারডেম হাসপাতাল অডিটোরিয়াম, ঢাকা',
-          image: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&q=80&w=800&h=450'
+          image: 'https://i.ibb.co.com/B25ChBhp/6.jpg'
         },
         {
           id: 's2',
@@ -278,7 +278,7 @@ async function run() {
           expertRole: 'গবেষক, নিউট্রিজেনেটিক্স ইনস্টিটিউট',
           date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
           location: 'প্যান প্যাসিফিক সোনারগাঁও, ঢাকা',
-          image: 'https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?auto=format&fit=crop&q=80&w=800&h=450'
+          image: 'https://i.ibb.co.com/gFhP2QLp/Seminar-inter.png'
         },
         {
           id: 's3',

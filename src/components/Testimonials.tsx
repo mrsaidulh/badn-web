@@ -93,6 +93,8 @@ export default function Testimonials() {
                 src={currentTestimonial.image}
                 alt={currentTestimonial.name}
                 className="w-14 h-14 rounded-full object-cover border-2 border-brand shadow-md"
+                width={56}
+                height={56}
                 loading="lazy"
                 decoding="async"
                 referrerPolicy="no-referrer"

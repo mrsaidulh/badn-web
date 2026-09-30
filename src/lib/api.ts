@@ -310,7 +310,26 @@ export async function getCourses(): Promise<any[]> {
     safeLocalStorage.setItem('badn_dynamic_courses', JSON.stringify(COURSES));
     return COURSES;
   }
-  return safeJsonParse(local, COURSES);
+  const parsed = safeJsonParse(local, COURSES);
+  const updated = parsed.map((course: any) => {
+    const staticMatch = COURSES.find(c => c.id === course.id);
+    if (staticMatch) {
+      if (course.id === 'c1') {
+        return { ...course, image: 'https://i.ibb.co.com/v4wkMNH2/2.jpg' };
+      }
+      if (course.id === 'c2') {
+        return { ...course, image: 'https://i.ibb.co.com/chWrS0Qb/10.png' };
+      }
+      if (course.id === 'c3') {
+        return { ...course, image: 'https://i.ibb.co.com/6J49g293/11.png' };
+      }
+      if (course.image?.includes('course_thumbnail') || !course.image) {
+        return { ...course, image: staticMatch.image };
+      }
+    }
+    return course;
+  });
+  return updated;
 }
 
 export async function addCourse(course: any): Promise<boolean> {
@@ -370,7 +389,23 @@ export async function getSeminarEvents(): Promise<any[]> {
     safeLocalStorage.setItem('badn_dynamic_seminar_events', JSON.stringify(STATIC_SEMINAR_EVENTS));
     return STATIC_SEMINAR_EVENTS;
   }
-  return safeJsonParse(local, STATIC_SEMINAR_EVENTS);
+  const parsed = safeJsonParse(local, STATIC_SEMINAR_EVENTS);
+  const updated = parsed.map((seminar: any) => {
+    const staticMatch = STATIC_SEMINAR_EVENTS.find(s => s.id === seminar.id);
+    if (staticMatch) {
+      if (seminar.id === 's1') {
+        return { ...seminar, image: 'https://i.ibb.co.com/B25ChBhp/6.jpg' };
+      }
+      if (seminar.id === 's2') {
+        return { ...seminar, image: 'https://i.ibb.co.com/gFhP2QLp/Seminar-inter.png' };
+      }
+      if (seminar.image?.includes('unsplash') || seminar.image?.includes('9mJcbjDC') || !seminar.image) {
+        return { ...seminar, image: staticMatch.image };
+      }
+    }
+    return seminar;
+  });
+  return updated;
 }
 
 export async function addSeminarEvent(seminar: any): Promise<boolean> {

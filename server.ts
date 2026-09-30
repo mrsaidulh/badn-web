@@ -329,7 +329,7 @@ async function initializeTables(dbPool: mysql.Pool) {
         id: 's2',
         title: 'জিনোমিক্স এন্ড নিউট্রিজেনেটিক্স বিষয়ে আন্তর্জাতিক সেমিনার',
         organization: 'BADN ও Institute of Nutrigenetics, India',
-        description: 'ঢাকায় বাংলাদেশে প্রথমবার “International Workshop on Understanding Nutrigenetics: The Science behind Personalized Nutrition” সফলভাবে অনুষ্ঠিত হয়। কর্মশালাটি Institute of Nutrigenetics, India কর্তৃক সার্টিфাইড ছিল এবং পার্সোনালাইজড ডায়েট ডিজাইনের ওপর গুরুত্বপূর্ণ আলোচনা করা হয়।',
+        description: 'ঢাকায় বাংলাদেশে প্রথমবার “International Workshop on Understanding Nutrigenetics: The Science behind Personalized Nutrition” সফলভাবে অনুষ্ঠিত হয়। কর্মশালাটি Institute of Nutrigenetics, India কর্তৃক সার্টিফাইড ছিল এবং পার্সোনালাইজড ডায়েট ডিজাইনের ওপর গুরুত্বপূর্ণ আলোচনা করা হয়।',
         expertName: 'ড. অশোক কুমার',
         expertRole: 'গবেষক, নিউট্রিজেনেটিক্স ইনস্টিটিউট',
         date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
@@ -369,7 +369,7 @@ async function initializeTables(dbPool: mysql.Pool) {
         id: 't1',
         name: 'জিন্নাতুল জাহরা ঐশী',
         role: 'নিউট্রিয়াম গ্র্যাজুয়েট ও পুষ্টিবিদ',
-        feedback: 'একাডেমিক পড়াশোনায় যে ঘাটতিগুলো ছিলো, курс করার ফলে সেগুলো অনেকটাই পূরণ হয়েছে। নিজের মধ্যে কনফিডেন্স এসেছে, জানার আগ্রহ আরও বেড়েছে। BADN কে ধন্যবাদ এই অসাধারণ কোর্সটি আয়োজন করার জন্য।',
+        feedback: 'একাডেমিক পড়াশোনায় যে ঘাটতিগুলো ছিলো, কোর্স করার ফলে সেগুলো অনেকটাই পূরণ হয়েছে। নিজের মধ্যে কনফিডেন্স এসেছে, জানার আগ্রহ আরও বেড়েছে। BADN কে ধন্যবাদ এই অসাধারণ কোর্সটি আয়োজন করার জন্য।',
         image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200&h=200',
         rating: 5
       },
@@ -802,6 +802,24 @@ app.delete('/api/testimonials/:id', async (req, res) => {
 // ==================== STATIC ASSETS & VITE MIDDLEWARE ====================
 
 async function startServer() {
+  // Serve optimized and public static assets with high-performance caching headers
+  app.use('/optimized', express.static(path.join(process.cwd(), 'public', 'optimized'), {
+    maxAge: '1y',
+    immutable: true,
+    setHeaders: (res) => {
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    }
+  }));
+
+  app.use(express.static(path.join(process.cwd(), 'public'), {
+    maxAge: '7d',
+    setHeaders: (res, filePath) => {
+      if (/\.(webp|jpg|jpeg|png|svg|ico)$/i.test(filePath)) {
+        res.setHeader('Cache-Control', 'public, max-age=864000, immutable');
+      }
+    }
+  }));
+
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({

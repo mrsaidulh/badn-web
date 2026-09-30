@@ -79,15 +79,57 @@ export default function CoursesSection() {
               className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group h-full"
             >
               {/* Card Image Thumbnail */}
-              <div className="relative h-48 sm:h-52 shrink-0">
-                <img
-                  src={course.image}
-                  alt={course.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
-                  loading="lazy"
-                  decoding="async"
-                  referrerPolicy="no-referrer"
-                />
+              <div className="relative h-52 sm:h-56 shrink-0 bg-gray-100 overflow-hidden">
+                <picture>
+                  {course.id === 'c1' ? (
+                    <>
+                      <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/course-c1-mobile.webp" />
+                      <source type="image/webp" srcSet="/optimized/course-c1.webp" />
+                    </>
+                  ) : course.id === 'c2' ? (
+                    <>
+                      <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/course-10-mobile.webp" />
+                      <source type="image/webp" srcSet="/optimized/course-10.webp" />
+                    </>
+                  ) : course.id === 'c3' ? (
+                    <>
+                      <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/course-11-mobile.webp" />
+                      <source type="image/webp" srcSet="/optimized/course-11.webp" />
+                    </>
+                  ) : (
+                    <>
+                      <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/course-renal-mobile.webp" />
+                      <source type="image/webp" srcSet="/optimized/course-renal.webp" />
+                    </>
+                  )}
+                  <img
+                    src={
+                      course.id === 'c1'
+                        ? 'https://i.ibb.co.com/v4wkMNH2/2.jpg'
+                        : course.id === 'c2'
+                        ? 'https://i.ibb.co.com/chWrS0Qb/10.png'
+                        : course.id === 'c3'
+                        ? 'https://i.ibb.co.com/6J49g293/11.png'
+                        : course.image
+                    }
+                    onError={(e) => {
+                      if (course.id === 'c1') {
+                        (e.target as HTMLImageElement).src = '/about-workshop-user-2.jpg';
+                      } else if (course.id === 'c2') {
+                        (e.target as HTMLImageElement).src = '/course-user-10.png';
+                      } else if (course.id === 'c3') {
+                        (e.target as HTMLImageElement).src = '/course-user-11.png';
+                      }
+                    }}
+                    alt={course.title}
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-all duration-500"
+                    width={400}
+                    height={224}
+                    loading="lazy"
+                    decoding="async"
+                    referrerPolicy="no-referrer"
+                  />
+                </picture>
                 
                 {/* Overlay Badge for seats constraint */}
                 {course.seatsLeft <= 8 && (
