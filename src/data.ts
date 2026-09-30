@@ -17,9 +17,10 @@ import courseUser8Img from './assets/images/course_user_8.jpg';
 import courseUser10Img from './assets/images/course_user_10.png';
 import courseUser11Img from './assets/images/course_user_11.png';
 import badnLogoCroppedImg from './assets/images/badn_logo_cropped.png';
+import firstMainImg from './assets/images/first_main.jpg';
 
-export const HERO_IMAGE = renalNutritionBanner || 'https://i.ibb.co.com/wNgD30g1/9.png';
-export const HERO_FALLBACK_IMAGE = renalNutritionBanner;
+export const HERO_IMAGE = 'https://i.ibb.co.com/gMMFsLNx/first-main.jpg';
+export const HERO_FALLBACK_IMAGE = firstMainImg;
 export const BADN_LOGO_IMAGE = 'https://i.ibb.co.com/Cs3J3TgL/badn-logo-png.png';
 export const BADN_LOGO_FALLBACK = badnLogoCroppedImg;
 export const SEMINAR_VIDEO_PLACEHOLDER = classroomSeminarImg;

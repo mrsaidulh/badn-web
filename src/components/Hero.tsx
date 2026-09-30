@@ -1,4 +1,4 @@
-import { HERO_IMAGE } from '../data';
+import { HERO_IMAGE, HERO_FALLBACK_IMAGE } from '../data';
 import { Award, Users, BookOpen, CheckCircle, Sparkles } from 'lucide-react';
 import { motion } from 'motion/react';
 
@@ -151,16 +151,21 @@ export default function Hero() {
                 <source
                   type="image/webp"
                   media="(max-width: 640px)"
-                  srcSet="/optimized/hero-9-mobile.webp"
+                  srcSet="/optimized/hero-main-mobile.webp"
                 />
                 <source
                   type="image/webp"
-                  srcSet="/optimized/hero-9.webp"
+                  srcSet="/optimized/hero-main.webp"
                 />
                 <img
                   src={HERO_IMAGE}
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = '/hero-user-9.png';
+                    const target = e.target as HTMLImageElement;
+                    const picture = target.closest('picture');
+                    if (picture) {
+                      picture.querySelectorAll('source').forEach(s => s.remove());
+                    }
+                    target.src = HERO_FALLBACK_IMAGE || '/first-main.jpg';
                   }}
                   alt="BADN - Bangladesh Academy of Dietetics and Nutrition"
                   className="w-full h-auto object-cover rounded-xl block"
