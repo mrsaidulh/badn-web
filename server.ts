@@ -248,7 +248,7 @@ async function initializeTables(dbPool: mysql.Pool) {
         classDuration: '২ ঘণ্টা করে মোট ৪০ ঘণ্টা',
         price: 12000.00,
         originalPrice: 15000.00,
-        image: '/src/assets/images/course_thumbnail_1783175481540.jpg',
+        image: 'https://i.ibb.co.com/wNgD30g1/9.png',
         category: 'Clinical Nutrition',
         rating: 4.9,
         reviewsCount: 320,

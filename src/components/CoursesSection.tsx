@@ -3,6 +3,23 @@ import { Course } from '../types';
 import { Clock, BookOpen, Award, Users, Star, ArrowRight, Flame } from 'lucide-react';
 import EnrollModal from './EnrollModal';
 import { getCourses } from '../lib/api';
+import courseUser9Img from '../assets/images/course_user_9.png';
+import courseUser10Img from '../assets/images/course_user_10.png';
+import courseUser11Img from '../assets/images/course_user_11.png';
+
+const getCourseImage = (id: string, defaultImg?: string) => {
+  if (id === 'c1') return 'https://i.ibb.co.com/wNgD30g1/9.png';
+  if (id === 'c2') return 'https://i.ibb.co.com/chWrS0Qb/10.png';
+  if (id === 'c3') return 'https://i.ibb.co.com/6J49g293/11.png';
+  return defaultImg || courseUser9Img;
+};
+
+const getCourseFallback = (id: string) => {
+  if (id === 'c1') return courseUser9Img;
+  if (id === 'c2') return courseUser10Img;
+  if (id === 'c3') return courseUser11Img;
+  return courseUser9Img;
+};
 
 export default function CoursesSection() {
   const [courses, setCourses] = useState<Course[]>([]);
@@ -83,8 +100,8 @@ export default function CoursesSection() {
                 <picture>
                   {course.id === 'c1' ? (
                     <>
-                      <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/course-c1-mobile.webp" />
-                      <source type="image/webp" srcSet="/optimized/course-c1.webp" />
+                      <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/course-9-mobile.webp" />
+                      <source type="image/webp" srcSet="/optimized/course-9.webp" />
                     </>
                   ) : course.id === 'c2' ? (
                     <>
@@ -103,23 +120,14 @@ export default function CoursesSection() {
                     </>
                   )}
                   <img
-                    src={
-                      course.id === 'c1'
-                        ? 'https://i.ibb.co.com/v4wkMNH2/2.jpg'
-                        : course.id === 'c2'
-                        ? 'https://i.ibb.co.com/chWrS0Qb/10.png'
-                        : course.id === 'c3'
-                        ? 'https://i.ibb.co.com/6J49g293/11.png'
-                        : course.image
-                    }
+                    src={getCourseImage(course.id, course.image)}
                     onError={(e) => {
-                      if (course.id === 'c1') {
-                        (e.target as HTMLImageElement).src = '/about-workshop-user-2.jpg';
-                      } else if (course.id === 'c2') {
-                        (e.target as HTMLImageElement).src = '/course-user-10.png';
-                      } else if (course.id === 'c3') {
-                        (e.target as HTMLImageElement).src = '/course-user-11.png';
+                      const target = e.target as HTMLImageElement;
+                      const parent = target.parentElement;
+                      if (parent && parent.tagName.toLowerCase() === 'picture') {
+                        parent.querySelectorAll('source').forEach((s) => s.remove());
                       }
+                      target.src = getCourseFallback(course.id);
                     }}
                     alt={course.title}
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-all duration-500"

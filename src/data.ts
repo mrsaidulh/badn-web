@@ -18,8 +18,8 @@ import courseUser10Img from './assets/images/course_user_10.png';
 import courseUser11Img from './assets/images/course_user_11.png';
 import badnLogoCroppedImg from './assets/images/badn_logo_cropped.png';
 
-export const HERO_IMAGE = 'https://i.ibb.co.com/wNgD30g1/9.png';
-export const HERO_FALLBACK_IMAGE = heroUser9Img;
+export const HERO_IMAGE = renalNutritionBanner || 'https://i.ibb.co.com/wNgD30g1/9.png';
+export const HERO_FALLBACK_IMAGE = renalNutritionBanner;
 export const BADN_LOGO_IMAGE = 'https://i.ibb.co.com/Cs3J3TgL/badn-logo-png.png';
 export const BADN_LOGO_FALLBACK = badnLogoCroppedImg;
 export const SEMINAR_VIDEO_PLACEHOLDER = classroomSeminarImg;
@@ -29,6 +29,7 @@ export const PROMO_BANNER_IMAGE = 'https://i.ibb.co.com/cKnMCsN1/8.jpg';
 export const PROMO_BANNER_FALLBACK_IMAGE = courseUser8Img;
 export const SEMINAR_FALLBACK_IMAGE = seminarUser6Img;
 export const SEMINAR_INTER_FALLBACK_IMAGE = seminarUserInterImg;
+export const COURSE_1_FALLBACK_IMAGE = heroUser9Img;
 export const COURSE_2_FALLBACK_IMAGE = courseUser10Img;
 export const COURSE_3_FALLBACK_IMAGE = courseUser11Img;
 
@@ -83,7 +84,7 @@ export const COURSES: Course[] = [
     classDuration: '২ ঘণ্টা করে মোট ৪০ ঘণ্টা',
     price: 12000,
     originalPrice: 15000,
-    image: 'https://i.ibb.co.com/v4wkMNH2/2.jpg',
+    image: 'https://i.ibb.co.com/wNgD30g1/9.png',
     category: 'Clinical Nutrition',
     rating: 4.9,
     reviewsCount: 320,

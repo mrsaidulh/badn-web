@@ -315,7 +315,7 @@ export async function getCourses(): Promise<any[]> {
     const staticMatch = COURSES.find(c => c.id === course.id);
     if (staticMatch) {
       if (course.id === 'c1') {
-        return { ...course, image: 'https://i.ibb.co.com/v4wkMNH2/2.jpg' };
+        return { ...course, image: 'https://i.ibb.co.com/wNgD30g1/9.png' };
       }
       if (course.id === 'c2') {
         return { ...course, image: 'https://i.ibb.co.com/chWrS0Qb/10.png' };
