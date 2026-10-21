@@ -353,23 +353,33 @@ sudo ufw status
 
 ---
 
-## Redeploying Future Code Updates
+## Redeploying Future Code Updates & Syncing New Courses / Features
 
-When you push new updates to your git repository, you can redeploy the application on your VPS in a few seconds:
+When you push new updates, courses, seminars, or code changes to your GitHub repository, run this exact sequence on your VPS:
 
 ```bash
-# 1. Pull the latest code
+# 1. Navigate to your project folder
 cd /var/www/badn-academy
+
+# 2. Pull the latest commits from GitHub
 git pull
 
-# 2. Re-install packages (if package.json changed)
+# 3. Install any updated dependencies
 npm install
 
-# 3. Rebuild the application
+# 4. Rebuild BOTH frontend assets and server bundle (Vite + esbuild)
 npm run build
 
-# 4. Restart the running background process
+# 5. Synchronize new database rows (safely inserts any newly added courses/seminars without deleting existing data)
+npm run db:init
+
+# 6. Restart the running PM2 background process
 pm2 restart badn-academy
 ```
+
+### 💡 Why newly added courses were previously not visible on your VPS:
+1. **Production Build Required**: In production, the Node/Express server serves pre-compiled frontend assets from `dist/`. Running `git pull` updates your `.ts` source files, but running `npm run build` is necessary to compile them into `dist/` and `dist/server.cjs`.
+2. **Database Auto-Sync**: The database initialization now automatically inspects your existing `courses` and `seminars` tables, detects any missing default items (`c4`, `c5`, `c6` and `s4`, `s5`, `s6`), and inserts them without altering your existing enrollments or registrations.
+3. **Browser Cache**: After restarting PM2, perform a hard refresh in your browser (`Ctrl + F5` or `Cmd + Shift + R` or Incognito) to clear any cached scripts.
 
 Your system is now fully set up, secured, and ready for production! 🚀

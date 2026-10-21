@@ -172,11 +172,9 @@ async function run() {
       console.log('   - "users" table already has records. Skipping seed.');
     }
 
-    // 2. Seed default courses if empty
-    const [courseRows]: any = await connection.query('SELECT COUNT(*) as count FROM courses');
-    if (courseRows[0].count === 0) {
-      console.log('📚 Seeding default courses...');
-      const defaultCourses = [
+    // 2. Seed / Synchronize default courses
+    console.log('📚 Verifying and synchronizing default courses...');
+    const defaultCourses = [
         {
           id: 'c1',
           title: 'সার্টিফিকেট কোর্স - ক্লিনিক্যাল নিউট্রিশন এন্ড ডায়েটেটিক্স (সিসিএনডি)',
@@ -294,27 +292,28 @@ async function run() {
       ];
 
       for (const course of defaultCourses) {
-        await connection.query(
-          `INSERT INTO courses (id, title, duration, liveClasses, recordedClasses, orientation, exams, classDuration, price, originalPrice, image, category, rating, reviewsCount, description, seatsLeft, startDate) 
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-          [
-            course.id, course.title, course.duration, course.liveClasses, course.recordedClasses,
-            course.orientation, course.exams, course.classDuration, course.price, course.originalPrice,
-            course.image, course.category, course.rating, course.reviewsCount, course.description,
-            course.seatsLeft, course.startDate
-          ]
-        );
+        const [existing]: any = await connection.query('SELECT id FROM courses WHERE id = ?', [course.id]);
+        if (existing.length === 0) {
+          console.log(`   + Adding missing default course: [${course.id}] ${course.title.slice(0, 40)}...`);
+          await connection.query(
+            `INSERT INTO courses (id, title, duration, liveClasses, recordedClasses, orientation, exams, classDuration, price, originalPrice, image, category, rating, reviewsCount, description, seatsLeft, startDate) 
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+              course.id, course.title, course.duration, course.liveClasses, course.recordedClasses,
+              course.orientation, course.exams, course.classDuration, course.price, course.originalPrice,
+              course.image, course.category, course.rating, course.reviewsCount, course.description,
+              course.seatsLeft, course.startDate
+            ]
+          );
+        } else {
+          console.log(`   ✓ Course [${course.id}] verified in database.`);
+        }
       }
-      console.log('   - Seeding completed for default courses.');
-    } else {
-      console.log('   - "courses" table already has records. Skipping seed.');
-    }
+      console.log('   - Courses verified and in sync.');
 
-    // 3. Seed default seminars if empty
-    const [seminarRows]: any = await connection.query('SELECT COUNT(*) as count FROM seminars');
-    if (seminarRows[0].count === 0) {
-      console.log('🎤 Seeding default seminars...');
-      const defaultSeminars = [
+    // 3. Seed / Synchronize default seminars
+    console.log('🎤 Verifying and synchronizing default seminars...');
+    const defaultSeminars = [
         {
           id: 's1',
           title: 'ক্রিটিক্যাল কেয়ার নিউট্রিশন নিয়ে আন্তর্জাতিক সেমিনার',
@@ -384,19 +383,22 @@ async function run() {
       ];
 
       for (const seminar of defaultSeminars) {
-        await connection.query(
-          `INSERT INTO seminars (id, title, organization, description, expertName, expertRole, date, location, image) 
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-          [
-            seminar.id, seminar.title, seminar.organization, seminar.description,
-            seminar.expertName, seminar.expertRole, seminar.date, seminar.location, seminar.image
-          ]
-        );
+        const [existing]: any = await connection.query('SELECT id FROM seminars WHERE id = ?', [seminar.id]);
+        if (existing.length === 0) {
+          console.log(`   + Adding missing default seminar: [${seminar.id}] ${seminar.title.slice(0, 40)}...`);
+          await connection.query(
+            `INSERT INTO seminars (id, title, organization, description, expertName, expertRole, date, location, image) 
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+              seminar.id, seminar.title, seminar.organization, seminar.description,
+              seminar.expertName, seminar.expertRole, seminar.date, seminar.location, seminar.image
+            ]
+          );
+        } else {
+          console.log(`   ✓ Seminar [${seminar.id}] verified in database.`);
+        }
       }
-      console.log('   - Seeding completed for 3 default seminars.');
-    } else {
-      console.log('   - "seminars" table already has records. Skipping seed.');
-    }
+      console.log('   - Seminars verified and in sync.');
 
     // 4. Seed default testimonials if empty
     const [testimonialRows]: any = await connection.query('SELECT COUNT(*) as count FROM testimonials');

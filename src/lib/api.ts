@@ -299,8 +299,16 @@ export async function getCourses(): Promise<any[]> {
     const res = await fetch('/api/courses');
     const result = await res.json();
     if (result.success && result.data && result.data.length > 0) {
-      safeLocalStorage.setItem('badn_dynamic_courses', JSON.stringify(result.data));
-      return result.data;
+      const dbCourses: any[] = result.data;
+      const dbIds = new Set(dbCourses.map((c: any) => c.id));
+      const missingDefaults = COURSES.filter(dc => !dbIds.has(dc.id));
+      let mergedCourses = [...dbCourses];
+      if (missingDefaults.length > 0) {
+        mergedCourses = [...dbCourses, ...missingDefaults];
+        fetch('/api/courses/sync-defaults', { method: 'POST' }).catch(() => {});
+      }
+      safeLocalStorage.setItem('badn_dynamic_courses', JSON.stringify(mergedCourses));
+      return mergedCourses;
     }
   } catch (err) {
     console.warn('API error fetching courses. Using localStorage fallback:', err);
@@ -396,8 +404,16 @@ export async function getSeminarEvents(): Promise<any[]> {
     const res = await fetch('/api/seminar-events');
     const result = await res.json();
     if (result.success && result.data && result.data.length > 0) {
-      safeLocalStorage.setItem('badn_dynamic_seminar_events', JSON.stringify(result.data));
-      return result.data;
+      const dbSeminars: any[] = result.data;
+      const dbIds = new Set(dbSeminars.map((s: any) => s.id));
+      const missingDefaults = STATIC_SEMINAR_EVENTS.filter(ds => !dbIds.has(ds.id));
+      let mergedSeminars = [...dbSeminars];
+      if (missingDefaults.length > 0) {
+        mergedSeminars = [...dbSeminars, ...missingDefaults];
+        fetch('/api/seminar-events/sync-defaults', { method: 'POST' }).catch(() => {});
+      }
+      safeLocalStorage.setItem('badn_dynamic_seminar_events', JSON.stringify(mergedSeminars));
+      return mergedSeminars;
     }
   } catch (err) {
     console.warn('API error fetching seminar events. Using localStorage fallback:', err);

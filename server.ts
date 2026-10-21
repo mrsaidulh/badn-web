@@ -72,19 +72,228 @@ async function getDbPool() {
   return dbInitializationPromise;
 }
 
-async function initializeTables(dbPool: mysql.Pool) {
-  try {
-    // Check if tables are already initialized by querying 'users' table presence
-    const [rows]: any = await dbPool.query("SHOW TABLES LIKE 'users'");
-    if (rows && rows.length > 0) {
-      console.log('📡 Connected to MySQL database. Table structure is already verified.');
-      return;
-    }
-  } catch (err: any) {
-    console.warn('⚠️ Error checking table existence, proceeding with safety creation:', err.message);
+export const DEFAULT_COURSES = [
+  {
+    id: 'c1',
+    title: 'সার্টিফিকেট কোর্স - ক্লিনিক্যাল নিউট্রিশন এন্ড ডায়েটেটিক্স (সিসিএনডি)',
+    duration: '২ মাস (2 Months)',
+    liveClasses: 16,
+    recordedClasses: 1,
+    orientation: 1,
+    exams: 2,
+    classDuration: '২ ঘণ্টা করে মোট ৪০ ঘণ্টা',
+    price: 12000.00,
+    originalPrice: 15000.00,
+    image: 'https://i.ibb.co.com/wNgD30g1/9.png',
+    category: 'Clinical Nutrition',
+    rating: 4.9,
+    reviewsCount: 320,
+    description: 'ক্লিনিক্যাল ক্যারিয়ার গঠনে দেশের সবচাইতে কার্যকরী ও সমৃদ্ধ ব্যবহারিক পাঠ্যক্রম সমৃদ্ধ কোর্স। বাস্তবধর্মী কেস স্টাডি ও অভিজ্ঞ পুষ্টিবিদদের নির্দেশনায় সরাসরি শিখুন।',
+    seatsLeft: 8,
+    startDate: '১৫ জুলাই, ২০২৬'
+  },
+  {
+    id: 'c2',
+    title: 'অ্যাডভান্সড স্পোর্টস নিউট্রিশন অ্যান্ড পারফরম্যান্স',
+    duration: '৩ মাস (3 Months)',
+    liveClasses: 24,
+    recordedClasses: 2,
+    orientation: 1,
+    exams: 2,
+    classDuration: '২ ঘণ্টা করে মোট ৪৮ ঘণ্টা',
+    price: 16000.00,
+    originalPrice: 20000.00,
+    image: 'https://i.ibb.co.com/chWrS0Qb/10.png',
+    category: 'Sports Nutrition',
+    rating: 4.8,
+    reviewsCount: 145,
+    description: 'অ্যাথলেট ও ক্রীড়াবিদদের খাদ্যতালিকা প্রণয়ন, ক্যালরি পরিমাপ এবং স্পোর্টস পারফরম্যান্স বুস্ট করার জন্য বৈজ্ঞানিক ডায়েট গাইডলাইন।',
+    seatsLeft: 12,
+    startDate: '০১ আগস্ট, ২০২৬'
+  },
+  {
+    id: 'c3',
+    title: 'ম্যাটারনাল অ্যান্ড চাইল্ড নিউট্রিশন মাস্টারক্লাস',
+    duration: '৬ সপ্তাহ (6 Weeks)',
+    liveClasses: 12,
+    recordedClasses: 1,
+    orientation: 1,
+    exams: 1,
+    classDuration: '১.৫ ঘণ্টা করে মোট ২০ ঘণ্টা',
+    price: 8000.00,
+    originalPrice: 10000.00,
+    image: 'https://i.ibb.co.com/6J49g293/11.png',
+    category: 'Child Nutrition',
+    rating: 5.0,
+    reviewsCount: 98,
+    description: 'গর্ভকালীন পুষ্টি এবং শিশুর জন্মের পর প্রথম ১০০০ দিনের পুষ্টি চাহিদা পূরণ ও পথ্য পরিকল্পনা নিয়ে বিশেষায়িত কোর্স।',
+    seatsLeft: 5,
+    startDate: '২০ জুলাই, ২০২৬'
+  },
+  {
+    id: 'c4',
+    title: 'সার্টিফিকেট কোর্স - রেনাল নিউট্রিশন অ্যান্ড কিডনি ডায়েট ম্যানেজমেন্ট',
+    duration: '২ মাস (2 Months)',
+    liveClasses: 16,
+    recordedClasses: 2,
+    orientation: 1,
+    exams: 2,
+    classDuration: '২ ঘণ্টা করে মোট ৪০ ঘণ্টা',
+    price: 13500.00,
+    originalPrice: 17000.00,
+    image: '/renal-nutrition-banner.png',
+    category: 'Renal Nutrition',
+    rating: 4.9,
+    reviewsCount: 164,
+    description: 'সিকেডি (CKD) স্টেজ ১-৫, ডায়ালাইসিস ও কিডনি ট্রান্সপ্লান্ট রোগীদের প্রোটিন, সোডিয়াম, পটাসিয়াম ও ফ্লুইড ক্যালকুলেশন নিয়ে আন্তর্জাতিক মানের ব্যবহারিক কোর্স।',
+    seatsLeft: 6,
+    startDate: '২৫ জুলাই, ২০২৬'
+  },
+  {
+    id: 'c5',
+    title: 'অ্যাডভান্সড অনকো নিউট্রিশন অ্যান্ড ক্যান্সার কেয়ার',
+    duration: '২.৫ মাস (2.5 Months)',
+    liveClasses: 20,
+    recordedClasses: 2,
+    orientation: 1,
+    exams: 2,
+    classDuration: '২ ঘণ্টা করে মোট ৫০ ঘণ্টা',
+    price: 15000.00,
+    originalPrice: 19000.00,
+    image: 'https://i.ibb.co.com/3mP31tt1/3.jpg',
+    category: 'Onco Nutrition',
+    rating: 5.0,
+    reviewsCount: 112,
+    description: 'ক্যান্সার রোগীদের কেমোথেরাপি ও রেডিওথেরাপির সময় টিউমার মেটাবলিজম, অ্যানোরেক্সিয়া-ক্যাচেক্সিয়া সিন্ড্রোম ও ইমিউনোনিউট্রিশন সাপোর্টের ওপর বিশেষায়িত কোর্স।',
+    seatsLeft: 4,
+    startDate: '১০ আগস্ট, ২০২৬'
+  },
+  {
+    id: 'c6',
+    title: 'মাস্টারক্লাস - ক্রিটিক্যাল কেয়ার নিউট্রিশন অ্যান্ড আইসিইউ ম্যানেজমেন্ট',
+    duration: '২ মাস (2 Months)',
+    liveClasses: 18,
+    recordedClasses: 2,
+    orientation: 1,
+    exams: 2,
+    classDuration: '২ ঘণ্টা করে মোট ৪৫ ঘণ্টা',
+    price: 14000.00,
+    originalPrice: 18000.00,
+    image: 'https://i.ibb.co.com/B25ChBhp/6.jpg',
+    category: 'Critical Care Nutrition',
+    rating: 4.9,
+    reviewsCount: 188,
+    description: 'আইসিইউ ও এইচডিইউতে ভেন্টিলেশন, সেপসিস ও ট্রমা রোগীদের এন্টারাল ও প্যারেন্টেরাল নিউট্রিশন (EN & TPN), ইলেকট্রোলাইট ও মেটাবলিক ব্যালেন্সিং নিয়ে স্পেশালাইজড কোর্স।',
+    seatsLeft: 7,
+    startDate: '০৫ আগস্ট, ২০২৬'
   }
+];
 
-  console.log('📦 Automatically initializing database tables...');
+export const DEFAULT_SEMINARS = [
+  {
+    id: 's1',
+    title: 'ক্রিটিক্যাল কেয়ার নিউট্রিশন নিয়ে আন্তর্জাতিক সেমিনার',
+    organization: 'BADN ইন্টারন্যাশনাল',
+    description: 'BADN এর উদ্যোগে ঢাকার বারডেম হাসপাতালে সফলভাবে অনুষ্ঠিত হয় International Workshop on Critical Care Nutrition। ভারতের প্রখ্যাত ডায়েটেটিশিয়ান সাংহামিত্রা চক্রবর্তী (HOD, Nutrition & Dietetics, Medica Superspecialty Hospital, কলকাতা) কর্মশালাটি পরিচালনা করেন। এতে নিউট্রিশনিস্ট, ডায়েটেটিশিয়ান, চিকিৎসকসহ বিভিন্ন স্বাস্থ্য পেশাজীবীরা অংশ নেন।',
+    expertName: 'সাংহামিত্রা চক্রবর্তী',
+    expertRole: 'HOD, Nutrition & Dietetics, Medica Hospital, কলকাতা',
+    date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
+    location: 'বারডেম হাসপাতাল অডিটোরিয়াম, ঢাকা',
+    image: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&q=80&w=800&h=450'
+  },
+  {
+    id: 's2',
+    title: 'জিনোমিক্স এন্ড নিউট্রিজেনেটিক্স বিষয়ে আন্তর্জাতিক সেমিনার',
+    organization: 'BADN ও Institute of Nutrigenetics, India',
+    description: 'ঢাকায় বাংলাদেশে প্রথমবার “International Workshop on Understanding Nutrigenetics: The Science behind Personalized Nutrition” সফলভাবে অনুষ্ঠিত হয়। কর্মশালাটি Institute of Nutrigenetics, India কর্তৃক সার্টিফাইড ছিল এবং পার্সোনালাইজড ডায়েট ডিজাইনের ওপর গুরুত্বপূর্ণ আলোচনা করা হয়।',
+    expertName: 'ড. অশোক কুমার',
+    expertRole: 'গবেষক, নিউট্রিজেনেটিক্স ইনস্টিটিউট',
+    date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
+    location: 'প্যান প্যাসিফিক সোনারগাঁও, ঢাকা',
+    image: 'https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?auto=format&fit=crop&q=80&w=800&h=450'
+  },
+  {
+    id: 's3',
+    title: 'স্পোর্টস নিউট্রিশন বিষয়ে আন্তর্জাতিক সেমিনার',
+    organization: 'BADN স্পোর্টস উইং',
+    description: 'ঢাকায় ৩ দিনব্যাপী “International Workshop on Sports Nutrition” সফলভাবে অনুষ্ঠিত হয়। কর্মশালাটি পরিচালনা করেন ভারতের প্রখ্যাত স্পোর্টস নিউট্রিশন বিশেষজ্ঞ মিসেস রাশমি চেরিয়ান, RD। অ্যাথলেটদের পুষ্টি চাহিদা এবং সাপ্লিমেন্টের সঠিক ব্যবহার নিয়ে বিস্তারিত গাইড প্রদান করা হয়।',
+    expertName: 'মিসেস রাশমি চেরিয়ান',
+    expertRole: 'রেজিস্টার্ড ডায়েটেশিয়ান (RD), স্পোর্টস পুষ্টিবিদ',
+    date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
+    location: 'কমনওয়েলথ অডিটোরিয়াম, ঢাকা',
+    image: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=800&h=450'
+  },
+  {
+    id: 's4',
+    title: 'রেনাল নিউট্রিশন বিষয়ে আন্তর্জাতিক সেমিনার',
+    organization: 'BADN রেনাল কেয়ার উইং',
+    description: 'BADN এর উদ্যোগে ঢাকায় অনুষ্ঠিত হয় International Workshop on Renal Nutrition। কিডনি রোগীদের চিকিৎসায় বৈজ্ঞানিক পথ্যব্যবস্থাপনা, সিকেডি (CKD) স্টেজভিত্তিক প্রোটিন নিয়ন্ত্রণ ও ডায়ালাইসিসের পুষ্টি চাহিদা নিয়ে বিশেষজ্ঞ কর্মশালা অনুষ্ঠিত হয়।',
+    expertName: 'ডা. অনুপম ঘোষাল',
+    expertRole: 'কনসালট্যান্ট নেফ্রোলজিস্ট ও রেনাল ডায়েটিক্স স্পেশালিস্ট',
+    date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
+    location: 'বিএসএমএমইউ (BSMMU) কনভেনশন হল, ঢাকা',
+    image: '/renal-nutrition-banner.png'
+  },
+  {
+    id: 's5',
+    title: 'অনকো নিউট্রিশন বিষয়ে আন্তর্জাতিক সেমিনার',
+    organization: 'BADN অনকোলজি উইং',
+    description: 'ঢাকায় ৩ দিনব্যাপী অনুষ্ঠিত হয় International Workshop on Oncology Nutrition। ক্যান্সার রোগীদের কেমো ও রেডিওথেরাপির পার্শ্বপ্রতিক্রিয়া নিরসন, টিউমার মেটাবলিজম ও ইমিউনো-নিউট্রিশন নিশ্চিতকরণে আন্তর্জাতিক ক্যান্সার পুষ্টি বিশেষজ্ঞদের পরিচালনায় সেমিনার।',
+    expertName: 'প্রফেসর ড. রীতা শর্মা',
+    expertRole: 'চিফ অনকো-নিউট্রিশনিস্ট, টাটা মেডিকেল সহযোগী',
+    date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
+    location: 'জাতীয় ক্যান্সার গবেষণা ইনস্টিটিউট, ঢাকা',
+    image: 'https://i.ibb.co.com/3mP31tt1/3.jpg'
+  },
+  {
+    id: 's6',
+    title: 'চাইল্ড নিউট্রিশন ও পেডিয়াট্রিক ডায়েটেটিক্স বিষয়ে আন্তর্জাতিক সেমিনার',
+    organization: 'BADN পেডিয়াট্রিক উইং',
+    description: 'শিশুদের বৃদ্ধি ও বিকাশ, মারাত্মক তীব্র অপুষ্টি (SAM/MAM), শৈশবের স্থূলতা ও খাদ্যে অ্যালার্জি প্রতিরোধে বিজ্ঞানসম্মত খাদ্য পরিকল্পনা নিয়ে অনুষ্ঠিত International Workshop on Pediatric and Child Nutrition। এতে অভিজ্ঞ পুষ্টিবিদরা অংশ নেন।',
+    expertName: 'ড. মারিয়া ফার্নান্দেজ',
+    expertRole: 'সিনিয়র পেডিয়াট্রিক নিউট্রিশন স্পেশালিস্ট',
+    date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
+    location: 'ঢাকা শিশু হাসপাতাল অডিটোরিয়াম, ঢাকা',
+    image: '/about-workshop-user-2.jpg'
+  }
+];
+
+export async function syncDefaultCourses(dbPool: mysql.Pool) {
+  for (const course of DEFAULT_COURSES) {
+    const [existing]: any = await dbPool.query('SELECT id FROM courses WHERE id = ?', [course.id]);
+    if (existing.length === 0) {
+      await dbPool.query(
+        `INSERT INTO courses (id, title, duration, liveClasses, recordedClasses, orientation, exams, classDuration, price, originalPrice, image, category, rating, reviewsCount, description, seatsLeft, startDate) 
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          course.id, course.title, course.duration, course.liveClasses, course.recordedClasses,
+          course.orientation, course.exams, course.classDuration, course.price, course.originalPrice,
+          course.image, course.category, course.rating, course.reviewsCount, course.description,
+          course.seatsLeft, course.startDate
+        ]
+      );
+    }
+  }
+}
+
+export async function syncDefaultSeminars(dbPool: mysql.Pool) {
+  for (const seminar of DEFAULT_SEMINARS) {
+    const [existing]: any = await dbPool.query('SELECT id FROM seminars WHERE id = ?', [seminar.id]);
+    if (existing.length === 0) {
+      await dbPool.query(
+        `INSERT INTO seminars (id, title, organization, description, expertName, expertRole, date, location, image) 
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          seminar.id, seminar.title, seminar.organization, seminar.description,
+          seminar.expertName, seminar.expertRole, seminar.date, seminar.location, seminar.image
+        ]
+      );
+    }
+  }
+}
+
+async function initializeTables(dbPool: mysql.Pool) {
+  console.log('📦 Verifying and synchronizing database tables & default records...');
   
   // Users Table
   await dbPool.query(`
@@ -233,223 +442,11 @@ async function initializeTables(dbPool: mysql.Pool) {
     );
   }
 
-  // Seed default courses if empty
-  const [courseRows]: any = await dbPool.query('SELECT COUNT(*) as count FROM courses');
-  if (courseRows[0].count === 0) {
-    const defaultCourses = [
-      {
-        id: 'c1',
-        title: 'সার্টিফিকেট কোর্স - ক্লিনিক্যাল নিউট্রিশন এন্ড ডায়েটেটিক্স (সিসিএনডি)',
-        duration: '২ মাস (2 Months)',
-        liveClasses: 16,
-        recordedClasses: 1,
-        orientation: 1,
-        exams: 2,
-        classDuration: '২ ঘণ্টা করে মোট ৪০ ঘণ্টা',
-        price: 12000.00,
-        originalPrice: 15000.00,
-        image: 'https://i.ibb.co.com/wNgD30g1/9.png',
-        category: 'Clinical Nutrition',
-        rating: 4.9,
-        reviewsCount: 320,
-        description: 'ক্লিনিক্যাল ক্যারিয়ার গঠনে দেশের সবচাইতে কার্যকরী ও সমৃদ্ধ ব্যবহারিক পাঠ্যক্রম সমৃদ্ধ কোর্স। বাস্তবধর্মী কেস স্টাডি ও অভিজ্ঞ পুষ্টিবিদদের নির্দেশনায় সরাসরি শিখুন।',
-        seatsLeft: 8,
-        startDate: '১৫ জুলাই, ২০২৬'
-      },
-      {
-        id: 'c2',
-        title: 'অ্যাডভান্সড স্পোর্টস নিউট্রিশন অ্যান্ড পারফরম্যান্স',
-        duration: '৩ মাস (3 Months)',
-        liveClasses: 24,
-        recordedClasses: 2,
-        orientation: 1,
-        exams: 2,
-        classDuration: '২ ঘণ্টা করে মোট ৪৮ ঘণ্টা',
-        price: 16000.00,
-        originalPrice: 20000.00,
-        image: '/src/assets/images/hero_nutrition_banner_1783175357872.jpg',
-        category: 'Sports Nutrition',
-        rating: 4.8,
-        reviewsCount: 145,
-        description: 'অ্যাথলেট ও ক্রীড়াবিদদের খাদ্যতালিকা প্রণয়ন, ক্যালরি পরিমাপ এবং স্পোর্টস পারফরম্যান্স বুস্ট করার জন্য বৈজ্ঞানিক ডায়েট গাইডলাইন।',
-        seatsLeft: 12,
-        startDate: '০১ আগস্ট, ২০২৬'
-      },
-      {
-        id: 'c3',
-        title: 'ম্যাটারনাল অ্যান্ড চাইল্ড নিউট্রিশন মাস্টারক্লাস',
-        duration: '৬ সপ্তাহ (6 Weeks)',
-        liveClasses: 12,
-        recordedClasses: 1,
-        orientation: 1,
-        exams: 1,
-        classDuration: '১.৫ ঘণ্টা করে মোট ২০ ঘণ্টা',
-        price: 8000.00,
-        originalPrice: 10000.00,
-        image: '/src/assets/images/classroom_seminar_1783175376672.jpg',
-        category: 'Child Nutrition',
-        rating: 5.0,
-        reviewsCount: 98,
-        description: 'গর্ভকালীন পুষ্টি এবং শিশুর জন্মের পর প্রথম ১০০০ দিনের পুষ্টি চাহিদা পূরণ ও পথ্য পরিকল্পনা নিয়ে বিশেষায়িত কোর্স।',
-        seatsLeft: 5,
-        startDate: '২০ জুলাই, ২০২৬'
-      },
-      {
-        id: 'c4',
-        title: 'সার্টিফিকেট কোর্স - রেনাল নিউট্রিশন অ্যান্ড কিডনি ডায়েট ম্যানেজমেন্ট',
-        duration: '২ মাস (2 Months)',
-        liveClasses: 16,
-        recordedClasses: 2,
-        orientation: 1,
-        exams: 2,
-        classDuration: '২ ঘণ্টা করে মোট ৪০ ঘণ্টা',
-        price: 13500.00,
-        originalPrice: 17000.00,
-        image: '/renal-nutrition-banner.png',
-        category: 'Renal Nutrition',
-        rating: 4.9,
-        reviewsCount: 164,
-        description: 'সিকেডি (CKD) স্টেজ ১-৫, ডায়ালাইসিস ও কিডনি ট্রান্সপ্লান্ট রোগীদের প্রোটিন, সোডিয়াম, পটাসিয়াম ও ফ্লুইড ক্যালকুলেশন নিয়ে আন্তর্জাতিক মানের ব্যবহারিক কোর্স।',
-        seatsLeft: 6,
-        startDate: '২৫ জুলাই, ২০২৬'
-      },
-      {
-        id: 'c5',
-        title: 'অ্যাডভান্সড অনকো নিউট্রিশন অ্যান্ড ক্যান্সার কেয়ার',
-        duration: '২.৫ মাস (2.5 Months)',
-        liveClasses: 20,
-        recordedClasses: 2,
-        orientation: 1,
-        exams: 2,
-        classDuration: '২ ঘণ্টা করে মোট ৫০ ঘণ্টা',
-        price: 15000.00,
-        originalPrice: 19000.00,
-        image: 'https://i.ibb.co.com/3mP31tt1/3.jpg',
-        category: 'Onco Nutrition',
-        rating: 5.0,
-        reviewsCount: 112,
-        description: 'ক্যান্সার রোগীদের কেমোথেরাপি ও রেডিওথেরাপির সময় টিউমার মেটাবলিজম, অ্যানোরেক্সিয়া-ক্যাচেক্সিয়া সিন্ড্রোম ও ইমিউনোনিউট্রিশন সাপোর্টের ওপর বিশেষায়িত কোর্স।',
-        seatsLeft: 4,
-        startDate: '১০ আগস্ট, ২০২৬'
-      },
-      {
-        id: 'c6',
-        title: 'মাস্টারক্লাস - ক্রিটিক্যাল কেয়ার নিউট্রিশন অ্যান্ড আইসিইউ ম্যানেজমেন্ট',
-        duration: '২ মাস (2 Months)',
-        liveClasses: 18,
-        recordedClasses: 2,
-        orientation: 1,
-        exams: 2,
-        classDuration: '২ ঘণ্টা করে মোট ৪৫ ঘণ্টা',
-        price: 14000.00,
-        originalPrice: 18000.00,
-        image: 'https://i.ibb.co.com/B25ChBhp/6.jpg',
-        category: 'Critical Care Nutrition',
-        rating: 4.9,
-        reviewsCount: 188,
-        description: 'আইসিইউ ও এইচডিইউতে ভেন্টিলেশন, সেপসিস ও ট্রমা রোগীদের এন্টারাল ও প্যারেন্টেরাল নিউট্রিশন (EN & TPN), ইলেকট্রোলাইট ও মেটাবলিক ব্যালেন্সিং নিয়ে স্পেশালাইজড কোর্স।',
-        seatsLeft: 7,
-        startDate: '০৫ আগস্ট, ২০২৬'
-      }
-    ];
+  // Synchronize default courses (safely inserts any missing courses)
+  await syncDefaultCourses(dbPool);
 
-    for (const course of defaultCourses) {
-      await dbPool.query(
-        `INSERT INTO courses (id, title, duration, liveClasses, recordedClasses, orientation, exams, classDuration, price, originalPrice, image, category, rating, reviewsCount, description, seatsLeft, startDate) 
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [
-          course.id, course.title, course.duration, course.liveClasses, course.recordedClasses,
-          course.orientation, course.exams, course.classDuration, course.price, course.originalPrice,
-          course.image, course.category, course.rating, course.reviewsCount, course.description,
-          course.seatsLeft, course.startDate
-        ]
-      );
-    }
-  }
-
-  // Seed default seminars if empty
-  const [seminarRows]: any = await dbPool.query('SELECT COUNT(*) as count FROM seminars');
-  if (seminarRows[0].count === 0) {
-    const defaultSeminars = [
-      {
-        id: 's1',
-        title: 'ক্রিটিক্যাল কেয়ার নিউট্রিশন নিয়ে আন্তর্জাতিক সেমিনার',
-        organization: 'BADN ইন্টারন্যাশনাল',
-        description: 'BADN এর উদ্যোগে ঢাকার বারডেম হাসপাতালে সফলভাবে অনুষ্ঠিত হয় International Workshop on Critical Care Nutrition। ভারতের প্রখ্যাত ডায়েটেটিশিয়ান সাংহামিত্রা চক্রবর্তী (HOD, Nutrition & Dietetics, Medica Superspecialty Hospital, কলকাতা) কর্মশালাটি পরিচালনা করেন। এতে নিউট্রিশনিস্ট, ডায়েটেটিশিয়ান, চিকিৎসকসহ বিভিন্ন স্বাস্থ্য পেশাজীবীরা অংশ নেন।',
-        expertName: 'সাংহামিত্রা চক্রবর্তী',
-        expertRole: 'HOD, Nutrition & Dietetics, Medica Hospital, কলকাতা',
-        date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
-        location: 'বারডেম হাসপাতাল অডিটোরিয়াম, ঢাকা',
-        image: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&q=80&w=800&h=450'
-      },
-      {
-        id: 's2',
-        title: 'জিনোমিক্স এন্ড নিউট্রিজেনেটিক্স বিষয়ে আন্তর্জাতিক সেমিনার',
-        organization: 'BADN ও Institute of Nutrigenetics, India',
-        description: 'ঢাকায় বাংলাদেশে প্রথমবার “International Workshop on Understanding Nutrigenetics: The Science behind Personalized Nutrition” সফলভাবে অনুষ্ঠিত হয়। কর্মশালাটি Institute of Nutrigenetics, India কর্তৃক সার্টিফাইড ছিল এবং পার্সোনালাইজড ডায়েট ডিজাইনের ওপর গুরুত্বপূর্ণ আলোচনা করা হয়।',
-        expertName: 'ড. অশোক কুমার',
-        expertRole: 'গবেষক, নিউট্রিজেনেটিক্স ইনস্টিটিউট',
-        date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
-        location: 'প্যান প্যাসিফিক সোনারগাঁও, ঢাকা',
-        image: 'https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?auto=format&fit=crop&q=80&w=800&h=450'
-      },
-      {
-        id: 's3',
-        title: 'স্পোর্টস নিউট্রিশন বিষয়ে আন্তর্জাতিক সেমিনার',
-        organization: 'BADN স্পোর্টস উইং',
-        description: 'ঢাকায় ৩ দিনব্যাপী “International Workshop on Sports Nutrition” সফলভাবে অনুষ্ঠিত হয়। কর্মশালাটি পরিচালনা করেন ভারতের প্রখ্যাত স্পোর্টস নিউট্রিশন বিশেষজ্ঞ মিসেস রাশমি চেরিয়ান, RD। অ্যাথলেটদের পুষ্টি চাহিদা এবং সাপ্লিমেন্টের সঠিক ব্যবহার নিয়ে বিস্তারিত গাইড প্রদান করা হয়।',
-        expertName: 'মিসেস রাশমি চেরিয়ান',
-        expertRole: 'রেজিস্টার্ড ডায়েটেশিয়ান (RD), স্পোর্টস পুষ্টিবিদ',
-        date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
-        location: 'কমনওয়েলথ অডিটোরিয়াম, ঢাকা',
-        image: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=800&h=450'
-      },
-      {
-        id: 's4',
-        title: 'রেনাল নিউট্রিশন বিষয়ে আন্তর্জাতিক সেমিনার',
-        organization: 'BADN রেনাল কেয়ার উইং',
-        description: 'BADN এর উদ্যোগে ঢাকায় অনুষ্ঠিত হয় International Workshop on Renal Nutrition। কিডনি রোগীদের চিকিৎসায় বৈজ্ঞানিক পথ্যব্যবস্থাপনা, সিকেডি (CKD) স্টেজভিত্তিক প্রোটিন নিয়ন্ত্রণ ও ডায়ালাইসিসের পুষ্টি চাহিদা নিয়ে বিশেষজ্ঞ কর্মশালা অনুষ্ঠিত হয়।',
-        expertName: 'ডা. অনুপম ঘোষাল',
-        expertRole: 'কনসালট্যান্ট নেফ্রোলজিস্ট ও রেনাল ডায়েটিক্স স্পেশালিস্ট',
-        date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
-        location: 'বিএসএমএমইউ (BSMMU) কনভেনশন হল, ঢাকা',
-        image: '/renal-nutrition-banner.png'
-      },
-      {
-        id: 's5',
-        title: 'অনকো নিউট্রিশন বিষয়ে আন্তর্জাতিক সেমিনার',
-        organization: 'BADN অনকোলজি উইং',
-        description: 'ঢাকায় ৩ দিনব্যাপী অনুষ্ঠিত হয় International Workshop on Oncology Nutrition। ক্যান্সার রোগীদের কেমো ও রেডিওথেরাপির পার্শ্বপ্রতিক্রিয়া নিরসন, টিউমার মেটাবলিজম ও ইমিউনো-নিউট্রিশন নিশ্চিতকরণে আন্তর্জাতিক ক্যান্সার পুষ্টি বিশেষজ্ঞদের পরিচালনায় সেমিনার।',
-        expertName: 'প্রফেসর ড. রীতা শর্মা',
-        expertRole: 'চিফ অনকো-নিউট্রিশনিস্ট, টাটা মেডিকেল সহযোগী',
-        date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
-        location: 'জাতীয় ক্যান্সার গবেষণা ইনস্টিটিউট, ঢাকা',
-        image: 'https://i.ibb.co.com/3mP31tt1/3.jpg'
-      },
-      {
-        id: 's6',
-        title: 'চাইল্ড নিউট্রিশন ও পেডিয়াট্রিক ডায়েটেটিক্স বিষয়ে আন্তর্জাতিক সেমিনার',
-        organization: 'BADN পেডিয়াট্রিক উইং',
-        description: 'শিশুদের বৃদ্ধি ও বিকাশ, মারাত্মক তীব্র অপুষ্টি (SAM/MAM), শৈশবের স্থূলতা ও খাদ্যে অ্যালার্জি প্রতিরোধে বিজ্ঞানসম্মত খাদ্য পরিকল্পনা নিয়ে অনুষ্ঠিত International Workshop on Pediatric and Child Nutrition। এতে অভিজ্ঞ পুষ্টিবিদরা অংশ নেন।',
-        expertName: 'ড. মারিয়া ফার্নান্দেজ',
-        expertRole: 'সিনিয়র পেডিয়াট্রিক নিউট্রিশন স্পেশালিস্ট',
-        date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
-        location: 'ঢাকা শিশু হাসপাতাল অডিটোরিয়াম, ঢাকা',
-        image: '/about-workshop-user-2.jpg'
-      }
-    ];
-
-    for (const seminar of defaultSeminars) {
-      await dbPool.query(
-        `INSERT INTO seminars (id, title, organization, description, expertName, expertRole, date, location, image) 
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [
-          seminar.id, seminar.title, seminar.organization, seminar.description,
-          seminar.expertName, seminar.expertRole, seminar.date, seminar.location, seminar.image
-        ]
-      );
-    }
-  }
+  // Synchronize default seminars (safely inserts any missing seminars)
+  await syncDefaultSeminars(dbPool);
 
   // Seed default testimonials if empty
   const [testimonialRows]: any = await dbPool.query('SELECT COUNT(*) as count FROM testimonials');
@@ -755,10 +752,28 @@ app.get('/api/courses', async (req, res) => {
     return res.json({ success: false, message: 'Database not connected. Local fallback active.' });
   }
   try {
-    const [rows] = await db.query('SELECT * FROM courses');
+    let [rows]: any = await db.query('SELECT * FROM courses ORDER BY id ASC');
+    const existingIds = new Set(rows.map((r: any) => r.id));
+    const missing = DEFAULT_COURSES.some(c => !existingIds.has(c.id));
+    if (missing) {
+      await syncDefaultCourses(db);
+      [rows] = await db.query('SELECT * FROM courses ORDER BY id ASC');
+    }
     res.json({ success: true, source: 'database', data: rows });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.post('/api/courses/sync-defaults', async (req, res) => {
+  const db = await getDbPool();
+  if (!db) return res.json({ success: false, message: 'Database not connected' });
+  try {
+    await syncDefaultCourses(db);
+    const [rows]: any = await db.query('SELECT * FROM courses ORDER BY id ASC');
+    res.json({ success: true, count: rows.length, data: rows });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
@@ -802,10 +817,40 @@ app.get('/api/seminar-events', async (req, res) => {
     return res.json({ success: false, message: 'Database not connected. Local fallback active.' });
   }
   try {
-    const [rows] = await db.query('SELECT * FROM seminars');
+    let [rows]: any = await db.query('SELECT * FROM seminars ORDER BY id ASC');
+    const existingIds = new Set(rows.map((r: any) => r.id));
+    const missing = DEFAULT_SEMINARS.some(s => !existingIds.has(s.id));
+    if (missing) {
+      await syncDefaultSeminars(db);
+      [rows] = await db.query('SELECT * FROM seminars ORDER BY id ASC');
+    }
     res.json({ success: true, source: 'database', data: rows });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.post('/api/seminar-events/sync-defaults', async (req, res) => {
+  const db = await getDbPool();
+  if (!db) return res.json({ success: false, message: 'Database not connected' });
+  try {
+    await syncDefaultSeminars(db);
+    const [rows]: any = await db.query('SELECT * FROM seminars ORDER BY id ASC');
+    res.json({ success: true, count: rows.length, data: rows });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+app.post('/api/admin/sync-defaults', async (req, res) => {
+  const db = await getDbPool();
+  if (!db) return res.json({ success: false, message: 'Database not connected' });
+  try {
+    await syncDefaultCourses(db);
+    await syncDefaultSeminars(db);
+    res.json({ success: true, message: 'Default courses and seminars synchronized successfully.' });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
