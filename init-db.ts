@@ -346,41 +346,11 @@ async function run() {
           date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
           location: 'কমনওয়েলথ অডিটোরিয়াম, ঢাকা',
           image: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=800&h=450'
-        },
-        {
-          id: 's4',
-          title: 'রেনাল নিউট্রিশন বিষয়ে আন্তর্জাতিক সেমিনার',
-          organization: 'BADN রেনাল কেয়ার উইং',
-          description: 'BADN এর উদ্যোগে ঢাকায় অনুষ্ঠিত হয় International Workshop on Renal Nutrition। কিডনি রোগীদের চিকিৎসায় বৈজ্ঞানিক পথ্যব্যবস্থাপনা, সিকেডি (CKD) স্টেজভিত্তিক প্রোটিন নিয়ন্ত্রণ ও ডায়ালাইসিসের পুষ্টি চাহিদা নিয়ে বিশেষজ্ঞ কর্মশালা অনুষ্ঠিত হয়।',
-          expertName: 'ডা. অনুপম ঘোষাল',
-          expertRole: 'কনসালট্যান্ট নেফ্রোলজিস্ট ও রেনাল ডায়েটিক্স স্পেশালিস্ট',
-          date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
-          location: 'বিএসএমএমইউ (BSMMU) কনভেনশন হল, ঢাকা',
-          image: '/renal-nutrition-banner.png'
-        },
-        {
-          id: 's5',
-          title: 'অনকো নিউট্রিশন বিষয়ে আন্তর্জাতিক সেমিনার',
-          organization: 'BADN অনকোলজি উইং',
-          description: 'ঢাকায় ৩ দিনব্যাপী অনুষ্ঠিত হয় International Workshop on Oncology Nutrition। ক্যান্সার রোগীদের কেমো ও রেডিওথেরাপির পার্শ্বপ্রতিক্রিয়া নিরসন, টিউমার মেটাবলিজম ও ইমিউনো-নিউট্রিশন নিশ্চিতকরণে আন্তর্জাতিক ক্যান্সার পুষ্টি বিশেষজ্ঞদের পরিচালনায় সেমিনার।',
-          expertName: 'প্রফেসর ড. রীতা শর্মা',
-          expertRole: 'চিফ অনকো-নিউট্রিশনিস্ট, টাটা মেডিকেল সহযোগী',
-          date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
-          location: 'জাতীয় ক্যান্সার গবেষণা ইনস্টিটিউট, ঢাকা',
-          image: 'https://i.ibb.co.com/3mP31tt1/3.jpg'
-        },
-        {
-          id: 's6',
-          title: 'চাইল্ড নিউট্রিশন ও পেডিয়াট্রিক ডায়েটেটিক্স বিষয়ে আন্তর্জাতিক সেমিনার',
-          organization: 'BADN পেডিয়াট্রিক উইং',
-          description: 'শিশুদের বৃদ্ধি ও বিকাশ, মারাত্মক তীব্র অপুষ্টি (SAM/MAM), শৈশবের স্থূলতা ও খাদ্যে অ্যালার্জি প্রতিরোধে বিজ্ঞানসম্মত খাদ্য পরিকল্পনা নিয়ে অনুষ্ঠিত International Workshop on Pediatric and Child Nutrition। এতে অভিজ্ঞ পুষ্টিবিদরা অংশ নেন।',
-          expertName: 'ড. মারিয়া ফার্নান্দেজ',
-          expertRole: 'সিনিয়র পেডিয়াট্রিক নিউট্রিশন স্পেশালিস্ট',
-          date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
-          location: 'ঢাকা শিশু হাসপাতাল অডিটোরিয়াম, ঢাকা',
-          image: '/about-workshop-user-2.jpg'
         }
       ];
+
+      // Prune unwanted s4, s5, s6 seminars from database if present
+      await connection.query("DELETE FROM seminars WHERE id IN ('s4', 's5', 's6')").catch(() => {});
 
       for (const seminar of defaultSeminars) {
         const [existing]: any = await connection.query('SELECT id FROM seminars WHERE id = ?', [seminar.id]);

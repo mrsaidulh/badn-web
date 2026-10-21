@@ -302,11 +302,28 @@ export async function getCourses(): Promise<any[]> {
       const dbCourses: any[] = result.data;
       const dbIds = new Set(dbCourses.map((c: any) => c.id));
       const missingDefaults = COURSES.filter(dc => !dbIds.has(dc.id));
-      let mergedCourses = [...dbCourses];
-      if (missingDefaults.length > 0) {
-        mergedCourses = [...dbCourses, ...missingDefaults];
-        fetch('/api/courses/sync-defaults', { method: 'POST' }).catch(() => {});
-      }
+      let mergedCourses = [...dbCourses, ...missingDefaults].map((c: any) => {
+        const staticMatch = COURSES.find(sc => sc.id === c.id);
+        if (staticMatch) {
+          return {
+            ...staticMatch,
+            ...c,
+            modules: c.modules && c.modules.length > 0 ? c.modules : staticMatch.modules,
+            learningOutcomes: c.learningOutcomes && c.learningOutcomes.length > 0 ? c.learningOutcomes : staticMatch.learningOutcomes,
+            learningMethodology: c.learningMethodology && c.learningMethodology.length > 0 ? c.learningMethodology : staticMatch.learningMethodology,
+            perks: c.perks && c.perks.length > 0 ? c.perks : staticMatch.perks,
+            targetAudience: c.targetAudience && c.targetAudience.length > 0 ? c.targetAudience : staticMatch.targetAudience,
+            overviewBn: c.overviewBn || staticMatch.overviewBn,
+            whyChoose: c.whyChoose || staticMatch.whyChoose,
+            certificateInfo: c.certificateInfo || staticMatch.certificateInfo,
+            whatsappNumber: c.whatsappNumber || staticMatch.whatsappNumber,
+            totalClasses: c.totalClasses || staticMatch.totalClasses,
+            extraClasses: c.extraClasses || staticMatch.extraClasses,
+            medium: c.medium || staticMatch.medium
+          };
+        }
+        return c;
+      });
       safeLocalStorage.setItem('badn_dynamic_courses', JSON.stringify(mergedCourses));
       return mergedCourses;
     }
@@ -330,27 +347,32 @@ export async function getCourses(): Promise<any[]> {
   const updated = fullList.map((course: any) => {
     const staticMatch = COURSES.find(c => c.id === course.id);
     if (staticMatch) {
-      if (course.id === 'c1') {
-        return { ...course, image: 'https://i.ibb.co.com/wNgD30g1/9.png' };
-      }
-      if (course.id === 'c2') {
-        return { ...course, image: 'https://i.ibb.co.com/chWrS0Qb/10.png' };
-      }
-      if (course.id === 'c3') {
-        return { ...course, image: 'https://i.ibb.co.com/6J49g293/11.png' };
-      }
-      if (course.id === 'c4') {
-        return { ...course, image: course.image || '/renal-nutrition-banner.png' };
-      }
-      if (course.id === 'c5') {
-        return { ...course, image: course.image || 'https://i.ibb.co.com/3mP31tt1/3.jpg' };
-      }
-      if (course.id === 'c6') {
-        return { ...course, image: course.image || 'https://i.ibb.co.com/B25ChBhp/6.jpg' };
-      }
-      if (course.image?.includes('course_thumbnail') || !course.image) {
-        return { ...course, image: staticMatch.image };
-      }
+      let finalImg = course.image;
+      if (course.id === 'c1') finalImg = 'https://i.ibb.co.com/wNgD30g1/9.png';
+      else if (course.id === 'c2') finalImg = 'https://i.ibb.co.com/chWrS0Qb/10.png';
+      else if (course.id === 'c3') finalImg = 'https://i.ibb.co.com/6J49g293/11.png';
+      else if (course.id === 'c4') finalImg = course.image || '/renal-nutrition-banner.png';
+      else if (course.id === 'c5') finalImg = course.image || 'https://i.ibb.co.com/3mP31tt1/3.jpg';
+      else if (course.id === 'c6') finalImg = course.image || 'https://i.ibb.co.com/B25ChBhp/6.jpg';
+      else if (course.image?.includes('course_thumbnail') || !course.image) finalImg = staticMatch.image;
+
+      return {
+        ...staticMatch,
+        ...course,
+        image: finalImg,
+        modules: course.modules && course.modules.length > 0 ? course.modules : staticMatch.modules,
+        learningOutcomes: course.learningOutcomes && course.learningOutcomes.length > 0 ? course.learningOutcomes : staticMatch.learningOutcomes,
+        learningMethodology: course.learningMethodology && course.learningMethodology.length > 0 ? course.learningMethodology : staticMatch.learningMethodology,
+        perks: course.perks && course.perks.length > 0 ? course.perks : staticMatch.perks,
+        targetAudience: course.targetAudience && course.targetAudience.length > 0 ? course.targetAudience : staticMatch.targetAudience,
+        overviewBn: course.overviewBn || staticMatch.overviewBn,
+        whyChoose: course.whyChoose || staticMatch.whyChoose,
+        certificateInfo: course.certificateInfo || staticMatch.certificateInfo,
+        whatsappNumber: course.whatsappNumber || staticMatch.whatsappNumber,
+        totalClasses: course.totalClasses || staticMatch.totalClasses,
+        extraClasses: course.extraClasses || staticMatch.extraClasses,
+        medium: course.medium || staticMatch.medium
+      };
     }
     return course;
   });
@@ -404,7 +426,8 @@ export async function getSeminarEvents(): Promise<any[]> {
     const res = await fetch('/api/seminar-events');
     const result = await res.json();
     if (result.success && result.data && result.data.length > 0) {
-      const dbSeminars: any[] = result.data;
+      // Exclude removed s4, s5, s6 seminars
+      const dbSeminars: any[] = result.data.filter((s: any) => !['s4', 's5', 's6'].includes(s.id));
       const dbIds = new Set(dbSeminars.map((s: any) => s.id));
       const missingDefaults = STATIC_SEMINAR_EVENTS.filter(ds => !dbIds.has(ds.id));
       let mergedSeminars = [...dbSeminars];
@@ -424,8 +447,11 @@ export async function getSeminarEvents(): Promise<any[]> {
     return STATIC_SEMINAR_EVENTS;
   }
   const parsed = safeJsonParse(local, STATIC_SEMINAR_EVENTS);
-  const existingSeminarIds = new Set(parsed.map((s: any) => s.id));
-  const fullSeminarList = [...parsed];
+  // Filter out removed s4, s5, s6 from cached local storage
+  const filteredParsed = (Array.isArray(parsed) ? parsed : STATIC_SEMINAR_EVENTS)
+    .filter((s: any) => !['s4', 's5', 's6'].includes(s.id));
+  const existingSeminarIds = new Set(filteredParsed.map((s: any) => s.id));
+  const fullSeminarList = [...filteredParsed];
   for (const staticSeminar of STATIC_SEMINAR_EVENTS) {
     if (!existingSeminarIds.has(staticSeminar.id)) {
       fullSeminarList.push(staticSeminar);
@@ -440,15 +466,6 @@ export async function getSeminarEvents(): Promise<any[]> {
       }
       if (seminar.id === 's2') {
         return { ...seminar, image: 'https://i.ibb.co.com/gFhP2QLp/Seminar-inter.png' };
-      }
-      if (seminar.id === 's4') {
-        return { ...seminar, image: seminar.image || '/renal-nutrition-banner.png' };
-      }
-      if (seminar.id === 's5') {
-        return { ...seminar, image: seminar.image || 'https://i.ibb.co.com/3mP31tt1/3.jpg' };
-      }
-      if (seminar.id === 's6') {
-        return { ...seminar, image: seminar.image || '/about-workshop-user-2.jpg' };
       }
       if (seminar.image?.includes('unsplash') || seminar.image?.includes('9mJcbjDC') || !seminar.image) {
         return { ...seminar, image: staticMatch.image };

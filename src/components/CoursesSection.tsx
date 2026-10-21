@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Course } from '../types';
-import { Clock, BookOpen, Award, Users, Star, ArrowRight, Flame } from 'lucide-react';
+import { Clock, BookOpen, Award, Users, Star, ArrowRight, Sparkles } from 'lucide-react';
 import EnrollModal from './EnrollModal';
+import CourseDetailsModal from './CourseDetailsModal';
 import { getCourses } from '../lib/api';
 import courseUser9Img from '../assets/images/course_user_9.png';
 import courseUser10Img from '../assets/images/course_user_10.png';
@@ -31,6 +32,8 @@ export default function CoursesSection() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [isEnrollOpen, setIsEnrollOpen] = useState(false);
+  const [selectedDetailCourse, setSelectedDetailCourse] = useState<Course | null>(null);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string>('All');
 
   useEffect(() => {
@@ -170,14 +173,6 @@ export default function CoursesSection() {
                     referrerPolicy="no-referrer"
                   />
                 </picture>
-                
-                {/* Overlay Badge for seats constraint */}
-                {course.seatsLeft <= 8 && (
-                  <div className="absolute top-4 left-4 bg-amber-600 text-white font-extrabold text-[10px] px-2.5 py-1 rounded-full flex items-center gap-1 shadow">
-                    <Flame className="w-3.5 h-3.5 text-white animate-pulse" />
-                    <span>মাত্র {course.seatsLeft}টি সীট বাকি!</span>
-                  </div>
-                )}
 
                 <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-sm text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase">
                   {course.category}
@@ -203,43 +198,70 @@ export default function CoursesSection() {
                   </p>
                 </div>
 
-                {/* Course core specifications matching screenshot exactly */}
-                <div className="bg-brand-light/50 p-3 rounded-xl border border-[#cbdccb]/20 space-y-1.5 text-xs text-gray-700 dark:text-zinc-300">
+                {/* Course core specifications - High contrast and clearly visible across all courses */}
+                <div className="bg-[#f0f7f0] p-3.5 rounded-xl border border-[#b8d9b8] space-y-2 text-xs text-slate-800 shadow-xs">
                   <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-[#143a1b] dark:text-[#a8d764] shrink-0" />
-                    <span className="font-bold text-[#143a1b] dark:text-[#a8d764]">কোর্স সময়কাল: {course.duration}</span>
+                    <Clock className="w-4 h-4 text-[#143a1b] shrink-0" />
+                    <span className="font-bold text-[#143a1b] text-xs sm:text-[13px]">কোর্স সময়কাল: {course.duration}</span>
                   </div>
 
                   <div className="flex items-start gap-2">
-                    <BookOpen className="w-4 h-4 text-[#143a1b] dark:text-[#a8d764] shrink-0 mt-0.5" />
-                    <div className="leading-normal">
-                      লাইভ ক্লাস <span className="font-bold text-[#143a1b] dark:text-[#a8d764]">{course.liveClasses}টি</span> | রেকর্ড সেশন {course.recordedClasses}টি | {course.orientation}টি ওরিয়েন্টেশন | {course.exams}টি পরীক্ষা
+                    <BookOpen className="w-4 h-4 text-[#143a1b] shrink-0 mt-0.5" />
+                    <div className="leading-relaxed text-slate-800 font-semibold text-xs sm:text-[12.5px]">
+                      লাইভ ক্লাস <span className="font-black text-[#143a1b]">{course.liveClasses}টি</span> | রেকর্ড সেশন <span className="font-black text-[#143a1b]">{course.recordedClasses}টি</span> | <span className="font-black text-[#143a1b]">{course.orientation}টি</span> ওরিয়েন্টেশন | <span className="font-black text-[#143a1b]">{course.exams}টি</span> পরীক্ষা
                     </div>
                   </div>
 
-                  <div className="text-[11px] text-gray-500 italic pt-1 border-t border-gray-200/50">
-                    * {course.classDuration}
+                  <div className="flex items-center justify-between pt-2 border-t border-[#c2ddc2] text-[11px] sm:text-xs">
+                    <span className="text-slate-700 font-bold">* {course.classDuration}</span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedDetailCourse(course);
+                        setIsDetailOpen(true);
+                      }}
+                      className="text-[#92400e] bg-amber-100/90 hover:bg-amber-200/90 border border-amber-300 font-bold px-2 py-0.5 rounded-md hover:underline cursor-pointer flex items-center gap-1 transition-colors"
+                    >
+                      <Sparkles className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                      <span>{course.modules?.length || 10}টি মডিউল</span>
+                    </button>
                   </div>
                 </div>
 
                 {/* Pricing & CTA enrollment triggers */}
-                <div className="flex items-center justify-between pt-2 border-t border-gray-100 shrink-0">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 pt-3 border-t border-gray-100 shrink-0">
                   <div>
                     <span className="text-[10px] text-gray-400 line-through block font-medium">
                       ৳ {Number(course.originalPrice || 0).toLocaleString('bn-BD')}
                     </span>
-                    <span className="text-lg font-extrabold text-amber-600">
+                    <span className="text-base sm:text-lg font-extrabold text-amber-600 whitespace-nowrap">
                       ৳ {Number(course.price || 0).toLocaleString('bn-BD')} মাত্র
                     </span>
                   </div>
 
-                  <button
-                    onClick={() => handleEnrollClick(course)}
-                    className="bg-brand hover:bg-brand-hover text-brand-contrast hover:text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow transition-all duration-300 flex items-center gap-1 cursor-pointer"
-                  >
-                    <span>ভর্তি হোন</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedDetailCourse(course);
+                        setIsDetailOpen(true);
+                      }}
+                      className="flex-1 sm:flex-none bg-[#eaf3ea] hover:bg-[#cbdccb]/60 text-[#143a1b] border border-[#cbdccb]/50 text-xs font-bold px-3 py-2.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer"
+                      title="কোর্সের বিস্তারিত তথ্য দেখুন"
+                    >
+                      <BookOpen className="w-3.5 h-3.5 text-amber-600" />
+                      <span>বিস্তারিত</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => handleEnrollClick(course)}
+                      className="flex-1 sm:flex-none bg-brand hover:bg-brand-hover text-brand-contrast hover:text-white text-xs font-bold px-3.5 py-2.5 rounded-xl shadow transition-all duration-300 flex items-center justify-center gap-1 cursor-pointer"
+                    >
+                      <span>ভর্তি হোন</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -248,6 +270,17 @@ export default function CoursesSection() {
         </div>
 
       </div>
+
+      {/* Course Details & Full Syllabus Modal */}
+      <CourseDetailsModal
+        course={selectedDetailCourse}
+        isOpen={isDetailOpen}
+        onClose={() => setIsDetailOpen(false)}
+        onEnroll={(courseToEnroll) => {
+          setSelectedCourse(courseToEnroll);
+          setIsEnrollOpen(true);
+        }}
+      />
 
       {/* Enroll Modal */}
       <EnrollModal

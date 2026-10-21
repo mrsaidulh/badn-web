@@ -1,3 +1,9 @@
+export interface CourseModule {
+  id: number;
+  title: string;
+  description: string;
+}
+
 export interface Course {
   id: string;
   title: string;
@@ -16,6 +22,21 @@ export interface Course {
   description: string;
   seatsLeft: number;
   startDate: string;
+  
+  // Extended details
+  shortSummaryBn?: string;
+  overviewBn?: string;
+  whyChoose?: string;
+  targetAudience?: string[];
+  modules?: CourseModule[];
+  learningOutcomes?: string[];
+  learningMethodology?: string[];
+  perks?: string[];
+  totalClasses?: number;
+  extraClasses?: number;
+  medium?: string;
+  certificateInfo?: string;
+  whatsappNumber?: string;
 }
 
 export interface Seminar {
