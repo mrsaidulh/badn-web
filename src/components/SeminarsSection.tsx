@@ -65,6 +65,21 @@ export default function SeminarsSection() {
                       <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/seminar-inter-mobile.webp" />
                       <source type="image/webp" srcSet="/optimized/seminar-inter.webp" />
                     </>
+                  ) : seminar.id === 's4' ? (
+                    <>
+                      <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/course-renal-mobile.webp" />
+                      <source type="image/webp" srcSet="/optimized/course-renal.webp" />
+                    </>
+                  ) : seminar.id === 's5' ? (
+                    <>
+                      <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/about-workshop-3-mobile.webp" />
+                      <source type="image/webp" srcSet="/optimized/about-workshop-3.webp" />
+                    </>
+                  ) : seminar.id === 's6' ? (
+                    <>
+                      <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/about-workshop-2-mobile.webp" />
+                      <source type="image/webp" srcSet="/optimized/about-workshop-2.webp" />
+                    </>
                   ) : (
                     <>
                       <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/seminar-5-mobile.webp" />
@@ -77,13 +92,28 @@ export default function SeminarsSection() {
                         ? 'https://i.ibb.co.com/B25ChBhp/6.jpg'
                         : seminar.id === 's2'
                         ? 'https://i.ibb.co.com/gFhP2QLp/Seminar-inter.png'
+                        : seminar.id === 's4'
+                        ? '/renal-nutrition-banner.png'
+                        : seminar.id === 's5'
+                        ? 'https://i.ibb.co.com/3mP31tt1/3.jpg'
+                        : seminar.id === 's6'
+                        ? '/about-workshop-user-2.jpg'
                         : seminar.image
                     }
                     onError={(e) => {
+                      const target = e.target as HTMLImageElement;
                       if (seminar.id === 's1') {
-                        (e.target as HTMLImageElement).src = '/seminar-user-6.jpg';
+                        target.src = '/seminar-user-6.jpg';
                       } else if (seminar.id === 's2') {
-                        (e.target as HTMLImageElement).src = '/seminar-user-inter.png';
+                        target.src = '/seminar-user-inter.png';
+                      } else if (seminar.id === 's4') {
+                        target.src = '/renal-nutrition-banner.png';
+                      } else if (seminar.id === 's5') {
+                        target.src = '/about-workshop-user-3.jpg';
+                      } else if (seminar.id === 's6') {
+                        target.src = '/about-workshop-user-2.jpg';
+                      } else {
+                        target.src = '/seminar-user-5.jpg';
                       }
                     }}
                     alt={seminar.title}

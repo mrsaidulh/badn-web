@@ -233,6 +233,63 @@ async function run() {
           description: 'গর্ভকালীন পুষ্টি এবং শিশুর জন্মের পর প্রথম ১০০০ দিনের পুষ্টি চাহিদা পূরণ ও পথ্য পরিকল্পনা নিয়ে বিশেষায়িত কোর্স।',
           seatsLeft: 5,
           startDate: '২০ জুলাই, ২০২৬'
+        },
+        {
+          id: 'c4',
+          title: 'সার্টিফিকেট কোর্স - রেনাল নিউট্রিশন অ্যান্ড কিডনি ডায়েট ম্যানেজমেন্ট',
+          duration: '২ মাস (2 Months)',
+          liveClasses: 16,
+          recordedClasses: 2,
+          orientation: 1,
+          exams: 2,
+          classDuration: '২ ঘণ্টা করে মোট ৪০ ঘণ্টা',
+          price: 13500.00,
+          originalPrice: 17000.00,
+          image: '/renal-nutrition-banner.png',
+          category: 'Renal Nutrition',
+          rating: 4.9,
+          reviewsCount: 164,
+          description: 'সিকেডি (CKD) স্টেজ ১-৫, ডায়ালাইসিস ও কিডনি ট্রান্সপ্লান্ট রোগীদের প্রোটিন, সোডিয়াম, পটাসিয়াম ও ফ্লুইড ক্যালকুলেশন নিয়ে আন্তর্জাতিক মানের ব্যবহারিক কোর্স।',
+          seatsLeft: 6,
+          startDate: '২৫ জুলাই, ২০২৬'
+        },
+        {
+          id: 'c5',
+          title: 'অ্যাডভান্সড অনকো নিউট্রিশন অ্যান্ড ক্যান্সার কেয়ার',
+          duration: '২.৫ মাস (2.5 Months)',
+          liveClasses: 20,
+          recordedClasses: 2,
+          orientation: 1,
+          exams: 2,
+          classDuration: '২ ঘণ্টা করে মোট ৫০ ঘণ্টা',
+          price: 15000.00,
+          originalPrice: 19000.00,
+          image: 'https://i.ibb.co.com/3mP31tt1/3.jpg',
+          category: 'Onco Nutrition',
+          rating: 5.0,
+          reviewsCount: 112,
+          description: 'ক্যান্সার রোগীদের কেমোথেরাপি ও রেডিওথেরাপির সময় টিউমার মেটাবলিজম, অ্যানোরেক্সিয়া-ক্যাচেক্সিয়া সিন্ড্রোম ও ইমিউনোনিউট্রিশন সাপোর্টের ওপর বিশেষায়িত কোর্স।',
+          seatsLeft: 4,
+          startDate: '১০ আগস্ট, ২০২৬'
+        },
+        {
+          id: 'c6',
+          title: 'মাস্টারক্লাস - ক্রিটিক্যাল কেয়ার নিউট্রিশন অ্যান্ড আইসিইউ ম্যানেজমেন্ট',
+          duration: '২ মাস (2 Months)',
+          liveClasses: 18,
+          recordedClasses: 2,
+          orientation: 1,
+          exams: 2,
+          classDuration: '২ ঘণ্টা করে মোট ৪৫ ঘণ্টা',
+          price: 14000.00,
+          originalPrice: 18000.00,
+          image: 'https://i.ibb.co.com/B25ChBhp/6.jpg',
+          category: 'Critical Care Nutrition',
+          rating: 4.9,
+          reviewsCount: 188,
+          description: 'আইসিইউ ও এইচডিইউতে ভেন্টিলেশন, সেপসিস ও ট্রমা রোগীদের এন্টারাল ও প্যারেন্টেরাল নিউট্রিশন (EN & TPN), ইলেকট্রোলাইট ও মেটাবলিক ব্যালেন্সিং নিয়ে স্পেশালাইজড কোর্স।',
+          seatsLeft: 7,
+          startDate: '০৫ আগস্ট, ২০২৬'
         }
       ];
 
@@ -248,7 +305,7 @@ async function run() {
           ]
         );
       }
-      console.log('   - Seeding completed for 3 default courses.');
+      console.log('   - Seeding completed for default courses.');
     } else {
       console.log('   - "courses" table already has records. Skipping seed.');
     }
@@ -290,6 +347,39 @@ async function run() {
           date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
           location: 'কমনওয়েলথ অডিটোরিয়াম, ঢাকা',
           image: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=800&h=450'
+        },
+        {
+          id: 's4',
+          title: 'রেনাল নিউট্রিশন বিষয়ে আন্তর্জাতিক সেমিনার',
+          organization: 'BADN রেনাল কেয়ার উইং',
+          description: 'BADN এর উদ্যোগে ঢাকায় অনুষ্ঠিত হয় International Workshop on Renal Nutrition। কিডনি রোগীদের চিকিৎসায় বৈজ্ঞানিক পথ্যব্যবস্থাপনা, সিকেডি (CKD) স্টেজভিত্তিক প্রোটিন নিয়ন্ত্রণ ও ডায়ালাইসিসের পুষ্টি চাহিদা নিয়ে বিশেষজ্ঞ কর্মশালা অনুষ্ঠিত হয়।',
+          expertName: 'ডা. অনুপম ঘোষাল',
+          expertRole: 'কনসালট্যান্ট নেফ্রোলজিস্ট ও রেনাল ডায়েটিক্স স্পেশালিস্ট',
+          date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
+          location: 'বিএসএমএমইউ (BSMMU) কনভেনশন হল, ঢাকা',
+          image: '/renal-nutrition-banner.png'
+        },
+        {
+          id: 's5',
+          title: 'অনকো নিউট্রিশন বিষয়ে আন্তর্জাতিক সেমিনার',
+          organization: 'BADN অনকোলজি উইং',
+          description: 'ঢাকায় ৩ দিনব্যাপী অনুষ্ঠিত হয় International Workshop on Oncology Nutrition। ক্যান্সার রোগীদের কেমো ও রেডিওথেরাপির পার্শ্বপ্রতিক্রিয়া নিরসন, টিউমার মেটাবলিজম ও ইমিউনো-নিউট্রিশন নিশ্চিতকরণে আন্তর্জাতিক ক্যান্সার পুষ্টি বিশেষজ্ঞদের পরিচালনায় সেমিনার।',
+          expertName: 'প্রফেসর ড. রীতা শর্মা',
+          expertRole: 'চিফ অনকো-নিউট্রিশনিস্ট, টাটা মেডিকেল সহযোগী',
+          date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
+          location: 'জাতীয় ক্যান্সার গবেষণা ইনস্টিটিউট, ঢাকা',
+          image: 'https://i.ibb.co.com/3mP31tt1/3.jpg'
+        },
+        {
+          id: 's6',
+          title: 'চাইল্ড নিউট্রিশন ও পেডিয়াট্রিক ডায়েটেটিক্স বিষয়ে আন্তর্জাতিক সেমিনার',
+          organization: 'BADN পেডিয়াট্রিক উইং',
+          description: 'শিশুদের বৃদ্ধি ও বিকাশ, মারাত্মক তীব্র অপুষ্টি (SAM/MAM), শৈশবের স্থূলতা ও খাদ্যে অ্যালার্জি প্রতিরোধে বিজ্ঞানসম্মত খাদ্য পরিকল্পনা নিয়ে অনুষ্ঠিত International Workshop on Pediatric and Child Nutrition। এতে অভিজ্ঞ পুষ্টিবিদরা অংশ নেন।',
+          expertName: 'ড. মারিয়া ফার্নান্দেজ',
+          expertRole: 'সিনিয়র পেডিয়াট্রিক নিউট্রিশন স্পেশালিস্ট',
+          date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
+          location: 'ঢাকা শিশু হাসপাতাল অডিটোরিয়াম, ঢাকা',
+          image: '/about-workshop-user-2.jpg'
         }
       ];
 

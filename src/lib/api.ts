@@ -311,7 +311,15 @@ export async function getCourses(): Promise<any[]> {
     return COURSES;
   }
   const parsed = safeJsonParse(local, COURSES);
-  const updated = parsed.map((course: any) => {
+  const existingIds = new Set(parsed.map((c: any) => c.id));
+  const fullList = [...parsed];
+  for (const staticCourse of COURSES) {
+    if (!existingIds.has(staticCourse.id)) {
+      fullList.push(staticCourse);
+      existingIds.add(staticCourse.id);
+    }
+  }
+  const updated = fullList.map((course: any) => {
     const staticMatch = COURSES.find(c => c.id === course.id);
     if (staticMatch) {
       if (course.id === 'c1') {
@@ -323,12 +331,22 @@ export async function getCourses(): Promise<any[]> {
       if (course.id === 'c3') {
         return { ...course, image: 'https://i.ibb.co.com/6J49g293/11.png' };
       }
+      if (course.id === 'c4') {
+        return { ...course, image: course.image || '/renal-nutrition-banner.png' };
+      }
+      if (course.id === 'c5') {
+        return { ...course, image: course.image || 'https://i.ibb.co.com/3mP31tt1/3.jpg' };
+      }
+      if (course.id === 'c6') {
+        return { ...course, image: course.image || 'https://i.ibb.co.com/B25ChBhp/6.jpg' };
+      }
       if (course.image?.includes('course_thumbnail') || !course.image) {
         return { ...course, image: staticMatch.image };
       }
     }
     return course;
   });
+  safeLocalStorage.setItem('badn_dynamic_courses', JSON.stringify(updated));
   return updated;
 }
 
@@ -390,7 +408,15 @@ export async function getSeminarEvents(): Promise<any[]> {
     return STATIC_SEMINAR_EVENTS;
   }
   const parsed = safeJsonParse(local, STATIC_SEMINAR_EVENTS);
-  const updated = parsed.map((seminar: any) => {
+  const existingSeminarIds = new Set(parsed.map((s: any) => s.id));
+  const fullSeminarList = [...parsed];
+  for (const staticSeminar of STATIC_SEMINAR_EVENTS) {
+    if (!existingSeminarIds.has(staticSeminar.id)) {
+      fullSeminarList.push(staticSeminar);
+      existingSeminarIds.add(staticSeminar.id);
+    }
+  }
+  const updated = fullSeminarList.map((seminar: any) => {
     const staticMatch = STATIC_SEMINAR_EVENTS.find(s => s.id === seminar.id);
     if (staticMatch) {
       if (seminar.id === 's1') {
@@ -399,12 +425,22 @@ export async function getSeminarEvents(): Promise<any[]> {
       if (seminar.id === 's2') {
         return { ...seminar, image: 'https://i.ibb.co.com/gFhP2QLp/Seminar-inter.png' };
       }
+      if (seminar.id === 's4') {
+        return { ...seminar, image: seminar.image || '/renal-nutrition-banner.png' };
+      }
+      if (seminar.id === 's5') {
+        return { ...seminar, image: seminar.image || 'https://i.ibb.co.com/3mP31tt1/3.jpg' };
+      }
+      if (seminar.id === 's6') {
+        return { ...seminar, image: seminar.image || '/about-workshop-user-2.jpg' };
+      }
       if (seminar.image?.includes('unsplash') || seminar.image?.includes('9mJcbjDC') || !seminar.image) {
         return { ...seminar, image: staticMatch.image };
       }
     }
     return seminar;
   });
+  safeLocalStorage.setItem('badn_dynamic_seminar_events', JSON.stringify(updated));
   return updated;
 }
 

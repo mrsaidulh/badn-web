@@ -11,6 +11,9 @@ const getCourseImage = (id: string, defaultImg?: string) => {
   if (id === 'c1') return 'https://i.ibb.co.com/wNgD30g1/9.png';
   if (id === 'c2') return 'https://i.ibb.co.com/chWrS0Qb/10.png';
   if (id === 'c3') return 'https://i.ibb.co.com/6J49g293/11.png';
+  if (id === 'c4') return defaultImg || '/renal-nutrition-banner.png';
+  if (id === 'c5') return defaultImg || 'https://i.ibb.co.com/3mP31tt1/3.jpg';
+  if (id === 'c6') return defaultImg || 'https://i.ibb.co.com/B25ChBhp/6.jpg';
   return defaultImg || courseUser9Img;
 };
 
@@ -18,6 +21,9 @@ const getCourseFallback = (id: string) => {
   if (id === 'c1') return courseUser9Img;
   if (id === 'c2') return courseUser10Img;
   if (id === 'c3') return courseUser11Img;
+  if (id === 'c4') return '/renal-nutrition-banner.png';
+  if (id === 'c5') return '/about-workshop-user-3.jpg';
+  if (id === 'c6') return '/seminar-user-6.jpg';
   return courseUser9Img;
 };
 
@@ -41,7 +47,15 @@ export default function CoursesSection() {
     };
   }, []);
 
-  const categories = ['All', 'Clinical Nutrition', 'Sports Nutrition', 'Child Nutrition'];
+  const categories = [
+    'All',
+    'Clinical Nutrition',
+    'Renal Nutrition',
+    'Onco Nutrition',
+    'Critical Care Nutrition',
+    'Child Nutrition',
+    'Sports Nutrition'
+  ];
 
   const filteredCourses = activeCategory === 'All'
     ? courses
@@ -83,7 +97,10 @@ export default function CoursesSection() {
             >
               {cat === 'All' ? 'সব কোর্সসমূহ' : 
                cat === 'Clinical Nutrition' ? 'ক্লিনিক্যাল নিউট্রিশন' : 
-               cat === 'Sports Nutrition' ? 'স্পোর্টস নিউট্রিশন' : 'শিশু পুষ্টি'}
+               cat === 'Renal Nutrition' ? 'রেনাল নিউট্রিশন' :
+               cat === 'Onco Nutrition' ? 'অনকো নিউট্রিশন' :
+               cat === 'Critical Care Nutrition' ? 'ক্রিটিক্যাল কেয়ার' :
+               cat === 'Child Nutrition' ? 'শিশু পুষ্টি' : 'স্পোর্টস নিউট্রিশন'}
             </button>
           ))}
         </div>
@@ -112,6 +129,21 @@ export default function CoursesSection() {
                     <>
                       <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/course-11-mobile.webp" />
                       <source type="image/webp" srcSet="/optimized/course-11.webp" />
+                    </>
+                  ) : course.id === 'c4' ? (
+                    <>
+                      <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/course-renal-mobile.webp" />
+                      <source type="image/webp" srcSet="/optimized/course-renal.webp" />
+                    </>
+                  ) : course.id === 'c5' ? (
+                    <>
+                      <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/about-workshop-3-mobile.webp" />
+                      <source type="image/webp" srcSet="/optimized/about-workshop-3.webp" />
+                    </>
+                  ) : course.id === 'c6' ? (
+                    <>
+                      <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/seminar-6-mobile.webp" />
+                      <source type="image/webp" srcSet="/optimized/seminar-6.webp" />
                     </>
                   ) : (
                     <>

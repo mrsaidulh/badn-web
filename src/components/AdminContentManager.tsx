@@ -420,8 +420,11 @@ export default function AdminContentManager() {
                   className="w-full text-xs p-2.5 border border-gray-300 rounded-lg focus:ring-1 focus:ring-brand bg-gray-50 font-semibold cursor-pointer"
                 >
                   <option value="Clinical Nutrition">Clinical Nutrition (ক্লিনিক্যাল)</option>
-                  <option value="Sports Nutrition">Sports Nutrition (স্পোর্টস)</option>
+                  <option value="Renal Nutrition">Renal Nutrition (রেনাল নিউট্রিশন)</option>
+                  <option value="Onco Nutrition">Onco Nutrition (অনকো নিউট্রিশন)</option>
+                  <option value="Critical Care Nutrition">Critical Care Nutrition (ক্রিটিক্যাল কেয়ার)</option>
                   <option value="Child Nutrition">Child Nutrition (শিশু পুষ্টি)</option>
+                  <option value="Sports Nutrition">Sports Nutrition (স্পোর্টস)</option>
                 </select>
               </div>
 
