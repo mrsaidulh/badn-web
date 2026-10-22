@@ -17,7 +17,9 @@ import {
   Maximize2,
   Minimize2,
   FolderOpen,
-  FolderClosed
+  FolderClosed,
+  Calendar,
+  GraduationCap
 } from 'lucide-react';
 import { Course } from '../types';
 
@@ -34,7 +36,7 @@ export default function CourseDetailsModal({
   onClose,
   onEnroll
 }: CourseDetailsModalProps) {
-  const [activeTab, setActiveTab] = useState<'syllabus' | 'outcomes' | 'overview'>('syllabus');
+  const [activeTab, setActiveTab] = useState<'overview' | 'syllabus' | 'outcomes'>('overview');
   const [expandedModuleId, setExpandedModuleId] = useState<number | null>(1);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [expandAll, setExpandAll] = useState<boolean>(false);
@@ -57,7 +59,7 @@ export default function CourseDetailsModal({
   // Reset tab and states when course changes or modal opens
   useEffect(() => {
     if (isOpen) {
-      setActiveTab('syllabus');
+      setActiveTab('overview');
       setExpandedModuleId(1);
       setExpandAll(false);
     }
@@ -89,7 +91,7 @@ export default function CourseDetailsModal({
     <AnimatePresence>
       {isOpen && (
         <div className={`fixed inset-0 z-50 flex items-center justify-center overflow-hidden ${
-          isFullscreen ? 'p-0' : 'p-0 sm:p-3 md:p-6'
+          isFullscreen ? 'p-0' : 'p-0 sm:p-4 md:p-6 lg:p-8'
         }`}>
           {/* Backdrop */}
           <motion.div
@@ -100,7 +102,7 @@ export default function CourseDetailsModal({
             className="fixed inset-0 bg-black/75 backdrop-blur-sm"
           />
 
-          {/* Modal Container - Fullscreen Capable, Mobile Friendly, No Gradients */}
+          {/* Modal Container - Optimized for Both Laptop and Mobile Devices, No Gradients */}
           <motion.div
             initial={{ opacity: 0, scale: 0.98, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -109,19 +111,20 @@ export default function CourseDetailsModal({
             className={`relative w-full bg-white z-10 border border-[#cbdccb] flex flex-col overflow-hidden transition-all duration-200 ${
               isFullscreen
                 ? 'fixed inset-0 h-[100dvh] w-screen max-w-none max-h-none rounded-none shadow-none'
-                : 'h-[100dvh] sm:h-auto sm:max-h-[90vh] sm:max-w-4xl rounded-none sm:rounded-2xl md:rounded-3xl shadow-2xl'
+                : 'h-[100dvh] sm:h-[88vh] sm:max-h-[840px] sm:w-[94vw] sm:max-w-4xl lg:max-w-5xl xl:max-w-6xl rounded-none sm:rounded-2xl shadow-2xl'
             }`}
           >
-            {/* COMPACT HEADER: Space-Optimized, Solid Green, Zero Gradients */}
-            <div className="relative bg-[#143a1b] text-white px-3.5 py-3 sm:px-6 sm:py-3.5 shrink-0 border-b border-emerald-900">
+            {/* COMPACT & RESPONSIVE HEADER: Solid Green (#143a1b), Zero Gradients */}
+            <div className="relative bg-[#143a1b] text-white px-3.5 py-2.5 sm:px-6 sm:py-3.5 shrink-0 border-b border-emerald-900">
               {/* Row 1: Badges & Window Controls */}
               <div className="flex items-center justify-between gap-2">
-                <div className="flex flex-wrap items-center gap-1.5">
+                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                   <span className="bg-amber-500 text-gray-950 font-extrabold text-[10px] sm:text-[11px] px-2 py-0.5 rounded uppercase tracking-wider">
                     {course.category}
                   </span>
-                  <span className="bg-white/15 text-emerald-100 text-[10px] sm:text-xs px-2 py-0.5 rounded border border-white/20">
-                    শুরু: {course.startDate}
+                  <span className="bg-white/15 text-emerald-100 text-[10px] sm:text-xs px-2 py-0.5 rounded border border-white/20 flex items-center gap-1">
+                    <Calendar className="w-3 h-3 text-amber-300 shrink-0" />
+                    <span>শুরু: {course.startDate}</span>
                   </span>
                 </div>
 
@@ -153,41 +156,56 @@ export default function CourseDetailsModal({
                 </div>
               </div>
 
-              {/* Row 2: Course Title */}
-              <h2 className="text-base sm:text-xl font-bold text-white leading-snug mt-1.5 line-clamp-1 sm:line-clamp-none">
+              {/* Row 2: Course Title - Responsive typography for phone & laptop screens */}
+              <h2 className="text-base sm:text-xl lg:text-2xl font-bold text-white leading-snug mt-1.5">
                 {course.title}
               </h2>
 
-              {/* Row 3: Compact Inline Specs (Replaces bulky 4-grid, saves vertical space) */}
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] sm:text-xs text-emerald-200 mt-1.5 pt-1.5 border-t border-white/10">
-                <span className="flex items-center gap-1 font-medium">
+              {/* Row 3: Responsive Inline Specs - 2x2 grid on small mobile, flex row on tablet & laptop */}
+              <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-x-3 gap-y-1 sm:gap-x-4 text-[11px] sm:text-xs text-emerald-100 mt-2 pt-2 border-t border-white/10">
+                <span className="flex items-center gap-1.5 font-medium truncate">
                   <Clock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                  সময়কাল: <strong className="text-white">{course.duration}</strong>
+                  <span>সময়কাল: <strong className="text-white">{course.duration}</strong></span>
                 </span>
                 <span className="text-white/30 hidden sm:inline">•</span>
-                <span className="flex items-center gap-1 font-medium">
+                <span className="flex items-center gap-1.5 font-medium truncate">
                   <Video className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                  মোট ক্লাস: <strong className="text-white">{totalClassesCount}টি</strong> ({course.liveClasses} লাইভ)
+                  <span>মোট ক্লাস: <strong className="text-white">{totalClassesCount}টি</strong> ({course.liveClasses} লাইভ)</span>
                 </span>
                 <span className="text-white/30 hidden sm:inline">•</span>
-                <span className="flex items-center gap-1 font-medium">
+                <span className="flex items-center gap-1.5 font-medium truncate">
                   <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                  মাধ্যম: <strong className="text-white">{course.medium || 'অনলাইন (লাইভ)'}</strong>
+                  <span>মাধ্যম: <strong className="text-white">{course.medium || 'অনলাইন (লাইভ)'}</strong></span>
                 </span>
                 <span className="text-white/30 hidden sm:inline">•</span>
-                <span className="flex items-center gap-1 font-medium">
+                <span className="flex items-center gap-1.5 font-medium truncate">
                   <Award className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                   <strong className="text-white">সার্টিফিকেট প্রদান করা হবে</strong>
                 </span>
               </div>
             </div>
 
-            {/* CONSOLIDATED TABS BAR: 3 Distinct Tabs, Horizontal Scrollable, Touch Friendly */}
-            <div className="flex border-b border-gray-200 bg-[#f8faf8] px-2 sm:px-6 overflow-x-auto scrollbar-none shrink-0 gap-1">
+            {/* RESPONSIVE TABS BAR:
+                - Mobile: Smooth horizontal swipe/scroll
+                - Laptop/Desktop: 3 equal columns spanning the full width cleanly */}
+            <div className="flex sm:grid sm:grid-cols-3 border-b border-gray-200 bg-[#f8faf8] px-2 sm:px-6 overflow-x-auto scrollbar-none shrink-0 gap-1 sm:gap-0">
+              <button
+                type="button"
+                onClick={() => setActiveTab('overview')}
+                className={`py-2.5 sm:py-3 px-3 sm:px-4 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition-colors cursor-pointer flex items-center justify-center gap-1.5 shrink-0 ${
+                  activeTab === 'overview'
+                    ? 'border-[#143a1b] text-[#143a1b] bg-white shadow-xs'
+                    : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-white/50'
+                }`}
+              >
+                <Users className="w-4 h-4 text-blue-600 shrink-0" />
+                <span>কোর্স পরিচিতি ও যোগ্যতা</span>
+              </button>
+
               <button
                 type="button"
                 onClick={() => setActiveTab('syllabus')}
-                className={`py-2.5 sm:py-3 px-3 sm:px-4 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition-colors cursor-pointer flex items-center gap-1.5 shrink-0 ${
+                className={`py-2.5 sm:py-3 px-3 sm:px-4 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition-colors cursor-pointer flex items-center justify-center gap-1.5 shrink-0 ${
                   activeTab === 'syllabus'
                     ? 'border-[#143a1b] text-[#143a1b] bg-white shadow-xs'
                     : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-white/50'
@@ -200,7 +218,7 @@ export default function CourseDetailsModal({
               <button
                 type="button"
                 onClick={() => setActiveTab('outcomes')}
-                className={`py-2.5 sm:py-3 px-3 sm:px-4 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition-colors cursor-pointer flex items-center gap-1.5 shrink-0 ${
+                className={`py-2.5 sm:py-3 px-3 sm:px-4 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition-colors cursor-pointer flex items-center justify-center gap-1.5 shrink-0 ${
                   activeTab === 'outcomes'
                     ? 'border-[#143a1b] text-[#143a1b] bg-white shadow-xs'
                     : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-white/50'
@@ -209,29 +227,95 @@ export default function CourseDetailsModal({
                 <Target className="w-4 h-4 text-emerald-700 shrink-0" />
                 <span>শিখনফল ও সুবিধাসমূহ</span>
               </button>
-
-              <button
-                type="button"
-                onClick={() => setActiveTab('overview')}
-                className={`py-2.5 sm:py-3 px-3 sm:px-4 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition-colors cursor-pointer flex items-center gap-1.5 shrink-0 ${
-                  activeTab === 'overview'
-                    ? 'border-[#143a1b] text-[#143a1b] bg-white shadow-xs'
-                    : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-white/50'
-                }`}
-              >
-                <Users className="w-4 h-4 text-blue-600 shrink-0" />
-                <span>কোর্স পরিচিতি ও যোগ্যতা</span>
-              </button>
             </div>
 
             {/* SCROLLABLE CONTENT BODY */}
-            <div className="p-3.5 sm:p-6 overflow-y-auto flex-1 space-y-4 sm:space-y-5 text-gray-800">
-              {/* TAB 1: SYLLABUS & MODULES */}
+            <div className="p-3.5 sm:p-5 lg:p-6 overflow-y-auto flex-1 space-y-4 sm:space-y-5 text-gray-800">
+              {/* TAB 1: OVERVIEW & ELIGIBILITY */}
+              {activeTab === 'overview' && (
+                <div className="lg:grid lg:grid-cols-12 lg:gap-6 space-y-4 lg:space-y-0">
+                  {/* Left Column: Course Overview & Why Choose */}
+                  <div className="lg:col-span-7 space-y-4">
+                    {course.overviewBn && (
+                      <div className="space-y-1.5 bg-[#f8faf8] p-3.5 sm:p-4 rounded-xl border border-gray-200">
+                        <h3 className="text-xs sm:text-sm font-bold text-[#143a1b] flex items-center gap-1.5">
+                          <GraduationCap className="w-4 h-4 text-[#143a1b] shrink-0" />
+                          কোর্স পরিচিতি ও পটভূমি
+                        </h3>
+                        <p className="text-xs sm:text-[13px] text-gray-700 leading-relaxed text-justify">
+                          {course.overviewBn}
+                        </p>
+                      </div>
+                    )}
+
+                    {course.whyChoose && (
+                      <div className="bg-[#eaf3ea] border border-[#cbdccb] p-3.5 sm:p-4 rounded-xl space-y-1.5">
+                        <h4 className="text-xs sm:text-sm font-bold text-[#143a1b] flex items-center gap-1.5">
+                          <Sparkles className="w-4 h-4 text-emerald-700 shrink-0" />
+                          কেন এই কোর্সটি করবেন?
+                        </h4>
+                        <p className="text-xs sm:text-[13px] text-gray-700 leading-relaxed text-justify">
+                          {course.whyChoose}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Right Column: Target Audience & Quick Highlights */}
+                  <div className="lg:col-span-5 space-y-4">
+                    <div className="space-y-2 bg-white p-3.5 sm:p-4 rounded-xl border border-gray-200">
+                      <h3 className="text-xs sm:text-sm font-bold text-gray-900 flex items-center gap-1.5">
+                        <Users className="w-4 h-4 text-blue-600 shrink-0" />
+                        কারা এই কোর্সে ভর্তি হতে পারবেন?
+                      </h3>
+                      <div className="grid grid-cols-1 gap-2">
+                        {course.targetAudience?.map((aud, idx) => (
+                          <div
+                            key={idx}
+                            className="p-2 sm:p-2.5 rounded-lg bg-blue-50/70 border border-blue-100 flex items-center gap-2"
+                          >
+                            <span className="w-2 h-2 rounded-full bg-blue-600 shrink-0" />
+                            <span className="text-xs sm:text-[13px] font-medium text-gray-800">{aud}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Quick Course Summary Card */}
+                    <div className="bg-[#fafdfa] border border-[#cbdccb]/70 p-3.5 sm:p-4 rounded-xl space-y-2.5">
+                      <h4 className="text-xs sm:text-sm font-bold text-gray-900 flex items-center gap-1.5">
+                        <Award className="w-4 h-4 text-amber-600 shrink-0" />
+                        কোর্সের সারসংক্ষেপ
+                      </h4>
+                      <div className="space-y-1.5 text-xs text-gray-700">
+                        <div className="flex justify-between py-1 border-b border-gray-100">
+                          <span className="text-gray-500">সময়কাল:</span>
+                          <span className="font-bold text-gray-900">{course.duration}</span>
+                        </div>
+                        <div className="flex justify-between py-1 border-b border-gray-100">
+                          <span className="text-gray-500">মোট ক্লাস:</span>
+                          <span className="font-bold text-gray-900">{totalClassesCount}টি</span>
+                        </div>
+                        <div className="flex justify-between py-1 border-b border-gray-100">
+                          <span className="text-gray-500">পদ্ধতি:</span>
+                          <span className="font-bold text-gray-900">{course.medium || 'অনলাইন লাইভ'}</span>
+                        </div>
+                        <div className="flex justify-between py-1">
+                          <span className="text-gray-500">সার্টিফিকেট:</span>
+                          <span className="font-bold text-emerald-700">ভেরিফাইড সনদপত্র</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 2: SYLLABUS & MODULES (Responsive: 1 col on mobile, 2 cols on laptop) */}
               {activeTab === 'syllabus' && (
-                <div className="space-y-3">
+                <div className="space-y-3 sm:space-y-4">
                   <div className="flex items-center justify-between gap-2 pb-2 border-b border-gray-100">
                     <div>
-                      <h3 className="text-sm sm:text-base font-bold text-gray-900 flex items-center gap-1.5">
+                      <h3 className="text-xs sm:text-base font-bold text-gray-900 flex items-center gap-1.5">
                         <BookOpen className="w-4 h-4 text-amber-600 shrink-0" />
                         কোর্সের মূল বিষয়ভিত্তিক সিলেবাস
                       </h3>
@@ -248,18 +332,21 @@ export default function CourseDetailsModal({
                       {expandAll ? (
                         <>
                           <FolderClosed className="w-3.5 h-3.5 text-[#143a1b]" />
-                          <span>সব বন্ধ করুন</span>
+                          <span className="hidden sm:inline">সব বন্ধ করুন</span>
+                          <span className="sm:hidden">বন্ধ</span>
                         </>
                       ) : (
                         <>
                           <FolderOpen className="w-3.5 h-3.5 text-[#143a1b]" />
-                          <span>সব খুলুন</span>
+                          <span className="hidden sm:inline">সব খুলুন</span>
+                          <span className="sm:hidden">খুলুন</span>
                         </>
                       )}
                     </button>
                   </div>
 
-                  <div className="space-y-2 sm:space-y-2.5">
+                  {/* Responsive grid: 1 column on phone, 2 columns on laptop */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-2.5 sm:gap-3 items-start">
                     {course.modules && course.modules.length > 0 ? (
                       course.modules.map((mod) => {
                         const isExpanded = expandAll || expandedModuleId === mod.id;
@@ -310,13 +397,13 @@ export default function CourseDetailsModal({
                         );
                       })
                     ) : (
-                      <p className="text-sm text-gray-500 italic">সিলেবাস তথ্য নেই</p>
+                      <p className="text-sm text-gray-500 italic col-span-2">সিলেবাস তথ্য নেই</p>
                     )}
                   </div>
                 </div>
               )}
 
-              {/* TAB 2: LEARNING OUTCOMES & PERKS (Deduplicated & Cleanly Structured) */}
+              {/* TAB 3: LEARNING OUTCOMES & PERKS (Responsive: 1/2 cols on mobile, 2/3 cols on laptop) */}
               {activeTab === 'outcomes' && (
                 <div className="space-y-4 sm:space-y-5">
                   {/* Practical Diet Planning Highlight */}
@@ -350,13 +437,13 @@ export default function CourseDetailsModal({
                     </div>
                   </div>
 
-                  {/* Consolidated Perks & Facilities (Clean, non-repetitive) */}
+                  {/* Consolidated Perks & Facilities - 1 col on mobile, 2 on tablet, 3 on laptop */}
                   <div className="space-y-2 pt-3 border-t border-gray-100">
                     <h3 className="text-xs sm:text-sm font-bold text-gray-900 flex items-center gap-1.5">
                       <Award className="w-4 h-4 text-amber-600 shrink-0" />
                       কোর্সের বিশেষ সুবিধাসমূহ:
                     </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-2.5">
                       <div className="p-2.5 rounded-lg bg-[#fafdfa] border border-[#cbdccb]/60 flex items-center gap-2">
                         <span className="text-emerald-700 font-extrabold text-xs sm:text-sm">✓</span>
                         <span className="text-xs font-semibold text-gray-800">১৬টি লাইভ ক্লাস + ৩টি এক্সট্রা রিভিশন ক্লাস</span>
@@ -371,11 +458,11 @@ export default function CourseDetailsModal({
                       </div>
                       <div className="p-2.5 rounded-lg bg-[#fafdfa] border border-[#cbdccb]/60 flex items-center gap-2">
                         <span className="text-emerald-700 font-extrabold text-xs sm:text-sm">✓</span>
-                        <span className="text-xs font-semibold text-gray-800">বাস্তব ক্লিনিক্যাল কেস অ্যানালাইসিস ও অ্যাসাইনমেন্ট</span>
+                        <span className="text-xs font-semibold text-gray-800">বাস্তব ক্লিনিক্যাল কেস অ্যানালাইসিস</span>
                       </div>
                       <div className="p-2.5 rounded-lg bg-[#fafdfa] border border-[#cbdccb]/60 flex items-center gap-2">
                         <span className="text-emerald-700 font-extrabold text-xs sm:text-sm">✓</span>
-                        <span className="text-xs font-semibold text-gray-800">বিশেষজ্ঞ পুষ্টিবিদদের প্রত্যক্ষ মেন্টরশিপ সাপোর্ট</span>
+                        <span className="text-xs font-semibold text-gray-800">বিশেষজ্ঞ পুষ্টিবিদদের প্রত্যক্ষ মেন্টরশিপ</span>
                       </div>
                       <div className="p-2.5 rounded-lg bg-[#fafdfa] border border-[#cbdccb]/60 flex items-center gap-2">
                         <span className="text-emerald-700 font-extrabold text-xs sm:text-sm">✓</span>
@@ -385,66 +472,18 @@ export default function CourseDetailsModal({
                   </div>
                 </div>
               )}
-
-              {/* TAB 3: OVERVIEW & ELIGIBILITY */}
-              {activeTab === 'overview' && (
-                <div className="space-y-4">
-                  {/* Overview */}
-                  {course.overviewBn && (
-                    <div className="space-y-1 bg-gray-50 p-3.5 rounded-xl border border-gray-200">
-                      <h3 className="text-xs sm:text-sm font-bold text-gray-900">
-                        কোর্স পরিচিতি
-                      </h3>
-                      <p className="text-xs sm:text-[13px] text-gray-700 leading-relaxed text-justify">
-                        {course.overviewBn}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Why Choose */}
-                  {course.whyChoose && (
-                    <div className="bg-[#eaf3ea] border border-[#cbdccb] p-3.5 rounded-xl space-y-1">
-                      <h4 className="text-xs sm:text-sm font-bold text-[#143a1b]">
-                        কেন এই কোর্সটি করবেন?
-                      </h4>
-                      <p className="text-xs sm:text-[13px] text-gray-700 leading-relaxed text-justify">
-                        {course.whyChoose}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Target Audience */}
-                  <div className="space-y-2">
-                    <h3 className="text-xs sm:text-sm font-bold text-gray-900 flex items-center gap-1.5">
-                      <Users className="w-4 h-4 text-blue-600 shrink-0" />
-                      কারা এই কোর্সে ভর্তি হতে পারবেন?
-                    </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {course.targetAudience?.map((aud, idx) => (
-                        <div
-                          key={idx}
-                          className="p-2.5 rounded-xl bg-blue-50 border border-blue-100 flex items-center gap-2"
-                        >
-                          <span className="w-2 h-2 rounded-full bg-blue-600 shrink-0" />
-                          <span className="text-xs sm:text-[13px] font-medium text-gray-800">{aud}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
 
-            {/* STICKY FOOTER: Compact, Mobile Friendly, No Gradients */}
+            {/* STICKY FOOTER: Highly responsive, Touch & Laptop Friendly, No Gradients */}
             <div className="px-3.5 py-2.5 sm:px-6 sm:py-3.5 bg-white border-t border-gray-200 shrink-0 flex items-center justify-between gap-2.5 shadow-md">
               {/* Fee Display */}
-              <div>
+              <div className="min-w-0">
                 <span className="text-[10px] text-gray-400 line-through block font-medium leading-none">
                   ৳ {Number(course.originalPrice || 0).toLocaleString('bn-BD')} টাকা
                 </span>
                 <div className="flex items-baseline gap-1 mt-0.5">
                   <span className="text-[11px] font-bold text-gray-500">ফি:</span>
-                  <span className="text-base sm:text-xl font-black text-[#143a1b]">
+                  <span className="text-base sm:text-xl lg:text-2xl font-black text-[#143a1b]">
                     ৳ {Number(course.price || 0).toLocaleString('bn-BD')}
                   </span>
                   <span className="text-[10px] sm:text-xs font-semibold text-gray-500">টাকা</span>
@@ -452,7 +491,7 @@ export default function CourseDetailsModal({
               </div>
 
               {/* Action Buttons */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 shrink-0">
                 {/* WhatsApp Chat Link */}
                 <a
                   href={waUrl}

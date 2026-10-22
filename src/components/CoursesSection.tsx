@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Course } from '../types';
-import { Clock, BookOpen, Award, Users, Star, ArrowRight, Sparkles } from 'lucide-react';
+import { Clock, BookOpen, Award, Users, Star, ArrowRight } from 'lucide-react';
 import EnrollModal from './EnrollModal';
 import CourseDetailsModal from './CourseDetailsModal';
 import { getCourses } from '../lib/api';
@@ -220,9 +220,8 @@ export default function CoursesSection() {
                         setSelectedDetailCourse(course);
                         setIsDetailOpen(true);
                       }}
-                      className="text-[#92400e] bg-amber-100/90 hover:bg-amber-200/90 border border-amber-300 font-bold px-2 py-0.5 rounded-md hover:underline cursor-pointer flex items-center gap-1 transition-colors"
+                      className="text-[#92400e] bg-amber-100/90 hover:bg-amber-200/90 border border-amber-300 font-bold px-2 py-0.5 rounded-md hover:underline cursor-pointer flex items-center transition-colors"
                     >
-                      <Sparkles className="w-3.5 h-3.5 text-amber-600 shrink-0" />
                       <span>{course.modules?.length || 10}টি মডিউল</span>
                     </button>
                   </div>
