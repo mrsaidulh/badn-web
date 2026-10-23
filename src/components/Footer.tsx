@@ -1,4 +1,4 @@
-import { Heart, MapPin, Mail, Clock, Phone, Facebook, Twitter, Globe } from 'lucide-react';
+import { Heart, MapPin, Mail, Clock, Phone, Facebook, Linkedin, Globe } from 'lucide-react';
 import Logo from './Logo';
 
 export default function Footer() {
@@ -31,11 +31,13 @@ export default function Footer() {
                 <Facebook className="w-4.5 h-4.5" />
               </a>
               <a
-                href="#"
-                className="w-9 h-9 rounded-full bg-brand/10 hover:bg-brand/20 text-brand-dark flex items-center justify-center transition-all duration-300 hover:scale-110"
-                title="Twitter"
+                href="https://www.linkedin.com/in/bangladesh-academy-of-dietetics-and-nutrition-badn-ba45a038b?"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-[#0A66C2]/10 hover:bg-[#0A66C2] text-[#0A66C2] hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm"
+                title="LinkedIn Profile"
               >
-                <Twitter className="w-4.5 h-4.5" />
+                <Linkedin className="w-4.5 h-4.5" />
               </a>
               <a
                 href="#"
@@ -101,6 +103,17 @@ export default function Footer() {
                   className="hover:text-[#1877F2] transition-colors font-semibold"
                 >
                   facebook.com/badntrust
+                </a>
+              </div>
+              <div className="flex items-center gap-2">
+                <Linkedin className="w-4 h-4 shrink-0 text-[#0A66C2]" />
+                <a 
+                  href="https://www.linkedin.com/in/bangladesh-academy-of-dietetics-and-nutrition-badn-ba45a038b?" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="hover:text-[#0A66C2] transition-colors font-semibold truncate"
+                >
+                  linkedin.com/in/badn
                 </a>
               </div>
             </div>

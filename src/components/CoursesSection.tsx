@@ -10,22 +10,22 @@ import courseUser10Img from '../assets/images/course_user_10.png';
 import courseUser11Img from '../assets/images/course_user_11.png';
 
 const getCourseImage = (id: string, defaultImg?: string) => {
-  if (id === 'c1') return 'https://i.ibb.co.com/wNgD30g1/9.png';
-  if (id === 'c2') return 'https://i.ibb.co.com/chWrS0Qb/10.png';
+  if (id === 'c1') return 'https://i.ibb.co.com/VYhH9KGM/CCND.jpg';
+  if (id === 'c6') return 'https://i.ibb.co.com/chWrS0Qb/10.png';
+  if (id === 'c2') return defaultImg && !defaultImg.includes('10.png') ? defaultImg : 'https://i.ibb.co.com/B25ChBhp/6.jpg';
   if (id === 'c3') return 'https://i.ibb.co.com/6J49g293/11.png';
   if (id === 'c4') return defaultImg || '/renal-nutrition-banner.png';
-  if (id === 'c5') return defaultImg || 'https://i.ibb.co.com/3mP31tt1/3.jpg';
-  if (id === 'c6') return defaultImg || 'https://i.ibb.co.com/B25ChBhp/6.jpg';
+  if (id === 'c5') return 'https://i.ibb.co.com/wZMQhYgz/Onco-Nutrition.png';
   return defaultImg || courseUser9Img;
 };
 
 const getCourseFallback = (id: string) => {
-  if (id === 'c1') return courseUser9Img;
-  if (id === 'c2') return courseUser10Img;
+  if (id === 'c1') return 'https://i.ibb.co.com/VYhH9KGM/CCND.jpg';
+  if (id === 'c6') return courseUser10Img;
+  if (id === 'c2') return '/seminar-user-6.jpg';
   if (id === 'c3') return courseUser11Img;
   if (id === 'c4') return '/renal-nutrition-banner.png';
-  if (id === 'c5') return '/about-workshop-user-3.jpg';
-  if (id === 'c6') return '/seminar-user-6.jpg';
+  if (id === 'c5') return 'https://i.ibb.co.com/wZMQhYgz/Onco-Nutrition.png';
   return courseUser9Img;
 };
 
@@ -169,10 +169,9 @@ export default function CoursesSection() {
                 <picture>
                   {course.id === 'c1' ? (
                     <>
-                      <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/course-9-mobile.webp" />
-                      <source type="image/webp" srcSet="/optimized/course-9.webp" />
+                      <source srcSet="https://i.ibb.co.com/VYhH9KGM/CCND.jpg" />
                     </>
-                  ) : course.id === 'c2' ? (
+                  ) : course.id === 'c6' ? (
                     <>
                       <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/course-10-mobile.webp" />
                       <source type="image/webp" srcSet="/optimized/course-10.webp" />
@@ -189,10 +188,9 @@ export default function CoursesSection() {
                     </>
                   ) : course.id === 'c5' ? (
                     <>
-                      <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/about-workshop-3-mobile.webp" />
-                      <source type="image/webp" srcSet="/optimized/about-workshop-3.webp" />
+                      <source srcSet="https://i.ibb.co.com/wZMQhYgz/Onco-Nutrition.png" />
                     </>
-                  ) : course.id === 'c6' ? (
+                  ) : course.id === 'c2' ? (
                     <>
                       <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/seminar-6-mobile.webp" />
                       <source type="image/webp" srcSet="/optimized/seminar-6.webp" />

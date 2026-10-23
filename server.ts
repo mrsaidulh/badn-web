@@ -84,7 +84,7 @@ export const DEFAULT_COURSES = [
     classDuration: '২ ঘণ্টা করে মোট ৪০ ঘণ্টা',
     price: 12000.00,
     originalPrice: 15000.00,
-    image: 'https://i.ibb.co.com/wNgD30g1/9.png',
+    image: 'https://i.ibb.co.com/VYhH9KGM/CCND.jpg',
     category: 'Clinical Nutrition',
     rating: 4.9,
     reviewsCount: 320,
@@ -122,7 +122,7 @@ export const DEFAULT_COURSES = [
     classDuration: '২ ঘণ্টা করে মোট ৫০ ঘণ্টা',
     price: 15000.00,
     originalPrice: 19000.00,
-    image: 'https://i.ibb.co.com/3mP31tt1/3.jpg',
+    image: 'https://i.ibb.co.com/wZMQhYgz/Onco-Nutrition.png',
     category: 'Onco Nutrition',
     rating: 5.0,
     reviewsCount: 112,
@@ -141,7 +141,7 @@ export const DEFAULT_COURSES = [
     classDuration: '২ ঘণ্টা করে মোট ৪৫ ঘণ্টা',
     price: 14000.00,
     originalPrice: 18000.00,
-    image: 'https://i.ibb.co.com/B25ChBhp/6.jpg',
+    image: 'https://i.ibb.co.com/chWrS0Qb/10.png',
     category: 'Critical Care Nutrition',
     rating: 4.9,
     reviewsCount: 188,
@@ -179,7 +179,7 @@ export const DEFAULT_COURSES = [
     classDuration: '২ ঘণ্টা করে মোট ৪৮ ঘণ্টা',
     price: 16000.00,
     originalPrice: 20000.00,
-    image: 'https://i.ibb.co.com/chWrS0Qb/10.png',
+    image: 'https://i.ibb.co.com/B25ChBhp/6.jpg',
     category: 'Sports Nutrition',
     rating: 4.8,
     reviewsCount: 145,
@@ -239,6 +239,8 @@ export async function syncDefaultCourses(dbPool: mysql.Pool) {
           course.seatsLeft, course.startDate
         ]
       );
+    } else {
+      await dbPool.query('UPDATE courses SET image = ? WHERE id = ?', [course.image, course.id]);
     }
   }
 }

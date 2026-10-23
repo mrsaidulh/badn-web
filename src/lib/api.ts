@@ -305,9 +305,18 @@ export async function getCourses(): Promise<any[]> {
       let mergedCourses = [...dbCourses, ...missingDefaults].map((c: any) => {
         const staticMatch = COURSES.find(sc => sc.id === c.id);
         if (staticMatch) {
+          let finalImg = c.image;
+          if (c.id === 'c1') finalImg = 'https://i.ibb.co.com/VYhH9KGM/CCND.jpg';
+          else if (c.id === 'c6') finalImg = 'https://i.ibb.co.com/chWrS0Qb/10.png';
+          else if (c.id === 'c2') finalImg = (c.image && !c.image.includes('10.png')) ? c.image : 'https://i.ibb.co.com/B25ChBhp/6.jpg';
+          else if (c.id === 'c3') finalImg = 'https://i.ibb.co.com/6J49g293/11.png';
+          else if (c.id === 'c4') finalImg = c.image || '/renal-nutrition-banner.png';
+          else if (c.id === 'c5') finalImg = 'https://i.ibb.co.com/wZMQhYgz/Onco-Nutrition.png';
+
           return {
             ...staticMatch,
             ...c,
+            image: finalImg,
             modules: c.modules && c.modules.length > 0 ? c.modules : staticMatch.modules,
             learningOutcomes: c.learningOutcomes && c.learningOutcomes.length > 0 ? c.learningOutcomes : staticMatch.learningOutcomes,
             learningMethodology: c.learningMethodology && c.learningMethodology.length > 0 ? c.learningMethodology : staticMatch.learningMethodology,
@@ -355,12 +364,12 @@ export async function getCourses(): Promise<any[]> {
     const staticMatch = COURSES.find(c => c.id === course.id);
     if (staticMatch) {
       let finalImg = course.image;
-      if (course.id === 'c1') finalImg = 'https://i.ibb.co.com/wNgD30g1/9.png';
-      else if (course.id === 'c2') finalImg = 'https://i.ibb.co.com/chWrS0Qb/10.png';
+      if (course.id === 'c1') finalImg = 'https://i.ibb.co.com/VYhH9KGM/CCND.jpg';
+      else if (course.id === 'c6') finalImg = 'https://i.ibb.co.com/chWrS0Qb/10.png';
+      else if (course.id === 'c2') finalImg = (course.image && !course.image.includes('10.png')) ? course.image : 'https://i.ibb.co.com/B25ChBhp/6.jpg';
       else if (course.id === 'c3') finalImg = 'https://i.ibb.co.com/6J49g293/11.png';
       else if (course.id === 'c4') finalImg = course.image || '/renal-nutrition-banner.png';
-      else if (course.id === 'c5') finalImg = course.image || 'https://i.ibb.co.com/3mP31tt1/3.jpg';
-      else if (course.id === 'c6') finalImg = course.image || 'https://i.ibb.co.com/B25ChBhp/6.jpg';
+      else if (course.id === 'c5') finalImg = 'https://i.ibb.co.com/wZMQhYgz/Onco-Nutrition.png';
       else if (course.image?.includes('course_thumbnail') || !course.image) finalImg = staticMatch.image;
 
       return {

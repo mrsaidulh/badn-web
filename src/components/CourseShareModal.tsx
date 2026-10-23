@@ -17,6 +17,7 @@ import {
   openWhatsAppShare, 
   openFacebookShare, 
   copyCourseLinkToClipboard, 
+  copyCourseTextToClipboard,
   triggerNativeShare 
 } from '../lib/shareUtils';
 import { useToast } from './Toast';
@@ -33,6 +34,7 @@ export default function CourseShareModal({
   onClose,
 }: CourseShareModalProps) {
   const [copied, setCopied] = useState(false);
+  const [copiedText, setCopiedText] = useState(false);
   const toast = useToast();
 
   if (!course) return null;
@@ -48,6 +50,17 @@ export default function CourseShareModal({
       setTimeout(() => setCopied(false), 2500);
     } else {
       toast.error('লিংক কপি করতে সমস্যা হয়েছে। দয়া করে ম্যানুয়ালি কপি করুন।');
+    }
+  };
+
+  const handleCopyText = async () => {
+    const success = await copyCourseTextToClipboard(course);
+    if (success) {
+      setCopiedText(true);
+      toast.success('কোর্সের সম্পূর্ণ বিবরণ টেক্সট সফলভাবে কপি করা হয়েছে!');
+      setTimeout(() => setCopiedText(false), 2500);
+    } else {
+      toast.error('টেক্সট কপি করতে সমস্যা হয়েছে।');
     }
   };
 
@@ -249,6 +262,24 @@ export default function CourseShareModal({
                     )}
                   </button>
                 </div>
+
+                <button
+                  type="button"
+                  onClick={handleCopyText}
+                  className="w-full py-2 px-3 border border-gray-300 hover:border-[#143a1b] hover:bg-[#fafdfa] text-gray-700 hover:text-[#143a1b] rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                >
+                  {copiedText ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-emerald-600" />
+                      <span className="text-emerald-700 font-bold">সম্পূর্ণ বিবরণ মেসেজ কপি হয়েছে!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5" />
+                      <span>সম্পূর্ণ কোর্স বিবরণ টেক্সট কপি করুন</span>
+                    </>
+                  )}
+                </button>
               </div>
             </div>
 

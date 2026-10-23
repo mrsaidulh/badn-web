@@ -17,13 +17,12 @@ export function getCourseShareText(course: Course): string {
   const priceFormatted = Number(course.price || 0).toLocaleString('bn-BD');
 
   return `🎓 *${course.title}*
-🏛️ *বাংলাদেশ একাডেমি অব ডায়েটেটিক্স অ্যান্ড নিউট্রিশন (BADN)*
+🏛️ *Bangladesh Academy of Dietetics and Nutrition (BADN)*
 
 📋 *কোর্সের মূল বিবরণ:*
 ⏱️ সময়কাল: ${course.duration}
 🎥 মোট ক্লাস: ${totalClasses}টি (${course.liveClasses}টি লাইভ সেশন)
 💰 কোর্স ফি: ৳ ${priceFormatted} টাকা
-🗓️ কোর্স শুরু: ${course.startDate}
 🏆 ভেরিফাইড সার্টিফিকেট প্রদান করা হবে
 
 📖 কোর্স পরিচিতি, বিস্তারিত বিষয়ভিত্তিক সিলেবাস ও ভর্তি হতে নিচের লিংকে ক্লিক করুন:
@@ -80,6 +79,33 @@ export async function copyCourseLinkToClipboard(course: Course): Promise<boolean
     }
   } catch (err) {
     console.error('Failed to copy to clipboard', err);
+    return false;
+  }
+}
+
+/**
+ * Copies complete formatted course details text to clipboard
+ */
+export async function copyCourseTextToClipboard(course: Course): Promise<boolean> {
+  const text = getCourseShareText(course);
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } else {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.opacity = '0';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      const success = document.execCommand('copy');
+      document.body.removeChild(textArea);
+      return success;
+    }
+  } catch (err) {
+    console.error('Failed to copy share text to clipboard', err);
     return false;
   }
 }

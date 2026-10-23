@@ -73,7 +73,7 @@ export default function CourseDetailsModal({
   const whatsappNumber = course.whatsappNumber || '০১৬৭৭-২৫০৫৯৭';
   const rawWaDigits = whatsappNumber.replace(/[^0-9]/g, '');
   const waUrl = `https://wa.me/88${rawWaDigits ? rawWaDigits : '01677250597'}?text=${encodeURIComponent(
-    `হ্যালো, আমি বাংলাদেশ একাডেমি অব ডায়েটেটিক্স অ্যান্ড নিউট্রিশন (BADN)-এর "${course.title}" কোর্সটিতে ভর্তি ও বিস্তারিত তথ্য সম্পর্কে জানতে আগ্রহী।`
+    `হ্যালো, আমি Bangladesh Academy of Dietetics and Nutrition (BADN)-এর "${course.title}" কোর্সটিতে ভর্তি ও বিস্তারিত তথ্য সম্পর্কে জানতে আগ্রহী।`
   )}`;
 
   const toggleModule = (id: number) => {
