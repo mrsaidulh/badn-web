@@ -93,44 +93,6 @@ export const DEFAULT_COURSES = [
     startDate: '১৫ জুলাই, ২০২৬'
   },
   {
-    id: 'c2',
-    title: 'অ্যাডভান্সড স্পোর্টস নিউট্রিশন অ্যান্ড পারফরম্যান্স',
-    duration: '৩ মাস (3 Months)',
-    liveClasses: 24,
-    recordedClasses: 2,
-    orientation: 1,
-    exams: 2,
-    classDuration: '২ ঘণ্টা করে মোট ৪৮ ঘণ্টা',
-    price: 16000.00,
-    originalPrice: 20000.00,
-    image: 'https://i.ibb.co.com/chWrS0Qb/10.png',
-    category: 'Sports Nutrition',
-    rating: 4.8,
-    reviewsCount: 145,
-    description: 'অ্যাথলেট ও ক্রীড়াবিদদের খাদ্যতালিকা প্রণয়ন, ক্যালরি পরিমাপ এবং স্পোর্টস পারফরম্যান্স বুস্ট করার জন্য বৈজ্ঞানিক ডায়েট গাইডলাইন।',
-    seatsLeft: 12,
-    startDate: '০১ আগস্ট, ২০২৬'
-  },
-  {
-    id: 'c3',
-    title: 'ম্যাটারনাল অ্যান্ড চাইল্ড নিউট্রিশন মাস্টারক্লাস',
-    duration: '৬ সপ্তাহ (6 Weeks)',
-    liveClasses: 12,
-    recordedClasses: 1,
-    orientation: 1,
-    exams: 1,
-    classDuration: '১.৫ ঘণ্টা করে মোট ২০ ঘণ্টা',
-    price: 8000.00,
-    originalPrice: 10000.00,
-    image: 'https://i.ibb.co.com/6J49g293/11.png',
-    category: 'Child Nutrition',
-    rating: 5.0,
-    reviewsCount: 98,
-    description: 'গর্ভকালীন পুষ্টি এবং শিশুর জন্মের পর প্রথম ১০০০ দিনের পুষ্টি চাহিদা পূরণ ও পথ্য পরিকল্পনা নিয়ে বিশেষায়িত কোর্স।',
-    seatsLeft: 5,
-    startDate: '২০ জুলাই, ২০২৬'
-  },
-  {
     id: 'c4',
     title: 'সার্টিফিকেট কোর্স - রেনাল নিউট্রিশন অ্যান্ড কিডনি ডায়েট ম্যানেজমেন্ট',
     duration: '২ মাস (2 Months)',
@@ -186,6 +148,44 @@ export const DEFAULT_COURSES = [
     description: 'আইসিইউ ও এইচডিইউতে ভেন্টিলেশন, সেপসিস ও ট্রমা রোগীদের এন্টারাল ও প্যারেন্টেরাল নিউট্রিশন (EN & TPN), ইলেকট্রোলাইট ও মেটাবলিক ব্যালেন্সিং নিয়ে স্পেশালাইজড কোর্স।',
     seatsLeft: 7,
     startDate: '০৫ আগস্ট, ২০২৬'
+  },
+  {
+    id: 'c3',
+    title: 'ম্যাটারনাল অ্যান্ড চাইল্ড নিউট্রিশন মাস্টারক্লাস',
+    duration: '৬ সপ্তাহ (6 Weeks)',
+    liveClasses: 12,
+    recordedClasses: 1,
+    orientation: 1,
+    exams: 1,
+    classDuration: '১.৫ ঘণ্টা করে মোট ২০ ঘণ্টা',
+    price: 8000.00,
+    originalPrice: 10000.00,
+    image: 'https://i.ibb.co.com/6J49g293/11.png',
+    category: 'Child Nutrition',
+    rating: 5.0,
+    reviewsCount: 98,
+    description: 'গর্ভকালীন পুষ্টি এবং শিশুর জন্মের পর প্রথম ১০০০ দিনের পুষ্টি চাহিদা পূরণ ও পথ্য পরিকল্পনা নিয়ে বিশেষায়িত কোর্স।',
+    seatsLeft: 5,
+    startDate: '২০ জুলাই, ২০২৬'
+  },
+  {
+    id: 'c2',
+    title: 'অ্যাডভান্সড স্পোর্টস নিউট্রিশন অ্যান্ড পারফরম্যান্স',
+    duration: '৩ মাস (3 Months)',
+    liveClasses: 24,
+    recordedClasses: 2,
+    orientation: 1,
+    exams: 2,
+    classDuration: '২ ঘণ্টা করে মোট ৪৮ ঘণ্টা',
+    price: 16000.00,
+    originalPrice: 20000.00,
+    image: 'https://i.ibb.co.com/chWrS0Qb/10.png',
+    category: 'Sports Nutrition',
+    rating: 4.8,
+    reviewsCount: 145,
+    description: 'অ্যাথলেট ও ক্রীড়াবিদদের খাদ্যতালিকা প্রণয়ন, ক্যালরি পরিমাপ এবং স্পোর্টস পারফরম্যান্স বুস্ট করার জন্য বৈজ্ঞানিক ডায়েট গাইডলাইন।',
+    seatsLeft: 12,
+    startDate: '০১ আগস্ট, ২০২৬'
   }
 ];
 
@@ -722,12 +722,12 @@ app.get('/api/courses', async (req, res) => {
     return res.json({ success: false, message: 'Database not connected. Local fallback active.' });
   }
   try {
-    let [rows]: any = await db.query('SELECT * FROM courses ORDER BY id ASC');
+    let [rows]: any = await db.query("SELECT * FROM courses ORDER BY FIELD(id, 'c1', 'c4', 'c5', 'c6', 'c3', 'c2')");
     const existingIds = new Set(rows.map((r: any) => r.id));
     const missing = DEFAULT_COURSES.some(c => !existingIds.has(c.id));
     if (missing) {
       await syncDefaultCourses(db);
-      [rows] = await db.query('SELECT * FROM courses ORDER BY id ASC');
+      [rows] = await db.query("SELECT * FROM courses ORDER BY FIELD(id, 'c1', 'c4', 'c5', 'c6', 'c3', 'c2')");
     }
     res.json({ success: true, source: 'database', data: rows });
   } catch (error: any) {
@@ -740,7 +740,7 @@ app.post('/api/courses/sync-defaults', async (req, res) => {
   if (!db) return res.json({ success: false, message: 'Database not connected' });
   try {
     await syncDefaultCourses(db);
-    const [rows]: any = await db.query('SELECT * FROM courses ORDER BY id ASC');
+    const [rows]: any = await db.query("SELECT * FROM courses ORDER BY FIELD(id, 'c1', 'c4', 'c5', 'c6', 'c3', 'c2')");
     res.json({ success: true, count: rows.length, data: rows });
   } catch (err: any) {
     res.status(500).json({ success: false, error: err.message });

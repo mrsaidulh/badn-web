@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Course } from '../types';
-import { Clock, BookOpen, Award, Users, Star, ArrowRight } from 'lucide-react';
+import { Clock, BookOpen, Award, Users, Star, ArrowRight, Share2 } from 'lucide-react';
 import EnrollModal from './EnrollModal';
 import CourseDetailsModal from './CourseDetailsModal';
+import CourseShareModal from './CourseShareModal';
 import { getCourses } from '../lib/api';
 import courseUser9Img from '../assets/images/course_user_9.png';
 import courseUser10Img from '../assets/images/course_user_10.png';
@@ -34,6 +35,8 @@ export default function CoursesSection() {
   const [isEnrollOpen, setIsEnrollOpen] = useState(false);
   const [selectedDetailCourse, setSelectedDetailCourse] = useState<Course | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [shareCourse, setShareCourse] = useState<Course | null>(null);
+  const [isShareOpen, setIsShareOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string>('All');
 
   useEffect(() => {
@@ -49,6 +52,52 @@ export default function CoursesSection() {
       window.removeEventListener('courses_updated', loadCourses);
     };
   }, []);
+
+  // Deep-linking: check for ?course=<id> parameter on load or change
+  useEffect(() => {
+    if (courses.length === 0) return;
+    const urlParams = new URLSearchParams(window.location.search);
+    const courseParam = urlParams.get('course');
+    if (courseParam) {
+      const foundCourse = courses.find((c) => c.id === courseParam);
+      if (foundCourse) {
+        setSelectedDetailCourse(foundCourse);
+        setIsDetailOpen(true);
+        // Smoothly scroll down to courses area if directly opening via deep-link
+        setTimeout(() => {
+          const section = document.getElementById('courses');
+          if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 400);
+      }
+    }
+  }, [courses]);
+
+  const handleOpenDetails = (course: Course) => {
+    setSelectedDetailCourse(course);
+    setIsDetailOpen(true);
+    // Sync browser URL for deep-linking
+    const url = new URL(window.location.href);
+    url.searchParams.set('course', course.id);
+    window.history.replaceState({}, '', url.toString());
+  };
+
+  const handleCloseDetails = () => {
+    setIsDetailOpen(false);
+    // Remove query param from URL on close
+    const url = new URL(window.location.href);
+    url.searchParams.delete('course');
+    window.history.replaceState({}, '', url.toString());
+  };
+
+  const handleOpenShare = (course: Course, e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation();
+    }
+    setShareCourse(course);
+    setIsShareOpen(true);
+  };
 
   const categories = [
     'All',
@@ -174,6 +223,16 @@ export default function CoursesSection() {
                   />
                 </picture>
 
+                <button
+                  type="button"
+                  onClick={(e) => handleOpenShare(course, e)}
+                  className="absolute top-3 right-3 p-2 rounded-full bg-white/95 hover:bg-white text-gray-700 hover:text-[#143a1b] shadow-md backdrop-blur-xs transition-all duration-200 hover:scale-110 cursor-pointer flex items-center justify-center z-10"
+                  title="ফেসবুক ও হোয়াটসঅ্যাপে শেয়ার করুন"
+                  aria-label="Share course"
+                >
+                  <Share2 className="w-4 h-4 text-[#143a1b]" />
+                </button>
+
                 <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-sm text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase">
                   {course.category}
                 </div>
@@ -216,10 +275,7 @@ export default function CoursesSection() {
                     <span className="text-slate-700 font-bold">* {course.classDuration}</span>
                     <button
                       type="button"
-                      onClick={() => {
-                        setSelectedDetailCourse(course);
-                        setIsDetailOpen(true);
-                      }}
+                      onClick={() => handleOpenDetails(course)}
                       className="text-[#92400e] bg-amber-100/90 hover:bg-amber-200/90 border border-amber-300 font-bold px-2 py-0.5 rounded-md hover:underline cursor-pointer flex items-center transition-colors"
                     >
                       <span>{course.modules?.length || 10}টি মডিউল</span>
@@ -238,13 +294,21 @@ export default function CoursesSection() {
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    {/* Quick Share Trigger */}
                     <button
                       type="button"
-                      onClick={() => {
-                        setSelectedDetailCourse(course);
-                        setIsDetailOpen(true);
-                      }}
+                      onClick={(e) => handleOpenShare(course, e)}
+                      className="p-2 sm:p-2.5 rounded-xl bg-gray-50 hover:bg-[#eaf3ea] text-gray-600 hover:text-[#143a1b] border border-gray-200 hover:border-[#cbdccb] transition-all duration-200 flex items-center justify-center cursor-pointer shrink-0"
+                      title="ফেসবুক বা হোয়াটসঅ্যাপে শেয়ার করুন"
+                      aria-label="Share Course"
+                    >
+                      <Share2 className="w-4 h-4" />
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => handleOpenDetails(course)}
                       className="flex-1 sm:flex-none bg-[#eaf3ea] hover:bg-[#cbdccb]/60 text-[#143a1b] border border-[#cbdccb]/50 text-xs font-bold px-3 py-2.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer"
                       title="কোর্সের বিস্তারিত তথ্য দেখুন"
                     >
@@ -274,11 +338,18 @@ export default function CoursesSection() {
       <CourseDetailsModal
         course={selectedDetailCourse}
         isOpen={isDetailOpen}
-        onClose={() => setIsDetailOpen(false)}
+        onClose={handleCloseDetails}
         onEnroll={(courseToEnroll) => {
           setSelectedCourse(courseToEnroll);
           setIsEnrollOpen(true);
         }}
+      />
+
+      {/* Course Share Modal */}
+      <CourseShareModal
+        course={shareCourse}
+        isOpen={isShareOpen}
+        onClose={() => setIsShareOpen(false)}
       />
 
       {/* Enroll Modal */}

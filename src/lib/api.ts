@@ -324,6 +324,12 @@ export async function getCourses(): Promise<any[]> {
         }
         return c;
       });
+      const courseOrderMap = new Map(COURSES.map((c, index) => [c.id, index]));
+      mergedCourses.sort((a, b) => {
+        const orderA = courseOrderMap.has(a.id) ? courseOrderMap.get(a.id)! : 999;
+        const orderB = courseOrderMap.has(b.id) ? courseOrderMap.get(b.id)! : 999;
+        return orderA - orderB;
+      });
       safeLocalStorage.setItem('badn_dynamic_courses', JSON.stringify(mergedCourses));
       return mergedCourses;
     }
@@ -344,6 +350,7 @@ export async function getCourses(): Promise<any[]> {
       existingIds.add(staticCourse.id);
     }
   }
+  const courseOrderMap = new Map(COURSES.map((c, index) => [c.id, index]));
   const updated = fullList.map((course: any) => {
     const staticMatch = COURSES.find(c => c.id === course.id);
     if (staticMatch) {
@@ -375,6 +382,11 @@ export async function getCourses(): Promise<any[]> {
       };
     }
     return course;
+  });
+  updated.sort((a, b) => {
+    const orderA = courseOrderMap.has(a.id) ? courseOrderMap.get(a.id)! : 999;
+    const orderB = courseOrderMap.has(b.id) ? courseOrderMap.get(b.id)! : 999;
+    return orderA - orderB;
   });
   safeLocalStorage.setItem('badn_dynamic_courses', JSON.stringify(updated));
   return updated;
