@@ -314,18 +314,17 @@ export async function getCourses(): Promise<any[]> {
           else if (c.id === 'c5') finalImg = 'https://i.ibb.co.com/wZMQhYgz/Onco-Nutrition.png';
 
           let finalPrice = staticMatch.price;
-          if (c.id === 'c2' || c.id === 'c3' || c.id === 'c4' || c.id === 'c6') {
+          if (c.id === 'c2' || c.id === 'c4' || c.id === 'c5' || c.id === 'c6') {
             finalPrice = 5000;
-          } else if (c.id === 'c5') {
+          } else if (c.id === 'c3') {
             finalPrice = 3500;
           } else if (c.price) {
             finalPrice = Number(c.price);
           }
 
           let finalOriginalPrice = staticMatch.originalPrice;
-          if (c.id === 'c2' || c.id === 'c4' || c.id === 'c6') finalOriginalPrice = 8000;
-          else if (c.id === 'c3') finalOriginalPrice = 7000;
-          else if (c.id === 'c5') finalOriginalPrice = 6000;
+          if (c.id === 'c2' || c.id === 'c4' || c.id === 'c5' || c.id === 'c6') finalOriginalPrice = 8000;
+          else if (c.id === 'c3') finalOriginalPrice = 6000;
 
           return {
             ...staticMatch,
@@ -389,18 +388,17 @@ export async function getCourses(): Promise<any[]> {
       else if (course.image?.includes('course_thumbnail') || !course.image) finalImg = staticMatch.image;
 
       let finalPrice = staticMatch.price;
-      if (course.id === 'c2' || course.id === 'c3' || course.id === 'c4' || course.id === 'c6') {
+      if (course.id === 'c2' || course.id === 'c4' || course.id === 'c5' || course.id === 'c6') {
         finalPrice = 5000;
-      } else if (course.id === 'c5') {
+      } else if (course.id === 'c3') {
         finalPrice = 3500;
       } else if (course.price) {
         finalPrice = Number(course.price);
       }
 
       let finalOriginalPrice = staticMatch.originalPrice;
-      if (course.id === 'c2' || course.id === 'c4' || course.id === 'c6') finalOriginalPrice = 8000;
-      else if (course.id === 'c3') finalOriginalPrice = 7000;
-      else if (course.id === 'c5') finalOriginalPrice = 6000;
+      if (course.id === 'c2' || course.id === 'c4' || course.id === 'c5' || course.id === 'c6') finalOriginalPrice = 8000;
+      else if (course.id === 'c3') finalOriginalPrice = 6000;
 
       return {
         ...staticMatch,
