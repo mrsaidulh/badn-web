@@ -323,7 +323,7 @@ async function run() {
           expertRole: 'HOD, Nutrition & Dietetics, Medica Hospital, কলকাতা',
           date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
           location: 'বারডেম হাসপাতাল অডিটোরিয়াম, ঢাকা',
-          image: 'https://i.ibb.co.com/B25ChBhp/6.jpg'
+          image: 'https://i.ibb.co.com/v62LhVDm/Critical-Care-International-Seminar.jpg'
         },
         {
           id: 's2',
@@ -334,7 +334,7 @@ async function run() {
           expertRole: 'গবেষক, নিউট্রিজেনেটিক্স ইনস্টিটিউট',
           date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
           location: 'প্যান প্যাসিফিক সোনারগাঁও, ঢাকা',
-          image: 'https://i.ibb.co.com/gFhP2QLp/Seminar-inter.png'
+          image: 'https://i.ibb.co.com/FLN94kyk/gynomix-and-nutrigenix.jpg'
         },
         {
           id: 's3',
@@ -345,12 +345,42 @@ async function run() {
           expertRole: 'রেজিস্টার্ড ডায়েটেশিয়ান (RD), স্পোর্টস পুষ্টিবিদ',
           date: '১৮ এপ্রিল, ২০১৮ (Apr 18, 2018)',
           location: 'কমনওয়েলথ অডিটোরিয়াম, ঢাকা',
-          image: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=800&h=450'
+          image: 'https://i.ibb.co.com/qYVdj7pr/Sports-Nutritions.jpg'
+        },
+        {
+          id: 's4',
+          title: 'রিসার্চ, ইনোভেশন অ্যান্ড সাসটেইনেবল ডেভেলপমেন্ট সেমিনার',
+          organization: 'BADN একাডেমি উইং',
+          description: 'পুষ্টিবিজ্ঞানে আধুনিক গবেষণা পদ্ধতি, কমিউনিটি এঙ্গেজমেন্ট এবং গবেষণালব্ধ জ্ঞানের বাস্তব প্রয়োগ নিয়ে অনুষ্ঠিত হয় এই ন্যাশনাল সেমিনার। দেশের প্রখ্যাত গবেষক ও পুষ্টিবিদরা এতে অংশ নিয়ে তথ্য উপস্থাপন করেন।',
+          expertName: 'প্রফেসর শাহনীন আহমেদ',
+          expertRole: 'সাবেক অধ্যক্ষ ও পুষ্টিবিদ, হোম ইকনোমিক্স কলেজ',
+          date: '১২ নভেম্বর, ২০২৩ (Nov 12, 2023)',
+          location: 'কৃষিবিদ ইনস্টিটিউশন বাংলাদেশ (KIB), ঢাকা',
+          image: '/seminar-user-5.jpg'
+        },
+        {
+          id: 's5',
+          title: 'ওয়ার্কশপ অন নিউট্রিশনাল সাপ্লিমেন্ট অ্যান্ড পাবলিক হেলথ',
+          organization: 'BADN ও ফার্মাসিউটিক্যাল সায়েন্সেস',
+          description: 'ডায়েটেশিয়ান ও ক্লিনিক্যাল প্র্যাকটিশনারদের জন্য নিউট্রাসিউটিক্যালস এবং ভিটামিন-মিনারেল সাপ্লিমেন্টের সঠিক ক্লিনিক্যাল প্রয়োগ ও সেফটি প্রোটোকলের ওপর আয়োজিত বিশেষায়িত কর্মশালা।',
+          expertName: 'সাংহামিত্রা চক্রবর্তী ও ডা. মো. আদিত মুকতাদির',
+          expertRole: 'ক্লিনিক্যাল নিউট্রিশনিস্ট ও সিনিয়র গবেষক',
+          date: '১৭ মার্চ, ২০২৩ (Mar 17, 2023)',
+          location: 'খামারবাড়ি মিল্কি অডিটোরিয়াম, ঢাকা',
+          image: '/seminar-user-6.jpg'
+        },
+        {
+          id: 's6',
+          title: 'ন্যাশনাল কনফারেন্স অন ক্লিনিক্যাল নিউট্রিশন অ্যান্ড ডায়েটেটিক্স',
+          organization: 'বাংলাদেশ একাডেমি অব ডায়েটেটিক্স অ্যান্ড নিউট্রিশন',
+          description: 'সারাদেশের ক্লিনিক্যাল ডায়েটেশিয়ান, ইন্টার্ন এবং পুষ্টি শিক্ষার্থীদের অংশগ্রহণে পেশাগত স্বীকৃতি, ক্লিনিক্যাল কেস অ্যানালাইসিস এবং আধুনিক ডায়েট প্ল্যানিং নিয়ে জাতীয় সম্মেলন।',
+          expertName: 'ডায়েটেশিয়ান সাজেদা কাশেম জ্যোতি',
+          expertRole: 'প্রধান পুষ্টিবিদ ও প্রতিষ্ঠাতা, BADN',
+          date: '০৫ জানুয়ারি, ২০২৪ (Jan 05, 2024)',
+          location: 'আইডিইবি অডিটোরিয়াম, কাকরাইল, ঢাকা',
+          image: '/first-main.jpg'
         }
       ];
-
-      // Prune unwanted s4, s5, s6 seminars from database if present
-      await connection.query("DELETE FROM seminars WHERE id IN ('s4', 's5', 's6')").catch(() => {});
 
       for (const seminar of defaultSeminars) {
         const [existing]: any = await connection.query('SELECT id FROM seminars WHERE id = ?', [seminar.id]);

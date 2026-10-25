@@ -447,13 +447,24 @@ export async function getSeminarEvents(): Promise<any[]> {
     const res = await fetch('/api/seminar-events');
     const result = await res.json();
     if (result.success && result.data && result.data.length > 0) {
-      // Exclude removed s4, s5, s6 seminars
-      const dbSeminars: any[] = result.data.filter((s: any) => !['s4', 's5', 's6'].includes(s.id));
+      const dbSeminars: any[] = result.data;
       const dbIds = new Set(dbSeminars.map((s: any) => s.id));
       const missingDefaults = STATIC_SEMINAR_EVENTS.filter(ds => !dbIds.has(ds.id));
-      let mergedSeminars = [...dbSeminars];
+      let mergedSeminars = [...dbSeminars, ...missingDefaults].map((s: any) => {
+        const staticMatch = STATIC_SEMINAR_EVENTS.find(sm => sm.id === s.id);
+        if (staticMatch) {
+          let finalImg = s.image;
+          if (s.id === 's1') finalImg = 'https://i.ibb.co.com/v62LhVDm/Critical-Care-International-Seminar.jpg';
+          else if (s.id === 's2') finalImg = 'https://i.ibb.co.com/FLN94kyk/gynomix-and-nutrigenix.jpg';
+          else if (s.id === 's3') finalImg = 'https://i.ibb.co.com/qYVdj7pr/Sports-Nutritions.jpg';
+          else if (s.id === 's4') finalImg = s.image || '/seminar-user-5.jpg';
+          else if (s.id === 's5') finalImg = s.image || '/seminar-user-6.jpg';
+          else if (s.id === 's6') finalImg = s.image || '/first-main.jpg';
+          return { ...staticMatch, ...s, image: finalImg };
+        }
+        return s;
+      });
       if (missingDefaults.length > 0) {
-        mergedSeminars = [...dbSeminars, ...missingDefaults];
         fetch('/api/seminar-events/sync-defaults', { method: 'POST' }).catch(() => {});
       }
       safeLocalStorage.setItem('badn_dynamic_seminar_events', JSON.stringify(mergedSeminars));
@@ -468,9 +479,7 @@ export async function getSeminarEvents(): Promise<any[]> {
     return STATIC_SEMINAR_EVENTS;
   }
   const parsed = safeJsonParse(local, STATIC_SEMINAR_EVENTS);
-  // Filter out removed s4, s5, s6 from cached local storage
-  const filteredParsed = (Array.isArray(parsed) ? parsed : STATIC_SEMINAR_EVENTS)
-    .filter((s: any) => !['s4', 's5', 's6'].includes(s.id));
+  const filteredParsed = Array.isArray(parsed) ? parsed : STATIC_SEMINAR_EVENTS;
   const existingSeminarIds = new Set(filteredParsed.map((s: any) => s.id));
   const fullSeminarList = [...filteredParsed];
   for (const staticSeminar of STATIC_SEMINAR_EVENTS) {
@@ -483,10 +492,22 @@ export async function getSeminarEvents(): Promise<any[]> {
     const staticMatch = STATIC_SEMINAR_EVENTS.find(s => s.id === seminar.id);
     if (staticMatch) {
       if (seminar.id === 's1') {
-        return { ...seminar, image: 'https://i.ibb.co.com/B25ChBhp/6.jpg' };
+        return { ...seminar, image: 'https://i.ibb.co.com/v62LhVDm/Critical-Care-International-Seminar.jpg' };
       }
       if (seminar.id === 's2') {
-        return { ...seminar, image: 'https://i.ibb.co.com/gFhP2QLp/Seminar-inter.png' };
+        return { ...seminar, image: 'https://i.ibb.co.com/FLN94kyk/gynomix-and-nutrigenix.jpg' };
+      }
+      if (seminar.id === 's3') {
+        return { ...seminar, image: 'https://i.ibb.co.com/qYVdj7pr/Sports-Nutritions.jpg' };
+      }
+      if (seminar.id === 's4') {
+        return { ...seminar, image: seminar.image || '/seminar-user-5.jpg' };
+      }
+      if (seminar.id === 's5') {
+        return { ...seminar, image: seminar.image || '/seminar-user-6.jpg' };
+      }
+      if (seminar.id === 's6') {
+        return { ...seminar, image: seminar.image || '/first-main.jpg' };
       }
       if (seminar.image?.includes('unsplash') || seminar.image?.includes('9mJcbjDC') || !seminar.image) {
         return { ...seminar, image: staticMatch.image };

@@ -86,48 +86,40 @@ export default function SeminarModal({ seminar, isOpen, onClose }: SeminarModalP
           >
             {/* Image / Header */}
             <div className="relative h-48 sm:h-56 shrink-0 bg-gray-900">
-              <picture>
-                {seminar.id === 's1' ? (
-                  <>
-                    <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/seminar-6-mobile.webp" />
-                    <source type="image/webp" srcSet="/optimized/seminar-6.webp" />
-                  </>
-                ) : seminar.id === 's2' ? (
-                  <>
-                    <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/seminar-inter-mobile.webp" />
-                    <source type="image/webp" srcSet="/optimized/seminar-inter.webp" />
-                  </>
-                ) : (
-                  <>
-                    <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/seminar-5-mobile.webp" />
-                    <source type="image/webp" srcSet="/optimized/seminar-5.webp" />
-                  </>
-                )}
-                <img
-                  src={
-                    seminar.id === 's1'
-                      ? 'https://i.ibb.co.com/B25ChBhp/6.jpg'
-                      : seminar.id === 's2'
-                      ? 'https://i.ibb.co.com/gFhP2QLp/Seminar-inter.png'
-                      : seminar.image
+              <img
+                src={
+                  seminar.id === 's1'
+                    ? 'https://i.ibb.co.com/v62LhVDm/Critical-Care-International-Seminar.jpg'
+                    : seminar.id === 's2'
+                    ? 'https://i.ibb.co.com/FLN94kyk/gynomix-and-nutrigenix.jpg'
+                    : seminar.id === 's3'
+                    ? 'https://i.ibb.co.com/qYVdj7pr/Sports-Nutritions.jpg'
+                    : (seminar.image || 'https://i.ibb.co.com/v62LhVDm/Critical-Care-International-Seminar.jpg')
+                }
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  if (seminar.id === 's1') {
+                    target.src = 'https://i.ibb.co.com/v62LhVDm/Critical-Care-International-Seminar.jpg';
+                  } else if (seminar.id === 's2') {
+                    target.src = 'https://i.ibb.co.com/FLN94kyk/gynomix-and-nutrigenix.jpg';
+                  } else if (seminar.id === 's3') {
+                    target.src = 'https://i.ibb.co.com/qYVdj7pr/Sports-Nutritions.jpg';
+                  } else if (seminar.id === 's4') {
+                    target.src = '/seminar-user-5.jpg';
+                  } else if (seminar.id === 's5') {
+                    target.src = '/seminar-user-6.jpg';
+                  } else if (seminar.id === 's6') {
+                    target.src = '/first-main.jpg';
+                  } else {
+                    target.src = seminar.image || '/seminar-user-5.jpg';
                   }
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    if (seminar.id === 's1') {
-                      target.src = '/seminar-user-6.jpg';
-                    } else if (seminar.id === 's2') {
-                      target.src = '/seminar-user-inter.png';
-                    } else {
-                      target.src = '/seminar-user-5.jpg';
-                    }
-                  }}
-                  alt={seminar.title}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                  decoding="async"
-                  referrerPolicy="no-referrer"
-                />
-              </picture>
+                }}
+                alt={seminar.title}
+                className="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+                referrerPolicy="no-referrer"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-6">
                 <span className="inline-block text-[11px] font-bold text-white bg-amber-600 px-2.5 py-0.5 rounded-full mb-1.5 w-fit">
                   আন্তর্জাতিক সেমিনার
