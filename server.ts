@@ -101,8 +101,8 @@ export const DEFAULT_COURSES = [
     orientation: 1,
     exams: 2,
     classDuration: '২ ঘণ্টা করে মোট ৪০ ঘণ্টা',
-    price: 13500.00,
-    originalPrice: 17000.00,
+    price: 5000.00,
+    originalPrice: 8000.00,
     image: '/renal-nutrition-banner.png',
     category: 'Renal Nutrition',
     rating: 4.9,
@@ -120,8 +120,8 @@ export const DEFAULT_COURSES = [
     orientation: 1,
     exams: 2,
     classDuration: '২ ঘণ্টা করে মোট ৫০ ঘণ্টা',
-    price: 15000.00,
-    originalPrice: 19000.00,
+    price: 3500.00,
+    originalPrice: 6000.00,
     image: 'https://i.ibb.co.com/wZMQhYgz/Onco-Nutrition.png',
     category: 'Onco Nutrition',
     rating: 5.0,
@@ -139,8 +139,8 @@ export const DEFAULT_COURSES = [
     orientation: 1,
     exams: 2,
     classDuration: '২ ঘণ্টা করে মোট ৪৫ ঘণ্টা',
-    price: 14000.00,
-    originalPrice: 18000.00,
+    price: 5000.00,
+    originalPrice: 8000.00,
     image: 'https://i.ibb.co.com/chWrS0Qb/10.png',
     category: 'Critical Care Nutrition',
     rating: 4.9,
@@ -158,8 +158,8 @@ export const DEFAULT_COURSES = [
     orientation: 1,
     exams: 1,
     classDuration: '১.৫ ঘণ্টা করে মোট ২০ ঘণ্টা',
-    price: 8000.00,
-    originalPrice: 10000.00,
+    price: 5000.00,
+    originalPrice: 7000.00,
     image: 'https://i.ibb.co.com/6J49g293/11.png',
     category: 'Child Nutrition',
     rating: 5.0,
@@ -177,8 +177,8 @@ export const DEFAULT_COURSES = [
     orientation: 1,
     exams: 2,
     classDuration: '২ ঘণ্টা করে মোট ৪৮ ঘণ্টা',
-    price: 16000.00,
-    originalPrice: 20000.00,
+    price: 5000.00,
+    originalPrice: 8000.00,
     image: 'https://i.ibb.co.com/B25ChBhp/6.jpg',
     category: 'Sports Nutrition',
     rating: 4.8,
@@ -273,7 +273,7 @@ export async function syncDefaultCourses(dbPool: mysql.Pool) {
         ]
       );
     } else {
-      await dbPool.query('UPDATE courses SET image = ? WHERE id = ?', [course.image, course.id]);
+      await dbPool.query('UPDATE courses SET image = ?, price = ?, originalPrice = ? WHERE id = ?', [course.image, course.price, course.originalPrice, course.id]);
     }
   }
 }
@@ -753,7 +753,7 @@ app.delete('/api/certificates/:id', async (req, res) => {
 app.get('/api/courses', async (req, res) => {
   const db = await getDbPool();
   if (!db) {
-    return res.json({ success: false, message: 'Database not connected. Local fallback active.' });
+    return res.json({ success: true, source: 'fallback', data: DEFAULT_COURSES });
   }
   try {
     let [rows]: any = await db.query("SELECT * FROM courses ORDER BY FIELD(id, 'c1', 'c4', 'c5', 'c6', 'c3', 'c2')");

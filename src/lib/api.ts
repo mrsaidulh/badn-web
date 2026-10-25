@@ -313,9 +313,25 @@ export async function getCourses(): Promise<any[]> {
           else if (c.id === 'c4') finalImg = c.image || '/renal-nutrition-banner.png';
           else if (c.id === 'c5') finalImg = 'https://i.ibb.co.com/wZMQhYgz/Onco-Nutrition.png';
 
+          let finalPrice = staticMatch.price;
+          if (c.id === 'c2' || c.id === 'c3' || c.id === 'c4' || c.id === 'c6') {
+            finalPrice = 5000;
+          } else if (c.id === 'c5') {
+            finalPrice = 3500;
+          } else if (c.price) {
+            finalPrice = Number(c.price);
+          }
+
+          let finalOriginalPrice = staticMatch.originalPrice;
+          if (c.id === 'c2' || c.id === 'c4' || c.id === 'c6') finalOriginalPrice = 8000;
+          else if (c.id === 'c3') finalOriginalPrice = 7000;
+          else if (c.id === 'c5') finalOriginalPrice = 6000;
+
           return {
             ...staticMatch,
             ...c,
+            price: finalPrice,
+            originalPrice: finalOriginalPrice,
             image: finalImg,
             modules: c.modules && c.modules.length > 0 ? c.modules : staticMatch.modules,
             learningOutcomes: c.learningOutcomes && c.learningOutcomes.length > 0 ? c.learningOutcomes : staticMatch.learningOutcomes,
@@ -372,9 +388,25 @@ export async function getCourses(): Promise<any[]> {
       else if (course.id === 'c5') finalImg = 'https://i.ibb.co.com/wZMQhYgz/Onco-Nutrition.png';
       else if (course.image?.includes('course_thumbnail') || !course.image) finalImg = staticMatch.image;
 
+      let finalPrice = staticMatch.price;
+      if (course.id === 'c2' || course.id === 'c3' || course.id === 'c4' || course.id === 'c6') {
+        finalPrice = 5000;
+      } else if (course.id === 'c5') {
+        finalPrice = 3500;
+      } else if (course.price) {
+        finalPrice = Number(course.price);
+      }
+
+      let finalOriginalPrice = staticMatch.originalPrice;
+      if (course.id === 'c2' || course.id === 'c4' || course.id === 'c6') finalOriginalPrice = 8000;
+      else if (course.id === 'c3') finalOriginalPrice = 7000;
+      else if (course.id === 'c5') finalOriginalPrice = 6000;
+
       return {
         ...staticMatch,
         ...course,
+        price: finalPrice,
+        originalPrice: finalOriginalPrice,
         image: finalImg,
         modules: course.modules && course.modules.length > 0 ? course.modules : staticMatch.modules,
         learningOutcomes: course.learningOutcomes && course.learningOutcomes.length > 0 ? course.learningOutcomes : staticMatch.learningOutcomes,

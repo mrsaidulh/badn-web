@@ -269,24 +269,14 @@ export default function CoursesSection() {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between pt-2 border-t border-[#c2ddc2] text-[11px] sm:text-xs">
+                  <div className="pt-2 border-t border-[#c2ddc2] text-[11px] sm:text-xs">
                     <span className="text-slate-700 font-bold">* {course.classDuration}</span>
-                    <button
-                      type="button"
-                      onClick={() => handleOpenDetails(course)}
-                      className="text-[#92400e] bg-amber-100/90 hover:bg-amber-200/90 border border-amber-300 font-bold px-2 py-0.5 rounded-md hover:underline cursor-pointer flex items-center transition-colors"
-                    >
-                      <span>{course.modules?.length || 10}টি মডিউল</span>
-                    </button>
                   </div>
                 </div>
 
                 {/* Pricing & CTA enrollment triggers */}
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 pt-3 border-t border-gray-100 shrink-0">
                   <div>
-                    <span className="text-[10px] text-gray-400 line-through block font-medium">
-                      ৳ {Number(course.originalPrice || 0).toLocaleString('bn-BD')}
-                    </span>
                     <span className="text-base sm:text-lg font-extrabold text-amber-600 whitespace-nowrap">
                       ৳ {Number(course.price || 0).toLocaleString('bn-BD')} মাত্র
                     </span>
