@@ -329,6 +329,7 @@ export async function getCourses(): Promise<any[]> {
           return {
             ...staticMatch,
             ...c,
+            title: staticMatch.title,
             price: finalPrice,
             originalPrice: finalOriginalPrice,
             image: finalImg,
@@ -403,6 +404,7 @@ export async function getCourses(): Promise<any[]> {
       return {
         ...staticMatch,
         ...course,
+        title: staticMatch.title,
         price: finalPrice,
         originalPrice: finalOriginalPrice,
         image: finalImg,

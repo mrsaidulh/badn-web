@@ -76,7 +76,7 @@ export const ABOUT_FEATURES = [
 export const COURSES: Course[] = [
   {
     id: 'c1',
-    title: 'সার্টিফিকেট কোর্স - ক্লিনিক্যাল নিউট্রিশন এন্ড ডায়েটেটিক্স (সিসিএনডি)',
+    title: 'সার্টিফিকেট কোর্স ইন ক্লিনিক্যাল নিউট্রিশন অ্যান্ড ডায়েটেটিক্স (CCND)',
     duration: '২ মাস (2 Months)',
     liveClasses: 16,
     recordedClasses: 1,
@@ -149,7 +149,7 @@ export const COURSES: Course[] = [
   },
   {
     id: 'c4',
-    title: 'সার্টিফিকেট কোর্স - রেনাল নিউট্রিশন অ্যান্ড কিডনি ডায়েট ম্যানেজমেন্ট',
+    title: 'সার্টিফিকেট কোর্স ইন রেনাল নিউট্রিশন (CRN)',
     duration: '২ মাস (2 Months)',
     liveClasses: 16,
     recordedClasses: 2,
@@ -204,7 +204,7 @@ export const COURSES: Course[] = [
   },
   {
     id: 'c5',
-    title: 'অ্যাডভান্সড অনকো নিউট্রিশন অ্যান্ড ক্যান্সার কেয়ার',
+    title: 'সার্টিফিকেট কোর্স ইন অনকো-নিউট্রিশন (CON)',
     duration: '২.৫ মাস (2.5 Months)',
     liveClasses: 20,
     recordedClasses: 2,
@@ -258,7 +258,7 @@ export const COURSES: Course[] = [
   },
   {
     id: 'c6',
-    title: 'মাস্টারক্লাস - ক্রিটিক্যাল কেয়ার নিউট্রিশন অ্যান্ড আইসিইউ ম্যানেজমেন্ট',
+    title: 'সার্টিফিকেট কোর্স ইন ক্রিটিক্যাল কেয়ার নিউট্রিশন (CCN)',
     duration: '২ মাস (2 Months)',
     liveClasses: 18,
     recordedClasses: 2,
@@ -312,7 +312,7 @@ export const COURSES: Course[] = [
   },
   {
     id: 'c3',
-    title: 'ম্যাটারনাল অ্যান্ড চাইল্ড নিউট্রিশন মাস্টারক্লাস',
+    title: 'সার্টিফিকেট কোর্স ইন চাইল্ড নিউট্রিশন (CN)',
     duration: '৬ সপ্তাহ (6 Weeks)',
     liveClasses: 12,
     recordedClasses: 1,
@@ -366,7 +366,7 @@ export const COURSES: Course[] = [
   },
   {
     id: 'c2',
-    title: 'অ্যাডভান্সড স্পোর্টস নিউট্রিশন অ্যান্ড পারফরম্যান্স',
+    title: 'সার্টিফিকেট কোর্স ইন স্পোর্টস নিউট্রিশন (CSN)',
     duration: '৩ মাস (3 Months)',
     liveClasses: 24,
     recordedClasses: 2,
