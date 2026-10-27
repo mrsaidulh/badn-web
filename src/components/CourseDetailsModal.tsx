@@ -18,7 +18,6 @@ import {
   Minimize2,
   FolderOpen,
   FolderClosed,
-  Calendar,
   GraduationCap,
   Share2
 } from 'lucide-react';
@@ -124,10 +123,6 @@ export default function CourseDetailsModal({
                 <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                   <span className="bg-amber-500 text-gray-950 font-extrabold text-[10px] sm:text-[11px] px-2 py-0.5 rounded uppercase tracking-wider">
                     {course.category}
-                  </span>
-                  <span className="bg-white/15 text-emerald-100 text-[10px] sm:text-xs px-2 py-0.5 rounded border border-white/20 flex items-center gap-1">
-                    <Calendar className="w-3 h-3 text-amber-300 shrink-0" />
-                    <span>শুরু: {course.startDate}</span>
                   </span>
                 </div>
 

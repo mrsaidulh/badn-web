@@ -161,7 +161,7 @@ export default function App() {
                 }}
                 className="inline-block origin-center tracking-wide font-extrabold text-[12px] sm:text-sm drop-shadow-sm"
               >
-                নতুন সেশনে ভর্তি চলছে ! দ্রুত ভর্তি হয়ে আপনার আসন নিশ্চিত করুন!
+                নতুন কোর্সে ভর্তি চলছে ! দ্রুত ভর্তি হয়ে আপনার আসন নিশ্চিত করুন!
               </motion.span>
             </div>
             

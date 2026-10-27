@@ -44,17 +44,17 @@ export default function AboutSection() {
 
               {/* Verified Badge overlay */}
               <div 
-                className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 bg-brand text-brand-contrast p-3.5 sm:p-4 rounded-2xl shadow-xl flex items-center gap-3 border border-[#143a1b]/15 max-w-[280px] sm:max-w-[340px] backdrop-blur-sm transition-all"
+                className="absolute bottom-2.5 right-2.5 sm:bottom-6 sm:right-6 bg-brand text-brand-contrast p-2.5 sm:p-4 rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl flex items-center gap-2 sm:gap-3 border border-[#143a1b]/15 max-w-[calc(100%-1.25rem)] sm:max-w-[340px] backdrop-blur-sm transition-all"
               >
-                <div className="w-10 h-10 rounded-full bg-black/10 flex items-center justify-center text-amber-700 shrink-0 font-bold text-lg">
+                <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-full bg-black/10 flex items-center justify-center text-amber-700 shrink-0 font-bold text-sm sm:text-lg">
                   ★
                 </div>
                 <div className="min-w-0 flex-1 text-left">
-                  <h4 className="text-xs sm:text-[13px] font-bold text-brand-contrast leading-snug">
-                    এক দশকেরও বেশি দক্ষতা উন্নয়নের যাত্রা
+                  <h4 className="text-[11px] sm:text-[13px] font-bold text-brand-contrast leading-tight sm:leading-snug">
+                    এক দশকের বেশি সময় ধরে
                   </h4>
-                  <p className="text-[11px] sm:text-xs text-brand-contrast/90 leading-snug mt-1">
-                    ৭,০০০+ পুষ্টি পেশাজীবীর অনুপ্রেরণার প্ল্যাটফর্ম BADN।
+                  <p className="text-[9.5px] sm:text-xs text-brand-contrast/90 leading-tight sm:leading-snug mt-0.5 sm:mt-1">
+                    ৭০০০+ পুষ্টি পেশাজীবীর অনুপ্রেরণার প্লাটফর্ম BADN
                   </p>
                 </div>
               </div>
