@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Course } from '../types';
-import { Clock, BookOpen, Award, Users, Star, ArrowRight, Share2 } from 'lucide-react';
+import { Clock, BookOpen, Award, Users, Star, ArrowRight, Share2, Video } from 'lucide-react';
 import EnrollModal from './EnrollModal';
 import CourseDetailsModal from './CourseDetailsModal';
 import CourseShareModal from './CourseShareModal';
@@ -255,22 +255,21 @@ export default function CoursesSection() {
                   </p>
                 </div>
 
-                {/* Course core specifications - High contrast and clearly visible across all courses */}
+                {/* Course core specifications - Structured specifications matching course info */}
                 <div className="bg-[#f0f7f0] p-3.5 rounded-xl border border-[#b8d9b8] space-y-2 text-xs text-slate-800 shadow-xs">
                   <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4 text-[#143a1b] shrink-0" />
-                    <span className="font-bold text-[#143a1b] text-xs sm:text-[13px]">কোর্স সময়কাল: {course.duration}</span>
+                    <span className="font-semibold text-slate-700">কোর্সের সময়কাল: <strong className="text-[#143a1b] font-bold">{course.duration.replace(/\s*\(.*?\)/, '').trim()}</strong></span>
                   </div>
 
-                  <div className="flex items-start gap-2">
-                    <BookOpen className="w-4 h-4 text-[#143a1b] shrink-0 mt-0.5" />
-                    <div className="leading-relaxed text-slate-800 font-semibold text-xs sm:text-[12.5px]">
-                      লাইভ ক্লাস <span className="font-black text-[#143a1b]">{course.liveClasses}টি</span> | রেকর্ড সেশন <span className="font-black text-[#143a1b]">{course.recordedClasses}টি</span> | <span className="font-black text-[#143a1b]">{course.orientation}টি</span> ওরিয়েন্টেশন | <span className="font-black text-[#143a1b]">{course.exams}টি</span> পরীক্ষা
-                    </div>
+                  <div className="flex items-center gap-2">
+                    <BookOpen className="w-4 h-4 text-[#143a1b] shrink-0" />
+                    <span className="font-semibold text-slate-700">মোট ক্লাস: <strong className="text-[#143a1b] font-bold">{(course.totalClasses || (course.liveClasses + (course.extraClasses || 2))).toLocaleString('bn-BD')}টি</strong></span>
                   </div>
 
-                  <div className="pt-2 border-t border-[#c2ddc2] text-[11px] sm:text-xs">
-                    <span className="text-slate-700 font-bold">* {course.classDuration}</span>
+                  <div className="flex items-center gap-2">
+                    <Video className="w-4 h-4 text-[#143a1b] shrink-0" />
+                    <span className="font-semibold text-slate-700">মাধ্যম: <strong className="text-[#143a1b] font-bold">{course.medium || 'অনলাইন'}</strong></span>
                   </div>
                 </div>
 
