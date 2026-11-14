@@ -4,6 +4,7 @@ import { Clock, BookOpen, Award, Users, Star, ArrowRight, Share2, Video } from '
 import EnrollModal from './EnrollModal';
 import CourseDetailsModal from './CourseDetailsModal';
 import CourseShareModal from './CourseShareModal';
+import PaymentInstructionModal from './PaymentInstructionModal';
 import { getCourses } from '../lib/api';
 import courseUser9Img from '../assets/images/course_user_9.png';
 import courseUser10Img from '../assets/images/course_user_10.png';
@@ -37,6 +38,7 @@ export default function CoursesSection() {
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [shareCourse, setShareCourse] = useState<Course | null>(null);
   const [isShareOpen, setIsShareOpen] = useState(false);
+  const [isPaymentInstructionOpen, setIsPaymentInstructionOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string>('All');
 
   useEffect(() => {
@@ -114,6 +116,10 @@ export default function CoursesSection() {
     : courses.filter(c => c.category === activeCategory);
 
   const handleEnrollClick = (course: Course) => {
+    if (course.id === 'c1') {
+      setIsPaymentInstructionOpen(true);
+      return;
+    }
     setSelectedCourse(course);
     setIsEnrollOpen(true);
   };
@@ -344,6 +350,12 @@ export default function CoursesSection() {
         course={selectedCourse}
         isOpen={isEnrollOpen}
         onClose={() => setIsEnrollOpen(false)}
+      />
+
+      {/* Payment Instruction Image Modal (CCND course only) */}
+      <PaymentInstructionModal
+        isOpen={isPaymentInstructionOpen}
+        onClose={() => setIsPaymentInstructionOpen(false)}
       />
     </section>
   );
