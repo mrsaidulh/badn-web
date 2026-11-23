@@ -161,7 +161,7 @@ export const COURSES: Course[] = [
     classDuration: '২ ঘণ্টা করে মোট ৪০ ঘণ্টা',
     price: 5000,
     originalPrice: 8000,
-    image: '/renal-nutrition-banner.png',
+    image: 'https://i.ibb.co.com/4RVL9YLF/Renal-Nutrition.jpg',
     category: 'Renal Nutrition',
     rating: 4.9,
     reviewsCount: 164,

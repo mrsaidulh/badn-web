@@ -15,7 +15,7 @@ const getCourseImage = (id: string, defaultImg?: string) => {
   if (id === 'c6') return 'https://i.ibb.co.com/chWrS0Qb/10.png';
   if (id === 'c2') return 'https://i.ibb.co.com/1JtL1f2B/Sports-Nutrition.jpg';
   if (id === 'c3') return 'https://i.ibb.co.com/6J49g293/11.png';
-  if (id === 'c4') return defaultImg || '/renal-nutrition-banner.png';
+  if (id === 'c4') return 'https://i.ibb.co.com/4RVL9YLF/Renal-Nutrition.jpg';
   if (id === 'c5') return 'https://i.ibb.co.com/wZMQhYgz/Onco-Nutrition.png';
   return defaultImg || courseUser9Img;
 };
@@ -189,8 +189,7 @@ export default function CoursesSection() {
                     </>
                   ) : course.id === 'c4' ? (
                     <>
-                      <source type="image/webp" media="(max-width: 640px)" srcSet="/optimized/course-renal-mobile.webp" />
-                      <source type="image/webp" srcSet="/optimized/course-renal.webp" />
+                      <source srcSet="https://i.ibb.co.com/4RVL9YLF/Renal-Nutrition.jpg" />
                     </>
                   ) : course.id === 'c5' ? (
                     <>

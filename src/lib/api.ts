@@ -310,7 +310,7 @@ export async function getCourses(): Promise<any[]> {
           else if (c.id === 'c6') finalImg = 'https://i.ibb.co.com/chWrS0Qb/10.png';
           else if (c.id === 'c2') finalImg = 'https://i.ibb.co.com/1JtL1f2B/Sports-Nutrition.jpg';
           else if (c.id === 'c3') finalImg = 'https://i.ibb.co.com/6J49g293/11.png';
-          else if (c.id === 'c4') finalImg = c.image || '/renal-nutrition-banner.png';
+          else if (c.id === 'c4') finalImg = 'https://i.ibb.co.com/4RVL9YLF/Renal-Nutrition.jpg';
           else if (c.id === 'c5') finalImg = 'https://i.ibb.co.com/wZMQhYgz/Onco-Nutrition.png';
 
           let finalPrice = staticMatch.price;
@@ -386,7 +386,7 @@ export async function getCourses(): Promise<any[]> {
       else if (course.id === 'c6') finalImg = 'https://i.ibb.co.com/chWrS0Qb/10.png';
       else if (course.id === 'c2') finalImg = 'https://i.ibb.co.com/1JtL1f2B/Sports-Nutrition.jpg';
       else if (course.id === 'c3') finalImg = 'https://i.ibb.co.com/6J49g293/11.png';
-      else if (course.id === 'c4') finalImg = course.image || '/renal-nutrition-banner.png';
+      else if (course.id === 'c4') finalImg = 'https://i.ibb.co.com/4RVL9YLF/Renal-Nutrition.jpg';
       else if (course.id === 'c5') finalImg = 'https://i.ibb.co.com/wZMQhYgz/Onco-Nutrition.png';
       else if (course.image?.includes('course_thumbnail') || !course.image) finalImg = staticMatch.image;
 
