@@ -150,13 +150,13 @@ export const COURSES: Course[] = [
   {
     id: 'c4',
     title: 'সার্টিফিকেট কোর্স ইন রেনাল নিউট্রিশন (CRN)',
-    duration: '২ মাস (2 Months)',
-    liveClasses: 16,
+    duration: '১ মাস (1 Month)',
+    liveClasses: 6,
     recordedClasses: 2,
     orientation: 1,
     exams: 2,
-    totalClasses: 18,
-    extraClasses: 2,
+    totalClasses: 6,
+    extraClasses: 0,
     medium: 'অনলাইন',
     classDuration: '২ ঘণ্টা করে মোট ৪০ ঘণ্টা',
     price: 5000,
@@ -169,9 +169,10 @@ export const COURSES: Course[] = [
     overviewBn: 'কিডনি রোগের বিভিন্ন পর্যায়ে পুষ্টি ব্যবস্থাপনা অত্যন্ত জটিল ও সংবেদনশীল। এই কোর্সে স্টেজভিত্তিক সিকেডি, হেমোডায়ালাইসিস, পেরিটোনিয়াল ডায়ালাইসিস এবং পোস্ট-ট্রান্সপ্লান্ট ডায়েট পরিকল্পনা নিবিড়ভাবে শেখানো হয়।',
     whyChoose: 'কিডনি রোগীদের দীর্ঘায়ু ও সুস্থতায় সঠিক পুষ্টি ব্যবস্থাপনা অপরিহার্য। এই কোর্সে আন্তর্জাতিক KDOQI গাইডলাইন অনুযায়ী পেশাদারদের প্রস্তুত করা হয়।',
     targetAudience: [
-      'ক্লিনিক্যাল নিউট্রিশনিস্ট ও ডায়েটিশিয়ান',
-      'হাসপাতালে কর্মরত হসপিটাল ডায়েটিশিয়ান',
-      'নেফ্রোলজি ইউনিটের স্বাস্থ্যকর্মী'
+      'Nutrition & Dietetics-এর শিক্ষার্থীদের জন্য',
+      'ইন্টার্নদের জন্য',
+      'Nutritionist-দের জন্য',
+      'Dietitian-দের জন্য'
     ],
     modules: [
       { id: 1, title: 'সিকেডি প্যাথোফিজিওলজি ও স্টেজ ক্লাসিফিকেশন', description: 'GFR ও ক্রিয়েটিনিন ভিত্তিক কিডনি রোগের পর্যায় নির্ণয়।' },
@@ -205,13 +206,13 @@ export const COURSES: Course[] = [
   {
     id: 'c5',
     title: 'সার্টিফিকেট কোর্স ইন অনকো-নিউট্রিশন (CON)',
-    duration: '২.৫ মাস (2.5 Months)',
-    liveClasses: 20,
+    duration: '১ মাস (1 Month)',
+    liveClasses: 6,
     recordedClasses: 2,
     orientation: 1,
     exams: 2,
-    totalClasses: 22,
-    extraClasses: 2,
+    totalClasses: 6,
+    extraClasses: 0,
     medium: 'অনলাইন',
     classDuration: '২ ঘণ্টা করে মোট ৫০ ঘণ্টা',
     price: 5000,
@@ -224,9 +225,10 @@ export const COURSES: Course[] = [
     overviewBn: 'ক্যান্সার চিকিৎসার সময় এবং পরবর্তীতে রোগীদের শারীরিক শক্তি ও রোগ প্রতিরোধ ক্ষমতা অটুট রাখতে অনকো নিউট্রিশন এর গুরুত্ব অপরিসীম। এই কোর্সে কেমো-রেডিওথেরাপির পার্শ্বপ্রতিক্রিয়া হ্রাস ও পুষ্টির আধুনিক প্রোটোকল শেখানো হয়।',
     whyChoose: 'ক্যান্সার রোগীদের অ্যানোরেক্সিয়া ও ক্যাচেক্সিয়া দূর করে চিকিৎসায় ইতিবাচক ফল আনয়নে এই কোর্স পুষ্টিবিদদের আন্তর্জাতিক মানে দক্ষ করে।',
     targetAudience: [
-      'Nutritionists ও Dietitians',
-      'অনকোলজি সেন্টারের কনসালট্যান্টস',
-      'মেডিকেল গ্র্যাজুয়েটস'
+      'Nutrition & Dietetics-এর শিক্ষার্থীদের জন্য',
+      'ইন্টার্নদের জন্য',
+      'Nutritionist-দের জন্য',
+      'Dietitian-দের জন্য'
     ],
     modules: [
       { id: 1, title: 'টিউমার মেটাবলিজম ও পুষ্টির প্রভাব', description: 'ক্যান্সার কোষের মেটাবলিক পরিবর্তন ও পুষ্টির ভারসাম্য।' },
@@ -259,13 +261,13 @@ export const COURSES: Course[] = [
   {
     id: 'c6',
     title: 'সার্টিফিকেট কোর্স ইন ক্রিটিক্যাল কেয়ার নিউট্রিশন (CCN)',
-    duration: '২ মাস (2 Months)',
-    liveClasses: 18,
+    duration: '১ মাস (1 Month)',
+    liveClasses: 6,
     recordedClasses: 2,
     orientation: 1,
     exams: 2,
-    totalClasses: 20,
-    extraClasses: 2,
+    totalClasses: 6,
+    extraClasses: 0,
     medium: 'অনলাইন',
     classDuration: '২ ঘণ্টা করে মোট ৪৫ ঘণ্টা',
     price: 5000,
@@ -278,9 +280,10 @@ export const COURSES: Course[] = [
     overviewBn: 'আইসিইউতে ভর্তি গুরুতর অসুস্থ রোগীদের জন্য এন্টারাল ও প্যারেন্টেরাল পুষ্টি সহায়তা প্রদান একটি সূক্ষ্ম ও জীবনরক্ষাকারী কাজ। এই কোর্সে এসপেন (ASPEN) এবং এসপেন (ESPEN) আন্তর্জাতিক গাইডলাইন অনুযায়ী ক্লিনিক্যাল সিদ্ধান্ত গ্রহণের দক্ষতা দেওয়া হয়।',
     whyChoose: 'আইসিইউ ডায়েটিশিয়ানদের দ্রুত ও নির্ভুল সিদ্ধান্ত নিতে হয়। এই মাস্টারক্লাস আপনাকে ক্রিটিক্যাল কেয়ার ইউনিটের অপরিহার্য সদস্য হিসেবে গড়ে তুলবে।',
     targetAudience: [
-      'ক্লিনিক্যাল ও আইসিইউ ডায়েটিশিয়ান',
-      'ক্রিটিক্যাল কেয়ার নার্স ও প্যারামেডিকস',
-      'মেডিকেল প্রফেশনালস'
+      'Nutrition & Dietetics-এর শিক্ষার্থীদের জন্য',
+      'ইন্টার্নদের জন্য',
+      'Nutritionist-দের জন্য',
+      'Dietitian-দের জন্য'
     ],
     modules: [
       { id: 1, title: 'মেটাবলিক রেসপন্স টু স্ট্রেস ও সেপসিস', description: 'গুরুতর অবস্থায় শরীরের ক্যাটাবলিক পরিবর্তন ও চাহিদা।' },
@@ -313,13 +316,13 @@ export const COURSES: Course[] = [
   {
     id: 'c3',
     title: 'সার্টিফিকেট কোর্স ইন চাইল্ড নিউট্রিশন (CN)',
-    duration: '৬ সপ্তাহ (6 Weeks)',
-    liveClasses: 12,
+    duration: '১ মাস (1 Month)',
+    liveClasses: 6,
     recordedClasses: 1,
     orientation: 1,
     exams: 1,
-    totalClasses: 14,
-    extraClasses: 2,
+    totalClasses: 6,
+    extraClasses: 0,
     medium: 'অনলাইন',
     classDuration: '১.৫ ঘণ্টা করে মোট ২০ ঘণ্টা',
     price: 3500,
@@ -332,9 +335,10 @@ export const COURSES: Course[] = [
     overviewBn: 'মা ও শিশুর সুস্থতার ভিত্তি গড়ে ওঠে গর্ভকালীন সময় ও জীবনের প্রথম ১০০০ দিনে। এই কোর্সে মায়েদের মাতৃত্বকালীন জটিলতা, স্তন্যদান এবং শিশুর বেড়ে ওঠার সঠিক পুষ্টি বিন্যাস বিশদভাবে আলোচনা করা হয়।',
     whyChoose: 'মাতৃ ও শিশু অপুষ্টি প্রতিরোধে এবং পিকি ইটার শিশুদের সঠিক খাদ্যাভ্যাস গড়ে তুলতে পুষ্টিবিদদের সক্ষমতা কয়েক গুণ বাড়িয়ে দেয় এই মাস্টারক্লাস।',
     targetAudience: [
-      'ক্লিনিক্যাল পুষ্টিবিদ ও ডায়েটিশিয়ান',
-      'মাতৃ ও শিশুস্বাস্থ্য উন্নয়নকর্মী',
-      'মেডিকেল ও নার্সিং প্রফেশনালস'
+      'Nutrition & Dietetics-এর শিক্ষার্থীদের জন্য',
+      'ইন্টার্নদের জন্য',
+      'Nutritionist-দের জন্য',
+      'Dietitian-দের জন্য'
     ],
     modules: [
       { id: 1, title: 'গর্ভকালীন ট্রাইমেস্টার ভিত্তিক পুষ্টি', description: 'প্রথম, দ্বিতীয় ও তৃতীয় ট্রাইমেস্টারে ফিটাল গ্রোথ নিশ্চিতকরণ।' },
@@ -367,18 +371,18 @@ export const COURSES: Course[] = [
   {
     id: 'c2',
     title: 'সার্টিফিকেট কোর্স ইন স্পোর্টস নিউট্রিশন (CSN)',
-    duration: '৩ মাস (3 Months)',
-    liveClasses: 24,
+    duration: '১ মাস (1 Month)',
+    liveClasses: 6,
     recordedClasses: 2,
     orientation: 1,
     exams: 2,
-    totalClasses: 26,
-    extraClasses: 2,
+    totalClasses: 6,
+    extraClasses: 0,
     medium: 'অনলাইন',
     classDuration: '২ ঘণ্টা করে মোট ৪৮ ঘণ্টা',
     price: 5000,
     originalPrice: 8000,
-    image: 'https://i.ibb.co.com/B25ChBhp/6.jpg',
+    image: 'https://i.ibb.co.com/1JtL1f2B/Sports-Nutrition.jpg',
     category: 'Sports Nutrition',
     rating: 4.8,
     reviewsCount: 145,
@@ -386,9 +390,10 @@ export const COURSES: Course[] = [
     overviewBn: 'স্পোর্টস নিউট্রিশন কোর্সে অ্যাথলেট ও ফিটনেস অ্যাথলেটদের জন্য বায়োএনার্জেটিক্স, হাইড্রেশন কৌশল, প্রাক ও পরবর্তী ওয়ার্কআউট ফুয়েলিং এবং এরগোজেনিক এইডস এর বৈজ্ঞানিক ব্যবস্থাপনা অন্তর্ভুক্ত।',
     whyChoose: 'ক্রীড়াজগতে বিশেষায়িত পুষ্টিবিদের চাহিদা দিন দিন বাড়ছে। এই কোর্সে অ্যাথলেটদের পারফরম্যান্স বৃদ্ধি ও ইনজুরি রিকভারির আধুনিক কলাকৌশল হাতে-কলমে শেখানো হয়।',
     targetAudience: [
-      'Nutritionist ও Dietitian-দের জন্য',
-      'ফিটনেস ট্রেইনার ও জিম ইন্সট্রাক্টরদের জন্য',
-      'Sports & Exercise Science-এর শিক্ষার্থীদের জন্য'
+      'Nutrition & Dietetics-এর শিক্ষার্থীদের জন্য',
+      'ইন্টার্নদের জন্য',
+      'Nutritionist-দের জন্য',
+      'Dietitian-দের জন্য'
     ],
     modules: [
       { id: 1, title: 'বায়োএনার্জেটিক্স ও মেটাবলিজম', description: 'অ্যাথলেটদের শক্তি উৎপাদন প্রক্রিয়া ও ম্যাক্রোনিউট্রিয়েন্ট মেটাবলিজম।' },

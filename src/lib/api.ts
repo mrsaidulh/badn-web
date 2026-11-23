@@ -308,7 +308,7 @@ export async function getCourses(): Promise<any[]> {
           let finalImg = c.image;
           if (c.id === 'c1') finalImg = 'https://i.ibb.co.com/VYhH9KGM/CCND.jpg';
           else if (c.id === 'c6') finalImg = 'https://i.ibb.co.com/chWrS0Qb/10.png';
-          else if (c.id === 'c2') finalImg = (c.image && !c.image.includes('10.png')) ? c.image : 'https://i.ibb.co.com/B25ChBhp/6.jpg';
+          else if (c.id === 'c2') finalImg = 'https://i.ibb.co.com/1JtL1f2B/Sports-Nutrition.jpg';
           else if (c.id === 'c3') finalImg = 'https://i.ibb.co.com/6J49g293/11.png';
           else if (c.id === 'c4') finalImg = c.image || '/renal-nutrition-banner.png';
           else if (c.id === 'c5') finalImg = 'https://i.ibb.co.com/wZMQhYgz/Onco-Nutrition.png';
@@ -337,13 +337,15 @@ export async function getCourses(): Promise<any[]> {
             learningOutcomes: (c.id === 'c1' || !c.learningOutcomes || c.learningOutcomes.length === 0) ? staticMatch.learningOutcomes : c.learningOutcomes,
             learningMethodology: (c.id === 'c1' || !c.learningMethodology || c.learningMethodology.length === 0) ? staticMatch.learningMethodology : c.learningMethodology,
             perks: (c.id === 'c1' || !c.perks || c.perks.length === 0) ? staticMatch.perks : c.perks,
-            targetAudience: (c.id === 'c1' || !c.targetAudience || c.targetAudience.length === 0) ? staticMatch.targetAudience : c.targetAudience,
+            targetAudience: staticMatch.targetAudience,
             overviewBn: (c.id === 'c1' || !c.overviewBn) ? staticMatch.overviewBn : c.overviewBn,
             whyChoose: (c.id === 'c1' || !c.whyChoose) ? staticMatch.whyChoose : c.whyChoose,
             certificateInfo: (c.id === 'c1' || !c.certificateInfo) ? staticMatch.certificateInfo : c.certificateInfo,
             whatsappNumber: (c.id === 'c1' || !c.whatsappNumber) ? staticMatch.whatsappNumber : c.whatsappNumber,
-            totalClasses: c.totalClasses || staticMatch.totalClasses,
-            extraClasses: c.extraClasses || staticMatch.extraClasses,
+            duration: c.id === 'c1' ? (c.duration || staticMatch.duration) : staticMatch.duration,
+            liveClasses: c.id === 'c1' ? (c.liveClasses || staticMatch.liveClasses) : staticMatch.liveClasses,
+            totalClasses: c.id === 'c1' ? (c.totalClasses || staticMatch.totalClasses) : staticMatch.totalClasses,
+            extraClasses: c.id === 'c1' ? (c.extraClasses ?? staticMatch.extraClasses) : staticMatch.extraClasses,
             medium: c.medium || staticMatch.medium
           };
         }
@@ -382,7 +384,7 @@ export async function getCourses(): Promise<any[]> {
       let finalImg = course.image;
       if (course.id === 'c1') finalImg = 'https://i.ibb.co.com/VYhH9KGM/CCND.jpg';
       else if (course.id === 'c6') finalImg = 'https://i.ibb.co.com/chWrS0Qb/10.png';
-      else if (course.id === 'c2') finalImg = (course.image && !course.image.includes('10.png')) ? course.image : 'https://i.ibb.co.com/B25ChBhp/6.jpg';
+      else if (course.id === 'c2') finalImg = 'https://i.ibb.co.com/1JtL1f2B/Sports-Nutrition.jpg';
       else if (course.id === 'c3') finalImg = 'https://i.ibb.co.com/6J49g293/11.png';
       else if (course.id === 'c4') finalImg = course.image || '/renal-nutrition-banner.png';
       else if (course.id === 'c5') finalImg = 'https://i.ibb.co.com/wZMQhYgz/Onco-Nutrition.png';
@@ -412,13 +414,15 @@ export async function getCourses(): Promise<any[]> {
         learningOutcomes: (course.id === 'c1' || !course.learningOutcomes || course.learningOutcomes.length === 0) ? staticMatch.learningOutcomes : course.learningOutcomes,
         learningMethodology: (course.id === 'c1' || !course.learningMethodology || course.learningMethodology.length === 0) ? staticMatch.learningMethodology : course.learningMethodology,
         perks: (course.id === 'c1' || !course.perks || course.perks.length === 0) ? staticMatch.perks : course.perks,
-        targetAudience: (course.id === 'c1' || !course.targetAudience || course.targetAudience.length === 0) ? staticMatch.targetAudience : course.targetAudience,
+        targetAudience: staticMatch.targetAudience,
         overviewBn: (course.id === 'c1' || !course.overviewBn) ? staticMatch.overviewBn : course.overviewBn,
         whyChoose: (course.id === 'c1' || !course.whyChoose) ? staticMatch.whyChoose : course.whyChoose,
         certificateInfo: (course.id === 'c1' || !course.certificateInfo) ? staticMatch.certificateInfo : course.certificateInfo,
         whatsappNumber: (course.id === 'c1' || !course.whatsappNumber) ? staticMatch.whatsappNumber : course.whatsappNumber,
-        totalClasses: course.totalClasses || staticMatch.totalClasses,
-        extraClasses: course.extraClasses || staticMatch.extraClasses,
+        duration: course.id === 'c1' ? (course.duration || staticMatch.duration) : staticMatch.duration,
+        liveClasses: course.id === 'c1' ? (course.liveClasses || staticMatch.liveClasses) : staticMatch.liveClasses,
+        totalClasses: course.id === 'c1' ? (course.totalClasses || staticMatch.totalClasses) : staticMatch.totalClasses,
+        extraClasses: course.id === 'c1' ? (course.extraClasses ?? staticMatch.extraClasses) : staticMatch.extraClasses,
         medium: course.medium || staticMatch.medium
       };
     }

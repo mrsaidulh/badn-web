@@ -278,7 +278,15 @@ export default function CourseDetailsModal({
                         কারা এই কোর্সে ভর্তি হতে পারবেন?
                       </h3>
                       <div className="grid grid-cols-1 gap-2">
-                        {course.targetAudience?.map((aud, idx) => (
+                        {(course.targetAudience && course.targetAudience.length > 0
+                          ? course.targetAudience
+                          : [
+                              'Nutrition & Dietetics-এর শিক্ষার্থীদের জন্য',
+                              'ইন্টার্নদের জন্য',
+                              'Nutritionist-দের জন্য',
+                              'Dietitian-দের জন্য'
+                            ]
+                        ).map((aud, idx) => (
                           <div
                             key={idx}
                             className="p-2 sm:p-2.5 rounded-lg bg-blue-50/70 border border-blue-100 flex items-center gap-2"
