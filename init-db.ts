@@ -197,15 +197,15 @@ async function run() {
         {
           id: 'c2',
           title: 'সার্টিফিকেট কোর্স ইন স্পোর্টস নিউট্রিশন (CSN)',
-          duration: '৩ মাস (3 Months)',
-          liveClasses: 24,
+          duration: '১ মাস (1 Month)',
+          liveClasses: 6,
           recordedClasses: 2,
           orientation: 1,
           exams: 2,
           classDuration: '২ ঘণ্টা করে মোট ৪৮ ঘণ্টা',
           price: 5000.00,
           originalPrice: 8000.00,
-          image: 'https://i.ibb.co.com/B25ChBhp/6.jpg',
+          image: 'https://i.ibb.co.com/1JtL1f2B/Sports-Nutrition.jpg',
           category: 'Sports Nutrition',
           rating: 4.8,
           reviewsCount: 145,
@@ -216,8 +216,8 @@ async function run() {
         {
           id: 'c3',
           title: 'সার্টিফিকেট কোর্স ইন চাইল্ড নিউট্রিশন (CN)',
-          duration: '৬ সপ্তাহ (6 Weeks)',
-          liveClasses: 12,
+          duration: '১ মাস (1 Month)',
+          liveClasses: 6,
           recordedClasses: 1,
           orientation: 1,
           exams: 1,
@@ -235,15 +235,15 @@ async function run() {
         {
           id: 'c4',
           title: 'সার্টিফিকেট কোর্স ইন রেনাল নিউট্রিশন (CRN)',
-          duration: '২ মাস (2 Months)',
-          liveClasses: 16,
+          duration: '১ মাস (1 Month)',
+          liveClasses: 6,
           recordedClasses: 2,
           orientation: 1,
           exams: 2,
           classDuration: '২ ঘণ্টা করে মোট ৪০ ঘণ্টা',
           price: 5000.00,
           originalPrice: 8000.00,
-          image: '/renal-nutrition-banner.png',
+          image: 'https://i.ibb.co.com/4RVL9YLF/Renal-Nutrition.jpg',
           category: 'Renal Nutrition',
           rating: 4.9,
           reviewsCount: 164,
@@ -254,8 +254,8 @@ async function run() {
         {
           id: 'c5',
           title: 'সার্টিফিকেট কোর্স ইন অনকো-নিউট্রিশন (CON)',
-          duration: '২.৫ মাস (2.5 Months)',
-          liveClasses: 20,
+          duration: '১ মাস (1 Month)',
+          liveClasses: 6,
           recordedClasses: 2,
           orientation: 1,
           exams: 2,
@@ -273,8 +273,8 @@ async function run() {
         {
           id: 'c6',
           title: 'সার্টিফিকেট কোর্স ইন ক্রিটিক্যাল কেয়ার নিউট্রিশন (CCN)',
-          duration: '২ মাস (2 Months)',
-          liveClasses: 18,
+          duration: '১ মাস (1 Month)',
+          liveClasses: 6,
           recordedClasses: 2,
           orientation: 1,
           exams: 2,
@@ -306,7 +306,11 @@ async function run() {
             ]
           );
         } else {
-          console.log(`   ✓ Course [${course.id}] verified in database.`);
+          await connection.query(
+            'UPDATE courses SET title = ?, duration = ?, liveClasses = ?, image = ?, price = ?, originalPrice = ? WHERE id = ?',
+            [course.title, course.duration, course.liveClasses, course.image, course.price, course.originalPrice, course.id]
+          );
+          console.log(`   ✓ Course [${course.id}] synchronized in database.`);
         }
       }
       console.log('   - Courses verified and in sync.');

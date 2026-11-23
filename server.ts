@@ -1,4 +1,5 @@
 import express from 'express';
+import fs from 'fs';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
 import mysql from 'mysql2/promise';
@@ -101,15 +102,15 @@ export const DEFAULT_COURSES = [
   {
     id: 'c4',
     title: 'সার্টিফিকেট কোর্স ইন রেনাল নিউট্রিশন (CRN)',
-    duration: '২ মাস (2 Months)',
-    liveClasses: 16,
+    duration: '১ মাস (1 Month)',
+    liveClasses: 6,
     recordedClasses: 2,
     orientation: 1,
     exams: 2,
     classDuration: '২ ঘণ্টা করে মোট ৪০ ঘণ্টা',
     price: 5000.00,
     originalPrice: 8000.00,
-    image: '/renal-nutrition-banner.png',
+    image: 'https://i.ibb.co.com/4RVL9YLF/Renal-Nutrition.jpg',
     category: 'Renal Nutrition',
     rating: 4.9,
     reviewsCount: 164,
@@ -120,8 +121,8 @@ export const DEFAULT_COURSES = [
   {
     id: 'c5',
     title: 'সার্টিফিকেট কোর্স ইন অনকো-নিউট্রিশন (CON)',
-    duration: '২.৫ মাস (2.5 Months)',
-    liveClasses: 20,
+    duration: '১ মাস (1 Month)',
+    liveClasses: 6,
     recordedClasses: 2,
     orientation: 1,
     exams: 2,
@@ -139,8 +140,8 @@ export const DEFAULT_COURSES = [
   {
     id: 'c6',
     title: 'সার্টিফিকেট কোর্স ইন ক্রিটিক্যাল কেয়ার নিউট্রিশন (CCN)',
-    duration: '২ মাস (2 Months)',
-    liveClasses: 18,
+    duration: '১ মাস (1 Month)',
+    liveClasses: 6,
     recordedClasses: 2,
     orientation: 1,
     exams: 2,
@@ -158,8 +159,8 @@ export const DEFAULT_COURSES = [
   {
     id: 'c3',
     title: 'সার্টিফিকেট কোর্স ইন চাইল্ড নিউট্রিশন (CN)',
-    duration: '৬ সপ্তাহ (6 Weeks)',
-    liveClasses: 12,
+    duration: '১ মাস (1 Month)',
+    liveClasses: 6,
     recordedClasses: 1,
     orientation: 1,
     exams: 1,
@@ -177,15 +178,15 @@ export const DEFAULT_COURSES = [
   {
     id: 'c2',
     title: 'সার্টিফিকেট কোর্স ইন স্পোর্টস নিউট্রিশন (CSN)',
-    duration: '৩ মাস (3 Months)',
-    liveClasses: 24,
+    duration: '১ মাস (1 Month)',
+    liveClasses: 6,
     recordedClasses: 2,
     orientation: 1,
     exams: 2,
     classDuration: '২ ঘণ্টা করে মোট ৪৮ ঘণ্টা',
     price: 5000.00,
     originalPrice: 8000.00,
-    image: 'https://i.ibb.co.com/B25ChBhp/6.jpg',
+    image: 'https://i.ibb.co.com/1JtL1f2B/Sports-Nutrition.jpg',
     category: 'Sports Nutrition',
     rating: 4.8,
     reviewsCount: 145,
@@ -279,7 +280,10 @@ export async function syncDefaultCourses(dbPool: mysql.Pool) {
         ]
       );
     } else {
-      await dbPool.query('UPDATE courses SET title = ?, image = ?, price = ?, originalPrice = ? WHERE id = ?', [course.title, course.image, course.price, course.originalPrice, course.id]);
+      await dbPool.query(
+        'UPDATE courses SET title = ?, duration = ?, liveClasses = ?, image = ?, price = ?, originalPrice = ? WHERE id = ?',
+        [course.title, course.duration, course.liveClasses, course.image, course.price, course.originalPrice, course.id]
+      );
     }
   }
 }
@@ -964,6 +968,49 @@ async function startServer() {
     }
   }));
 
+  const escapeHtmlAttr = (str: string) =>
+    str
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+  const injectShareMetaTags = async (html: string, req: express.Request): Promise<string> => {
+    const courseId = typeof req.query.course === 'string' ? req.query.course.trim() : '';
+    if (!courseId) return html;
+
+    let course = DEFAULT_COURSES.find((c) => c.id === courseId);
+    const db = await getDbPool();
+    if (db) {
+      try {
+        const [rows]: any = await db.query('SELECT * FROM courses WHERE id = ? LIMIT 1', [courseId]);
+        if (rows && rows.length > 0) {
+          course = { ...(course || {}), ...rows[0] };
+        }
+      } catch {
+        // Fallback to DEFAULT_COURSES
+      }
+    }
+    if (!course) return html;
+
+    const protocol = (req.headers['x-forwarded-proto'] as string) || req.protocol || 'https';
+    const host = req.get('host');
+    const origin = host ? `${protocol}://${host}` : '';
+    const imageUrl = course.image.startsWith('http') ? course.image : `${origin}${course.image}`;
+    const safeTitle = escapeHtmlAttr(`${course.title} | BADN Academy`);
+    const safeDesc = escapeHtmlAttr(course.description || '');
+    const safeImg = escapeHtmlAttr(imageUrl);
+
+    return html
+      .replace(/<title>.*?<\/title>/i, `<title>${safeTitle}</title>`)
+      .replace(/<meta\s+property="og:title"\s+content="[^"]*"\s*\/?>/i, `<meta property="og:title" content="${safeTitle}" />`)
+      .replace(/<meta\s+property="og:description"\s+content="[^"]*"\s*\/?>/i, `<meta property="og:description" content="${safeDesc}" />`)
+      .replace(/<meta\s+property="og:image"\s+content="[^"]*"\s*\/?>/i, `<meta property="og:image" content="${safeImg}" />`)
+      .replace(/<meta\s+name="twitter:title"\s+content="[^"]*"\s*\/?>/i, `<meta name="twitter:title" content="${safeTitle}" />`)
+      .replace(/<meta\s+name="twitter:description"\s+content="[^"]*"\s*\/?>/i, `<meta name="twitter:description" content="${safeDesc}" />`)
+      .replace(/<meta\s+name="twitter:image"\s+content="[^"]*"\s*\/?>/i, `<meta name="twitter:image" content="${safeImg}" />`);
+  };
+
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
@@ -973,12 +1020,33 @@ async function startServer() {
       },
       appType: "spa",
     });
+
+    app.get('/', async (req, res, next) => {
+      if (typeof req.query.course !== 'string') {
+        return next();
+      }
+      try {
+        const rawHtml = fs.readFileSync(path.join(process.cwd(), 'index.html'), 'utf-8');
+        const transformed = await vite.transformIndexHtml(req.originalUrl, rawHtml);
+        const withMeta = await injectShareMetaTags(transformed, req);
+        res.status(200).set({ 'Content-Type': 'text/html' }).end(withMeta);
+      } catch (e) {
+        next(e);
+      }
+    });
+
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath));
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
+    app.use(express.static(distPath, { index: false }));
+    app.get('*', async (req, res) => {
+      try {
+        const rawHtml = fs.readFileSync(path.join(distPath, 'index.html'), 'utf-8');
+        const withMeta = await injectShareMetaTags(rawHtml, req);
+        res.status(200).set({ 'Content-Type': 'text/html' }).end(withMeta);
+      } catch {
+        res.sendFile(path.join(distPath, 'index.html'));
+      }
     });
   }
 
