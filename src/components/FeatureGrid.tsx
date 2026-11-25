@@ -36,10 +36,22 @@ export default function FeatureGrid() {
                 </p>
               </div>
 
-              <div className="flex items-center gap-1.5 mt-6 text-xs font-extrabold text-[#143a1b] group-hover:text-[#e17100] transition-colors pt-4 border-t border-[#143a1b]/15">
-                <span>বিস্তারিত দেখুন</span>
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </div>
+              {feat.id === 'f3' ? (
+                <a
+                  href="https://www.facebook.com/profile.php?id=61588998886621&locale=en_GB"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 mt-6 text-xs font-extrabold text-[#143a1b] group-hover:text-[#e17100] transition-colors pt-4 border-t border-[#143a1b]/15"
+                >
+                  <span>বিস্তারিত দেখুন</span>
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </a>
+              ) : (
+                <div className="flex items-center gap-1.5 mt-6 text-xs font-extrabold text-[#143a1b] group-hover:text-[#e17100] transition-colors pt-4 border-t border-[#143a1b]/15">
+                  <span>বিস্তারিত দেখুন</span>
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </div>
+              )}
             </div>
           ))}
         </div>

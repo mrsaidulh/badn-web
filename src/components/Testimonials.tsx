@@ -1,11 +1,29 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
 import { TESTIMONIALS as STATIC_TESTIMONIALS } from '../data';
 import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
 import { getTestimonials } from '../lib/api';
 
+const slideVariants = {
+  enter: (dir: number) => ({
+    x: dir > 0 ? 80 : -80,
+    opacity: 0
+  }),
+  center: {
+    x: 0,
+    opacity: 1
+  },
+  exit: (dir: number) => ({
+    x: dir > 0 ? -80 : 80,
+    opacity: 0
+  })
+};
+
 export default function Testimonials() {
   const [testimonials, setTestimonials] = useState<any[]>(STATIC_TESTIMONIALS);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     const loadTestimonials = () => {
@@ -23,22 +41,34 @@ export default function Testimonials() {
     };
   }, []);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
+    setDirection(-1);
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
     );
-  };
+  }, [testimonials.length]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
+    setDirection(1);
     setCurrentIndex((prevIndex) =>
       prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
     );
-  };
+  }, [testimonials.length]);
+
+  // Auto-scroll reviews horizontally; pause while hovering or touching
+  useEffect(() => {
+    if (isPaused || testimonials.length <= 1) return;
+    const timer = setInterval(() => {
+      handleNext();
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [isPaused, testimonials.length, handleNext]);
 
   if (!testimonials || testimonials.length === 0) return null;
 
   // Ensure current index is within bounds (e.g. if items list gets smaller)
-  const currentTestimonial = testimonials[currentIndex] || testimonials[0];
+  const safeIndex = currentIndex % testimonials.length;
+  const currentTestimonial = testimonials[safeIndex] || testimonials[0];
 
   return (
     <section className="py-20 bg-white overflow-hidden relative">
@@ -63,53 +93,80 @@ export default function Testimonials() {
         </div>
 
         {/* Desktop grid layout for reviews & interactive slider */}
-        <div className="relative max-w-4xl mx-auto z-10">
+        <div
+          className="relative max-w-4xl mx-auto z-10 overflow-hidden"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
+        >
           
           {/* Main testimonial card */}
-          <div className="bg-gradient-to-br from-[#fafdfa] to-white p-8 sm:p-10 rounded-3xl border border-[#cbdccb]/40 shadow-xl relative min-h-[300px] flex flex-col justify-between">
-            <div className="space-y-6">
-              
-              {/* Star Rating & Quote Badge */}
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-1 text-amber-500">
-                  {[...Array(Number(currentTestimonial.rating || 5))].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-amber-500" />
-                  ))}
+          <AnimatePresence mode="wait" custom={direction} initial={false}>
+            <motion.div
+              key={currentTestimonial.id || safeIndex}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.35, ease: 'easeInOut' }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={(_, info) => {
+                if (info.offset.x < -50 || info.velocity.x < -300) {
+                  handleNext();
+                } else if (info.offset.x > 50 || info.velocity.x > 300) {
+                  handlePrev();
+                }
+              }}
+              className="bg-gradient-to-br from-[#fafdfa] to-white p-8 sm:p-10 rounded-3xl border border-[#cbdccb]/40 shadow-xl relative min-h-[300px] flex flex-col justify-between cursor-grab active:cursor-grabbing select-none"
+            >
+              <div className="space-y-6">
+                
+                {/* Star Rating & Quote Badge */}
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-1 text-amber-500">
+                    {[...Array(Number(currentTestimonial.rating || 5))].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 fill-amber-500" />
+                    ))}
+                  </div>
+                  <span className="text-brand/10">
+                    <Quote className="w-12 h-12" />
+                  </span>
                 </div>
-                <span className="text-brand/10">
-                  <Quote className="w-12 h-12" />
-                </span>
-              </div>
 
-              {/* Message quote */}
-              <p className="text-base sm:text-lg text-gray-700 leading-normal! font-medium italic text-justify whitespace-pre-line">
-                " {currentTestimonial.feedback} "
-              </p>
-            </div>
-
-            {/* Student metadata */}
-            <div className="flex items-center gap-4 sm:gap-5 pt-6 border-t border-gray-100 mt-6 shrink-0">
-              <img
-                src={currentTestimonial.image}
-                alt={currentTestimonial.name}
-                className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover object-top border-[3px] border-brand shadow-lg shrink-0 ring-4 ring-brand/10"
-                width={96}
-                height={96}
-                loading="lazy"
-                decoding="async"
-                referrerPolicy="no-referrer"
-              />
-              <div className="text-left">
-                <h4 className="text-lg sm:text-xl font-extrabold text-gray-900 leading-snug">
-                  {currentTestimonial.name}
-                </h4>
-                <p className="text-xs sm:text-sm text-brand font-semibold mt-1 leading-relaxed">
-                  {currentTestimonial.role}
+                {/* Message quote */}
+                <p className="text-base sm:text-lg text-gray-700 leading-normal! font-medium italic text-justify whitespace-pre-line">
+                  " {currentTestimonial.feedback} "
                 </p>
               </div>
-            </div>
 
-          </div>
+              {/* Student metadata */}
+              <div className="flex items-center gap-4 sm:gap-5 pt-6 border-t border-gray-100 mt-6 shrink-0">
+                <img
+                  src={currentTestimonial.image}
+                  alt={currentTestimonial.name}
+                  className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover object-top border-[3px] border-brand shadow-lg shrink-0 ring-4 ring-brand/10 pointer-events-none"
+                  width={96}
+                  height={96}
+                  loading="lazy"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="text-left">
+                  <h4 className="text-lg sm:text-xl font-extrabold text-gray-900 leading-snug">
+                    {currentTestimonial.name}
+                  </h4>
+                  <p className="text-xs sm:text-sm text-brand font-semibold mt-1 leading-relaxed">
+                    {currentTestimonial.role}
+                  </p>
+                </div>
+              </div>
+
+            </motion.div>
+          </AnimatePresence>
 
           {/* Navigation sliders */}
           <div className="flex items-center justify-between mt-8 max-w-xs mx-auto">
@@ -126,9 +183,12 @@ export default function Testimonials() {
               {testimonials.map((_, idx) => (
                 <button
                   key={idx}
-                  onClick={() => setCurrentIndex(idx)}
+                  onClick={() => {
+                    setDirection(idx >= safeIndex ? 1 : -1);
+                    setCurrentIndex(idx);
+                  }}
                   className={`h-2.5 rounded-full transition-all cursor-pointer ${
-                    currentIndex === idx ? 'w-6 bg-brand' : 'w-2.5 bg-gray-300'
+                    safeIndex === idx ? 'w-6 bg-brand' : 'w-2.5 bg-gray-300'
                   }`}
                   aria-label={`Go to slide ${idx + 1}`}
                 />

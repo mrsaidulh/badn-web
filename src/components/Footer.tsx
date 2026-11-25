@@ -1,4 +1,4 @@
-import { Heart, MapPin, Mail, Clock, Phone, Facebook, Linkedin, Globe } from 'lucide-react';
+import { Heart, Mail, Clock, Phone, Facebook, Linkedin, Globe } from 'lucide-react';
 import Logo from './Logo';
 
 export default function Footer() {
@@ -76,12 +76,6 @@ export default function Footer() {
               <span>Contact Us</span>
             </h3>
             <div className="text-xs space-y-3 text-gray-700 font-normal">
-              <div className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 shrink-0 text-[#e04f21] mt-0.5" />
-                <span>
-                  152/2A 2, Manama Ms Tower, 2nd Floor, Badda Link Road, Dhaka - 1212, Bangladesh
-                </span>
-              </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 shrink-0 text-[#e04f21]" />
                 <a href="mailto:support@badn.org" className="hover:text-[#e04f21] transition-colors font-medium">

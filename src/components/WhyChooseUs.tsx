@@ -36,31 +36,53 @@ export default function WhyChooseUs() {
 
         {/* 4 Pillars Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {WHY_CHOOSE_US_POINTS.map((point, idx) => (
-            <div
-              key={point.id}
-              className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-[#cbdccb]/50 transition-all duration-300 flex flex-col justify-between space-y-4 text-left"
-            >
-              <div className="space-y-4">
-                <div className="w-12 h-12 rounded-xl bg-brand-light/60 flex items-center justify-center shadow-inner">
-                  {getIcon(idx)}
+          {WHY_CHOOSE_US_POINTS.map((point, idx) => {
+            const cardContent = (
+              <>
+                <div className="space-y-4">
+                  <div className="w-12 h-12 rounded-xl bg-brand-light/60 flex items-center justify-center shadow-inner">
+                    {getIcon(idx)}
+                  </div>
+                  
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 leading-snug">
+                    {point.title}
+                  </h3>
+                  
+                  <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-light">
+                    {point.description}
+                  </p>
                 </div>
-                
-                <h3 className="text-base sm:text-lg font-bold text-gray-900 leading-snug">
-                  {point.title}
-                </h3>
-                
-                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-light">
-                  {point.description}
-                </p>
-              </div>
 
-              <div className="flex items-center gap-1 text-[11px] text-brand font-bold pt-3 border-t border-gray-50 uppercase tracking-wider">
-                <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
-                <span>Uncompromising Quality</span>
+                <div className="flex items-center gap-1 text-[11px] text-brand font-bold pt-3 border-t border-gray-50 uppercase tracking-wider">
+                  <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                  <span>Uncompromising Quality</span>
+                </div>
+              </>
+            );
+
+            if (point.id === 'w2') {
+              return (
+                <a
+                  key={point.id}
+                  href="https://www.facebook.com/profile.php?id=61588998886621&locale=en_GB"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-[#cbdccb]/50 transition-all duration-300 flex flex-col justify-between space-y-4 text-left cursor-pointer"
+                >
+                  {cardContent}
+                </a>
+              );
+            }
+
+            return (
+              <div
+                key={point.id}
+                className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-[#cbdccb]/50 transition-all duration-300 flex flex-col justify-between space-y-4 text-left"
+              >
+                {cardContent}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
       </div>
