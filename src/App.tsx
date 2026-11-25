@@ -16,7 +16,7 @@ import Footer from './components/Footer';
 import InstructorDashboard from './components/InstructorDashboard';
 import WhatsAppButton from './components/WhatsAppButton';
 import { ToastProvider } from './components/Toast';
-import { COURSES } from './data';
+import { HERO_IMAGE, COURSES } from './data';
 import { Award, ShieldAlert, X } from 'lucide-react';
 import { getCurrentTheme, applyTheme } from './lib/theme';
 
@@ -96,22 +96,22 @@ export default function App() {
             const sharedCourse = courseParam ? COURSES.find(c => c.id === courseParam) : null;
             const pageTitle = sharedCourse
               ? `${sharedCourse.title} | Bangladesh Academy of Dietetics and Nutrition - BADN`
-              : 'Bangladesh Academy of Dietetics and Nutrition - BADN';
+              : 'BADN — পুষ্টিবিদ্যা ও ডায়েটেটিক্স প্রশিক্ষণে দেশের বৃহত্তম প্ল্যাটফর্ম';
             const pageDescription = sharedCourse
               ? sharedCourse.description
-              : 'বাংলাদেশ একাডেমি অব ডায়েটেটিক্স অ্যান্ড নিউট্রিশন (BADN) - পুষ্টিবিদ্যা এবং ডায়েটেটিক্স বিষয়ে প্রফেশনাল প্রশিক্ষণ ও ক্লিনিক্যাল ক্যারিয়ার গঠনে দেশের সবচাইতে বড় প্ল্যাটফর্ম। CCND সার্টিফিকেট কোর্স ও বিশেষজ্ঞ গাইডলাইনে গড়ে তুলুন আপনার পেশাগত দক্ষতা।';
-            const shareImage = sharedCourse?.image || 'https://i.ibb.co.com/4RVL9YLF/Renal-Nutrition.jpg';
+              : 'আধুনিক ও বিজ্ঞানভিত্তিক কারিকুলামে অভিজ্ঞ দেশি-বিদেশি চিকিৎসাবিদ ও ডায়েটেশিয়ানদের সরাসরি গাইডলাইনে গড়ে তুলুন আপনার পেশাগত দক্ষতা।';
+            const shareImage = sharedCourse?.image || HERO_IMAGE;
 
             return (
               <>
-                <title>{pageTitle}</title>
+                <title>{sharedCourse ? pageTitle : 'Bangladesh Academy of Dietetics and Nutrition - BADN'}</title>
                 <meta name="description" content={pageDescription} />
                 <meta name="keywords" content="BADN, Bangladesh Academy of Dietetics and Nutrition, CCND, Clinical Nutrition Course, Dietetics Course Bangladesh, Nutrition training, Dietitian certification, পুষ্টিবিদ্যা, ডায়েটেটিক্স প্রশিক্ষণ, বাংলাদেশ একাডেমি অব ডায়েটেটিক্স অ্যান্ড নিউট্রিশন, নিউট্রিশন কোর্স" />
                 <meta name="author" content="Bangladesh Academy of Dietetics and Nutrition" />
                 <link rel="canonical" href="https://badn-academy.org" />
 
                 <meta property="og:title" content={pageTitle} />
-                <meta property="og:description" content={sharedCourse ? sharedCourse.description : 'পুষ্টিবিদ্যা এবং ডায়েটেটিক্স বিষয়ে প্রশিক্ষণ ও ক্যারিয়ার গঠনে দেশের সবচাইতে বড় প্ল্যাটফর্ম! ৮০ এর অধিক সফল ব্যাচ সম্পন্ন এবং ৫০০০+ গ্র্যাজুয়েট।'} />
+                <meta property="og:description" content={pageDescription} />
                 <meta property="og:image" content={shareImage} />
                 <meta property="og:url" content={typeof window !== 'undefined' ? window.location.href : 'https://badn-academy.org'} />
                 <meta property="og:type" content="website" />
@@ -119,7 +119,7 @@ export default function App() {
 
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content={pageTitle} />
-                <meta name="twitter:description" content={sharedCourse ? sharedCourse.description : 'পুষ্টিবিদ্যা এবং ডায়েটেটিক্স বিষয়ে প্রশিক্ষণ ও ক্যারিয়ার গঠনে দেশের সবচাইতে বড় প্ল্যাটফর্ম! অভিজ্ঞ দেশি-বিদেশি চিকিৎসাবিদ ও ডায়েটেশিয়ানদের সরাসরি গাইডলাইন।'} />
+                <meta name="twitter:description" content={pageDescription} />
                 <meta name="twitter:image" content={shareImage} />
 
                 <meta name="robots" content="index, follow" />

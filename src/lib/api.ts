@@ -333,15 +333,17 @@ export async function getCourses(): Promise<any[]> {
             price: finalPrice,
             originalPrice: finalOriginalPrice,
             image: finalImg,
-            modules: (c.id === 'c1' || !c.modules || c.modules.length === 0) ? staticMatch.modules : c.modules,
-            learningOutcomes: (c.id === 'c1' || !c.learningOutcomes || c.learningOutcomes.length === 0) ? staticMatch.learningOutcomes : c.learningOutcomes,
-            learningMethodology: (c.id === 'c1' || !c.learningMethodology || c.learningMethodology.length === 0) ? staticMatch.learningMethodology : c.learningMethodology,
-            perks: (c.id === 'c1' || !c.perks || c.perks.length === 0) ? staticMatch.perks : c.perks,
+            modules: (c.id === 'c1' || c.id === 'c2' || !c.modules || c.modules.length === 0) ? staticMatch.modules : c.modules,
+            learningOutcomes: (c.id === 'c1' || c.id === 'c2' || !c.learningOutcomes || c.learningOutcomes.length === 0) ? staticMatch.learningOutcomes : c.learningOutcomes,
+            learningMethodology: (c.id === 'c1' || c.id === 'c2' || !c.learningMethodology || c.learningMethodology.length === 0) ? staticMatch.learningMethodology : c.learningMethodology,
+            perks: (c.id === 'c1' || c.id === 'c2' || !c.perks || c.perks.length === 0) ? staticMatch.perks : c.perks,
             targetAudience: staticMatch.targetAudience,
-            overviewBn: (c.id === 'c1' || !c.overviewBn) ? staticMatch.overviewBn : c.overviewBn,
-            whyChoose: (c.id === 'c1' || !c.whyChoose) ? staticMatch.whyChoose : c.whyChoose,
-            certificateInfo: (c.id === 'c1' || !c.certificateInfo) ? staticMatch.certificateInfo : c.certificateInfo,
-            whatsappNumber: (c.id === 'c1' || !c.whatsappNumber) ? staticMatch.whatsappNumber : c.whatsappNumber,
+            overviewBn: (c.id === 'c1' || c.id === 'c2' || !c.overviewBn) ? staticMatch.overviewBn : c.overviewBn,
+            whyChoose: (c.id === 'c1' || c.id === 'c2' || !c.whyChoose) ? staticMatch.whyChoose : c.whyChoose,
+            certificateInfo: (c.id === 'c1' || c.id === 'c2' || !c.certificateInfo) ? staticMatch.certificateInfo : c.certificateInfo,
+            whatsappNumber: (c.id === 'c1' || c.id === 'c2' || !c.whatsappNumber) ? staticMatch.whatsappNumber : c.whatsappNumber,
+            classDuration: c.id === 'c2' ? staticMatch.classDuration : (c.classDuration || staticMatch.classDuration),
+            instructor: staticMatch.instructor,
             duration: c.id === 'c1' ? (c.duration || staticMatch.duration) : staticMatch.duration,
             liveClasses: c.id === 'c1' ? (c.liveClasses || staticMatch.liveClasses) : staticMatch.liveClasses,
             totalClasses: c.id === 'c1' ? (c.totalClasses || staticMatch.totalClasses) : staticMatch.totalClasses,
@@ -410,15 +412,17 @@ export async function getCourses(): Promise<any[]> {
         price: finalPrice,
         originalPrice: finalOriginalPrice,
         image: finalImg,
-        modules: (course.id === 'c1' || !course.modules || course.modules.length === 0) ? staticMatch.modules : course.modules,
-        learningOutcomes: (course.id === 'c1' || !course.learningOutcomes || course.learningOutcomes.length === 0) ? staticMatch.learningOutcomes : course.learningOutcomes,
-        learningMethodology: (course.id === 'c1' || !course.learningMethodology || course.learningMethodology.length === 0) ? staticMatch.learningMethodology : course.learningMethodology,
-        perks: (course.id === 'c1' || !course.perks || course.perks.length === 0) ? staticMatch.perks : course.perks,
+        modules: (course.id === 'c1' || course.id === 'c2' || !course.modules || course.modules.length === 0) ? staticMatch.modules : course.modules,
+        learningOutcomes: (course.id === 'c1' || course.id === 'c2' || !course.learningOutcomes || course.learningOutcomes.length === 0) ? staticMatch.learningOutcomes : course.learningOutcomes,
+        learningMethodology: (course.id === 'c1' || course.id === 'c2' || !course.learningMethodology || course.learningMethodology.length === 0) ? staticMatch.learningMethodology : course.learningMethodology,
+        perks: (course.id === 'c1' || course.id === 'c2' || !course.perks || course.perks.length === 0) ? staticMatch.perks : course.perks,
         targetAudience: staticMatch.targetAudience,
-        overviewBn: (course.id === 'c1' || !course.overviewBn) ? staticMatch.overviewBn : course.overviewBn,
-        whyChoose: (course.id === 'c1' || !course.whyChoose) ? staticMatch.whyChoose : course.whyChoose,
-        certificateInfo: (course.id === 'c1' || !course.certificateInfo) ? staticMatch.certificateInfo : course.certificateInfo,
-        whatsappNumber: (course.id === 'c1' || !course.whatsappNumber) ? staticMatch.whatsappNumber : course.whatsappNumber,
+        overviewBn: (course.id === 'c1' || course.id === 'c2' || !course.overviewBn) ? staticMatch.overviewBn : course.overviewBn,
+        whyChoose: (course.id === 'c1' || course.id === 'c2' || !course.whyChoose) ? staticMatch.whyChoose : course.whyChoose,
+        certificateInfo: (course.id === 'c1' || course.id === 'c2' || !course.certificateInfo) ? staticMatch.certificateInfo : course.certificateInfo,
+        whatsappNumber: (course.id === 'c1' || course.id === 'c2' || !course.whatsappNumber) ? staticMatch.whatsappNumber : course.whatsappNumber,
+        classDuration: course.id === 'c2' ? staticMatch.classDuration : (course.classDuration || staticMatch.classDuration),
+        instructor: staticMatch.instructor,
         duration: course.id === 'c1' ? (course.duration || staticMatch.duration) : staticMatch.duration,
         liveClasses: course.id === 'c1' ? (course.liveClasses || staticMatch.liveClasses) : staticMatch.liveClasses,
         totalClasses: course.id === 'c1' ? (course.totalClasses || staticMatch.totalClasses) : staticMatch.totalClasses,
@@ -597,12 +601,23 @@ export async function deleteSeminarEvent(id: string): Promise<boolean> {
 // ==================== DYNAMIC TESTIMONIALS ====================
 
 export async function getTestimonials(): Promise<any[]> {
+  const mergeWithStatic = (items: any[]) => {
+    const existingIds = new Set(items.map((t: any) => t.id));
+    const missing = STATIC_TESTIMONIALS.filter(st => !existingIds.has(st.id));
+    const merged = [...items, ...missing].map((t: any) => {
+      const staticMatch = STATIC_TESTIMONIALS.find(st => st.id === t.id);
+      return staticMatch ? { ...staticMatch, ...t, name: staticMatch.name, image: staticMatch.image, feedback: staticMatch.feedback, role: staticMatch.role } : t;
+    });
+    return merged;
+  };
+
   try {
     const res = await fetch('/api/testimonials');
     const result = await res.json();
     if (result.success && result.data && result.data.length > 0) {
-      safeLocalStorage.setItem('badn_dynamic_testimonials', JSON.stringify(result.data));
-      return result.data;
+      const merged = mergeWithStatic(result.data);
+      safeLocalStorage.setItem('badn_dynamic_testimonials', JSON.stringify(merged));
+      return merged;
     }
   } catch (err) {
     console.warn('API error fetching testimonials. Using localStorage fallback:', err);
@@ -612,7 +627,10 @@ export async function getTestimonials(): Promise<any[]> {
     safeLocalStorage.setItem('badn_dynamic_testimonials', JSON.stringify(STATIC_TESTIMONIALS));
     return STATIC_TESTIMONIALS;
   }
-  return safeJsonParse(local, STATIC_TESTIMONIALS);
+  const parsed = safeJsonParse(local, STATIC_TESTIMONIALS);
+  const mergedLocal = mergeWithStatic(Array.isArray(parsed) ? parsed : STATIC_TESTIMONIALS);
+  safeLocalStorage.setItem('badn_dynamic_testimonials', JSON.stringify(mergedLocal));
+  return mergedLocal;
 }
 
 export async function addTestimonial(testimonial: any): Promise<boolean> {

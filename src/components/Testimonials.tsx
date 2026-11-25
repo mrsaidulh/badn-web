@@ -82,28 +82,28 @@ export default function Testimonials() {
               </div>
 
               {/* Message quote */}
-              <p className="text-base sm:text-lg text-gray-700 leading-relaxed font-medium italic text-justify">
+              <p className="text-base sm:text-lg text-gray-700 leading-normal! font-medium italic text-justify whitespace-pre-line">
                 " {currentTestimonial.feedback} "
               </p>
             </div>
 
             {/* Student metadata */}
-            <div className="flex items-center gap-4 pt-6 border-t border-gray-100 mt-6 shrink-0">
+            <div className="flex items-center gap-4 sm:gap-5 pt-6 border-t border-gray-100 mt-6 shrink-0">
               <img
                 src={currentTestimonial.image}
                 alt={currentTestimonial.name}
-                className="w-14 h-14 rounded-full object-cover border-2 border-brand shadow-md"
-                width={56}
-                height={56}
+                className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover object-top border-[3px] border-brand shadow-lg shrink-0 ring-4 ring-brand/10"
+                width={96}
+                height={96}
                 loading="lazy"
                 decoding="async"
                 referrerPolicy="no-referrer"
               />
               <div className="text-left">
-                <h4 className="text-base font-extrabold text-gray-900 leading-tight">
+                <h4 className="text-lg sm:text-xl font-extrabold text-gray-900 leading-snug">
                   {currentTestimonial.name}
                 </h4>
-                <p className="text-xs text-brand font-semibold mt-0.5">
+                <p className="text-xs sm:text-sm text-brand font-semibold mt-1 leading-relaxed">
                   {currentTestimonial.role}
                 </p>
               </div>

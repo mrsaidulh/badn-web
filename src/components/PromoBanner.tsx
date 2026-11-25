@@ -26,14 +26,14 @@ export default function PromoBanner() {
             </h2>
 
             <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-              আমাদের অনলাইন লাইভ জুম ক্লাস ও ওয়েব সেমিনারের মাধ্যমে আপনি সুযোগ পাচ্ছেন দেশ-বিদেশের অভিজ্ঞ ক্লিনিক্যাল নিউট্রিশনিস্ট, রেজিস্টার্ড ডায়েটিশিয়ান এবং সিনিয়র বিজ্ঞানীদের কাছ থেকে ঘরে বসেই রিয়েল-টাইমে শেখার। কোনো ক্লাস মিস হলে রয়েছে লাইফটাইম রেকর্ডিং অ্যাক্সেস এবং বিশেষ সাপোর্ট গ্রুপ।
+              আমাদের অনলাইন লাইভ ক্লাস, ওয়েবিনার, ওয়ার্কশপ ও সেমিনারের মাধ্যমে আপনি সুযোগ পাচ্ছেন দেশ-বিদেশের অভিজ্ঞ ক্লিনিক্যাল নিউট্রিশনিস্ট, রেজিস্টার্ড ডায়েটিশিয়ান এবং সিনিয়র ডায়েটিশিয়ানদের কাছ থেকে ঘরে বসেই রিয়েল-টাইমে শেখার। কোনো ক্লাস মিস হলে রয়েছে রেকর্ডিং রিভিউ করার অ্যাক্সেস এবং বিশেষ সাপোর্ট গ্রুপ।
             </p>
 
             {/* List of features */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-2 text-xs sm:text-sm font-semibold text-gray-700">
               <div className="flex items-center gap-2">
                 <span className="text-brand text-lg">✓</span>
-                <span>১৬+ ইন্টারেক্টিভ লাইভ সেশন</span>
+                <span>ইন্টারেক্টিভ লাইভ সেশন</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-brand text-lg">✓</span>

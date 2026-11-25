@@ -251,9 +251,31 @@ export default function CourseDetailsModal({
                           <GraduationCap className="w-4 h-4 text-[#143a1b] shrink-0" />
                           কোর্স পরিচিতি ও পটভূমি
                         </h3>
-                        <p className="text-xs sm:text-[13px] text-gray-700 leading-relaxed text-justify">
+                        <p className="text-xs sm:text-[13px] text-gray-700 leading-relaxed text-justify whitespace-pre-line">
                           {course.overviewBn}
                         </p>
+                      </div>
+                    )}
+
+                    {course.instructor && (
+                      <div className="bg-[#f8faf8] border border-[#cbdccb] p-3.5 sm:p-4 rounded-xl space-y-1.5">
+                        <h4 className="text-xs sm:text-sm font-bold text-[#143a1b] flex items-center gap-1.5">
+                          <Award className="w-4 h-4 text-amber-600 shrink-0" />
+                          বিশেষজ্ঞ প্রশিক্ষক
+                        </h4>
+                        <div className="space-y-0.5 pt-0.5">
+                          <p className="text-sm sm:text-[15px] font-extrabold text-gray-900">
+                            {course.instructor.name}
+                          </p>
+                          <p className="text-xs sm:text-[13px] font-semibold text-[#143a1b] leading-snug">
+                            {course.instructor.designation}
+                          </p>
+                          {course.instructor.qualifications && (
+                            <p className="text-[11px] sm:text-xs text-gray-600 font-medium pt-0.5">
+                              {course.instructor.qualifications}
+                            </p>
+                          )}
+                        </div>
                       </div>
                     )}
 
@@ -313,6 +335,12 @@ export default function CourseDetailsModal({
                           <span className="text-gray-500">মোট ক্লাস:</span>
                           <span className="font-bold text-gray-900">{totalClassesCount}টি</span>
                         </div>
+                        {course.classDuration && (
+                          <div className="flex justify-between py-1 border-b border-gray-100 gap-2">
+                            <span className="text-gray-500 shrink-0">লেকচার সময়:</span>
+                            <span className="font-bold text-gray-900 text-right">{course.classDuration}</span>
+                          </div>
+                        )}
                         <div className="flex justify-between py-1 border-b border-gray-100">
                           <span className="text-gray-500">পদ্ধতি:</span>
                           <span className="font-bold text-gray-900">{course.medium || 'অনলাইন লাইভ'}</span>
@@ -461,30 +489,22 @@ export default function CourseDetailsModal({
                       কোর্সের বিশেষ সুবিধাসমূহ:
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-2.5">
-                      <div className="p-2.5 rounded-lg bg-[#fafdfa] border border-[#cbdccb]/60 flex items-center gap-2">
-                        <span className="text-emerald-700 font-extrabold text-xs sm:text-sm">✓</span>
-                        <span className="text-xs font-semibold text-gray-800">১৬টি লাইভ ক্লাস + ৩টি এক্সট্রা রিভিশন ক্লাস</span>
-                      </div>
-                      <div className="p-2.5 rounded-lg bg-[#fafdfa] border border-[#cbdccb]/60 flex items-center gap-2">
-                        <span className="text-emerald-700 font-extrabold text-xs sm:text-sm">✓</span>
-                        <span className="text-xs font-semibold text-gray-800">প্রতিটি ক্লাসের এইচডি রেকর্ডিং ও অ্যাক্সেস</span>
-                      </div>
-                      <div className="p-2.5 rounded-lg bg-[#fafdfa] border border-[#cbdccb]/60 flex items-center gap-2">
-                        <span className="text-emerald-700 font-extrabold text-xs sm:text-sm">✓</span>
-                        <span className="text-xs font-semibold text-gray-800">পরিপূর্ণ লেকচার শিট ও PDF নোটস</span>
-                      </div>
-                      <div className="p-2.5 rounded-lg bg-[#fafdfa] border border-[#cbdccb]/60 flex items-center gap-2">
-                        <span className="text-emerald-700 font-extrabold text-xs sm:text-sm">✓</span>
-                        <span className="text-xs font-semibold text-gray-800">বাস্তব ক্লিনিক্যাল কেস অ্যানালাইসিস</span>
-                      </div>
-                      <div className="p-2.5 rounded-lg bg-[#fafdfa] border border-[#cbdccb]/60 flex items-center gap-2">
-                        <span className="text-emerald-700 font-extrabold text-xs sm:text-sm">✓</span>
-                        <span className="text-xs font-semibold text-gray-800">বিশেষজ্ঞ পুষ্টিবিদদের প্রত্যক্ষ মেন্টরশিপ</span>
-                      </div>
-                      <div className="p-2.5 rounded-lg bg-[#fafdfa] border border-[#cbdccb]/60 flex items-center gap-2">
-                        <span className="text-emerald-700 font-extrabold text-xs sm:text-sm">✓</span>
-                        <span className="text-xs font-semibold text-gray-800">কোর্স সম্পন্নের পর ভেরিফাইড সার্টিফিকেট</span>
-                      </div>
+                      {(course.perks && course.perks.length > 0
+                        ? course.perks
+                        : [
+                            '১৬টি লাইভ ক্লাস + ৩টি এক্সট্রা রিভিশন ক্লাস',
+                            'প্রতিটি ক্লাসের এইচডি রেকর্ডিং ও অ্যাক্সেস',
+                            'পরিপূর্ণ লেকচার শিট ও PDF নোটস',
+                            'বাস্তব ক্লিনিক্যাল কেস অ্যানালাইসিস',
+                            'বিশেষজ্ঞ পুষ্টিবিদদের প্রত্যক্ষ মেন্টরশিপ',
+                            'কোর্স সম্পন্নের পর ভেরিফাইড সার্টিফিকেট'
+                          ]
+                      ).map((perk, idx) => (
+                        <div key={idx} className="p-2.5 rounded-lg bg-[#fafdfa] border border-[#cbdccb]/60 flex items-center gap-2">
+                          <span className="text-emerald-700 font-extrabold text-xs sm:text-sm">✓</span>
+                          <span className="text-xs font-semibold text-gray-800">{perk}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>

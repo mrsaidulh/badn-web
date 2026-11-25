@@ -37,6 +37,11 @@ export interface Course {
   medium?: string;
   certificateInfo?: string;
   whatsappNumber?: string;
+  instructor?: {
+    name: string;
+    designation: string;
+    qualifications?: string;
+  };
 }
 
 export interface Seminar {
