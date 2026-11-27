@@ -19,41 +19,51 @@ export default function FeatureGrid() {
     <section className="py-12 bg-white relative z-10 -mt-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {FEATURES.map((feat) => (
-            <div
-              key={feat.id}
-              className="bg-[#dbe6ca] hover:bg-[#cfdbbd] text-[#143a1b] rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between group cursor-pointer border border-[#143a1b]/10"
-            >
-              <div>
-                <div className="w-14 h-14 rounded-2xl bg-[#143a1b]/10 flex items-center justify-center mb-5 group-hover:bg-[#143a1b]/15 transition-all">
-                  {getIcon(feat.iconName, "text-[#143a1b]")}
+          {FEATURES.map((feat) => {
+            const cardInner = (
+              <>
+                <div>
+                  <div className="w-14 h-14 rounded-2xl bg-[#143a1b]/10 flex items-center justify-center mb-5 group-hover:bg-[#143a1b]/15 transition-all">
+                    {getIcon(feat.iconName, "text-[#143a1b]")}
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 tracking-tight text-[#e17100] select-none">
+                    {feat.title}
+                  </h3>
+                  <p className="text-sm text-[#143a1b] leading-relaxed font-semibold">
+                    {feat.description}
+                  </p>
                 </div>
-                <h3 className="text-xl font-bold mb-3 tracking-tight text-[#e17100] select-none">
-                  {feat.title}
-                </h3>
-                <p className="text-sm text-[#143a1b] leading-relaxed font-semibold">
-                  {feat.description}
-                </p>
-              </div>
 
-              {feat.id === 'f3' ? (
-                <a
-                  href="https://www.facebook.com/profile.php?id=61588998886621&locale=en_GB"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 mt-6 text-xs font-extrabold text-[#143a1b] group-hover:text-[#e17100] transition-colors pt-4 border-t border-[#143a1b]/15"
-                >
-                  <span>বিস্তারিত দেখুন</span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </a>
-              ) : (
                 <div className="flex items-center gap-1.5 mt-6 text-xs font-extrabold text-[#143a1b] group-hover:text-[#e17100] transition-colors pt-4 border-t border-[#143a1b]/15">
                   <span>বিস্তারিত দেখুন</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </div>
-              )}
-            </div>
-          ))}
+              </>
+            );
+
+            if (feat.id === 'f3') {
+              return (
+                <a
+                  key={feat.id}
+                  href="https://www.facebook.com/dt.sazedajyoti"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#dbe6ca] hover:bg-[#cfdbbd] text-[#143a1b] rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between group cursor-pointer border border-[#143a1b]/10"
+                >
+                  {cardInner}
+                </a>
+              );
+            }
+
+            return (
+              <div
+                key={feat.id}
+                className="bg-[#dbe6ca] hover:bg-[#cfdbbd] text-[#143a1b] rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between group cursor-pointer border border-[#143a1b]/10"
+              >
+                {cardInner}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

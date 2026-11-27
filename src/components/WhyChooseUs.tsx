@@ -64,7 +64,7 @@ export default function WhyChooseUs() {
               return (
                 <a
                   key={point.id}
-                  href="https://www.facebook.com/profile.php?id=61588998886621&locale=en_GB"
+                  href="https://www.facebook.com/dt.sazedajyoti"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-[#cbdccb]/50 transition-all duration-300 flex flex-col justify-between space-y-4 text-left cursor-pointer"
